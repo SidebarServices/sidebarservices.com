@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sidebar Services — NYC's Courthouse Insider</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1a2744;
+  --navy-deep: #111c33;
+  --navy-mid: #243560;
+  --gold: #c9a84c;
+  --gold-light: #e8cc85;
+  --cream: #f8f4ed;
+  --cream-dark: #ede8df;
+  --muted: #7a7060;
+  --red: #c23b2a;
+  --red-light: #fdecea;
+  --border: rgba(26,39,68,0.1);
+  --white: #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--navy-deep);
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 60px;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: white; text-decoration: none;
+  letter-spacing: -0.3px;
+}
+.nav-logo span { color: var(--gold); }
+
+.nav-links { display: flex; gap: 4px; }
+.nav-link {
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  font-size: 13px; font-weight: 500; padding: 7px 14px;
+  border-radius: 6px; transition: all 0.15s; border: none;
+  background: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+.nav-link:hover { color: white; background: rgba(255,255,255,0.07); }
+.nav-link.cta {
+  background: var(--gold); color: var(--navy);
+  font-weight: 500; padding: 7px 16px;
+}
+.nav-link.cta:hover { background: var(--gold-light); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; background: var(--navy-deep);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 100px 24px 60px;
+  position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 39px, rgba(201,168,76,0.8) 39px, rgba(201,168,76,0.8) 40px
+  ), repeating-linear-gradient(
+    90deg, transparent, transparent 39px, rgba(201,168,76,0.8) 39px, rgba(201,168,76,0.8) 40px
+  );
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px;
+  color: var(--gold); font-weight: 500; letter-spacing: 0.05em;
+  text-transform: uppercase; margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 7vw, 80px);
+  font-weight: 900; color: white; line-height: 1.05;
+  margin-bottom: 24px; max-width: 800px;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.hero h1 em { color: var(--gold); font-style: italic; }
+
+.hero-sub {
+  font-size: 18px; color: rgba(255,255,255,0.55);
+  max-width: 520px; line-height: 1.65; margin-bottom: 40px;
+  font-weight: 300;
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+
+.hero-form {
+  display: flex; gap: 10px; max-width: 460px; width: 100%;
+  animation: fadeUp 0.6s ease 0.3s both;
+}
+
+.hero-input {
+  flex: 1; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px; padding: 13px 16px;
+  color: white; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; outline: none;
+  transition: border-color 0.15s;
+}
+.hero-input::placeholder { color: rgba(255,255,255,0.35); }
+.hero-input:focus { border-color: var(--gold); }
+
+.hero-btn {
+  background: var(--gold); color: var(--navy);
+  border: none; border-radius: 8px; padding: 13px 22px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  font-weight: 500; cursor: pointer; white-space: nowrap;
+  transition: all 0.15s;
+}
+.hero-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.hero-social {
+  margin-top: 20px; font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  animation: fadeUp 0.6s ease 0.4s both;
+}
+
+.hero-pillars {
+  display: flex; gap: 20px; margin-top: 64px; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+
+.pillar-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 10px 16px;
+  font-size: 13px; color: rgba(255,255,255,0.7);
+}
+.pillar-chip i { color: var(--gold); font-size: 16px; }
+
+/* ── SECTIONS ── */
+section { padding: 80px 24px; }
+.section-inner { max-width: 1000px; margin: 0 auto; }
+
+.section-label {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--gold);
+  font-weight: 500; margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700; color: var(--navy);
+  line-height: 1.15; margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 16px; color: var(--muted);
+  max-width: 540px; line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── HOW IT WORKS ── */
+#how { background: white; }
+
+.steps {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2px; margin-top: 48px; background: var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+
+.step {
+  background: white; padding: 32px 28px;
+  position: relative;
+}
+
+.step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 900;
+  color: var(--cream-dark); line-height: 1;
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-size: 16px; font-weight: 500;
+  color: var(--navy); margin-bottom: 8px;
+}
+
+.step-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── SERVICES ── */
+#services { background: var(--cream); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px; margin-top: 48px;
+}
+
+.service-card {
+  background: white; border: 0.5px solid var(--border);
+  border-radius: 12px; padding: 28px;
+  transition: all 0.2s; cursor: default;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(26,39,68,0.1);
+}
+
+.service-icon {
+  width: 44px; height: 44px; background: #eef1f8;
+  border-radius: 10px; display: flex; align-items: center;
+  justify-content: center; margin-bottom: 16px;
+  font-size: 20px; color: var(--navy);
+}
+
+.service-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+.service-text { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+.service-price {
+  font-size: 13px; color: var(--gold); font-weight: 500;
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* ── ASK ── */
+#ask { background: var(--navy); }
+#ask .section-title { color: white; }
+#ask .section-sub { color: rgba(255,255,255,0.5); }
+#ask .section-label { color: var(--gold); }
+
+.ask-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; margin-top: 48px; align-items: start;
+}
+
+@media (max-width: 680px) {
+  .ask-layout { grid-template-columns: 1fr; }
+  nav { padding: 0 16px; }
+  .hero-form { flex-direction: column; }
+}
+
+.ask-left {}
+
+.ask-feature {
+  display: flex; gap: 14px; margin-bottom: 28px;
+}
+
+.ask-feature-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(201,168,76,0.15);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 18px; color: var(--gold);
+}
+
+.ask-feature-title { font-size: 14px; font-weight: 500; color: white; margin-bottom: 4px; }
+.ask-feature-text { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+.ask-right {}
+
+.ask-demo {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; overflow: hidden;
+}
+
+.ask-demo-header {
+  background: rgba(255,255,255,0.07);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.ask-demo-title { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 500; }
+.online-dot { width: 7px; height: 7px; background: #4caf7d; border-radius: 50%; }
+
+.ask-chat { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 280px; max-height: 380px; overflow-y: auto; }
+
+.bubble { max-width: 85%; padding: 10px 13px; border-radius: 10px; font-size: 13px; line-height: 1.55; }
+.bubble-q { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); align-self: flex-end; border-bottom-right-radius: 3px; }
+.bubble-a { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); color: rgba(255,255,255,0.8); align-self: flex-start; border-bottom-left-radius: 3px; }
+.bubble-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.bubble-q .bubble-label { color: rgba(255,255,255,0.3); }
+.bubble-a .bubble-label { color: var(--gold); }
+
+.ask-input-area {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; gap: 8px;
+}
+
+.ask-q-input {
+  flex: 1; background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 7px; padding: 9px 12px;
+  color: white; font-family: 'DM Sans', sans-serif;
+  font-size: 13px; outline: none;
+}
+.ask-q-input::placeholder { color: rgba(255,255,255,0.25); }
+.ask-q-input:focus { border-color: rgba(201,168,76,0.4); }
+.ask-q-input:disabled { opacity: 0.4; }
+
+.ask-submit {
+  background: var(--gold); color: var(--navy);
+  border: none; border-radius: 7px; padding: 9px 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  font-weight: 500; cursor: pointer; transition: opacity 0.15s;
+}
+.ask-submit:hover:not(:disabled) { opacity: 0.85; }
+.ask-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.upvote-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.upvote-btn {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px; padding: 3px 10px; font-size: 12px;
+  color: rgba(255,255,255,0.5); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+  display: flex; align-items: center; gap: 4px;
+}
+.upvote-btn:hover { background: rgba(201,168,76,0.15); color: var(--gold); border-color: rgba(201,168,76,0.3); }
+
+/* ── DOCKET ── */
+#docket { background: var(--cream); }
+
+.docket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px; margin-top: 48px;
+}
+
+.docket-card {
+  background: white; border: 0.5px solid var(--border);
+  border-radius: 10px; padding: 20px;
+  position: relative; overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.docket-card:hover { box-shadow: 0 4px 20px rgba(26,39,68,0.09); }
+
+.docket-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 3px;
+}
+.docket-card.cringe::before { background: var(--red); }
+.docket-card.wild::before { background: var(--gold); }
+.docket-card.facepalm::before { background: var(--muted); }
+
+.docket-tag {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.1em; font-weight: 500; margin-bottom: 8px;
+}
+.cringe .docket-tag { color: var(--red); }
+.wild .docket-tag { color: #b88a28; }
+.facepalm .docket-tag { color: var(--muted); }
+
+.docket-text { font-size: 14px; line-height: 1.65; color: var(--navy); margin-bottom: 14px; }
+.docket-footer { display: flex; align-items: center; justify-content: space-between; }
+.docket-meta { font-size: 11px; color: var(--muted); }
+.docket-reactions { display: flex; gap: 6px; }
+.react-btn {
+  background: var(--cream); border: 0.5px solid var(--border);
+  border-radius: 20px; padding: 3px 10px; font-size: 11px;
+  color: var(--muted); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  transition: all 0.15s; display: flex; align-items: center; gap: 3px;
+}
+.react-btn:hover { background: var(--cream-dark); color: var(--navy); }
+.react-btn i { font-size: 12px; }
+
+.docket-submit {
+  margin-top: 32px;
+  background: white; border: 0.5px solid var(--border);
+  border-radius: 12px; padding: 24px;
+}
+.docket-submit-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+.docket-submit-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+.docket-textarea {
+  width: 100%; border: 0.5px solid var(--border);
+  border-radius: 8px; padding: 10px 12px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--navy); background: var(--cream);
+  resize: none; outline: none; height: 80px;
+  margin-bottom: 10px;
+}
+.docket-textarea:focus { border-color: var(--navy); background: white; }
+.docket-footer-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.anon-note { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.submit-btn {
+  background: var(--navy); color: white; border: none;
+  border-radius: 7px; padding: 9px 18px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  font-weight: 500; cursor: pointer; transition: opacity 0.15s;
+}
+.submit-btn:hover { opacity: 0.85; }
+
+/* ── RUNNER CTA ── */
+#runners {
+  background: var(--navy-deep);
+  text-align: center;
+}
+#runners .section-title { color: white; }
+#runners .section-sub { color: rgba(255,255,255,0.45); margin: 0 auto 32px; }
+
+.runner-cards {
+  display: flex; gap: 16px; justify-content: center;
+  flex-wrap: wrap; margin: 40px 0 48px;
+}
+
+.runner-perk {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 20px 24px;
+  text-align: left; min-width: 200px; flex: 1; max-width: 240px;
+}
+.runner-perk i { font-size: 20px; color: var(--gold); margin-bottom: 10px; display: block; }
+.runner-perk-title { font-size: 14px; font-weight: 500; color: white; margin-bottom: 4px; }
+.runner-perk-text { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+.runner-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.runner-input {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px; padding: 12px 16px; color: white;
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  outline: none; min-width: 240px;
+}
+.runner-input::placeholder { color: rgba(255,255,255,0.3); }
+.runner-input:focus { border-color: var(--gold); }
+.runner-btn {
+  background: white; color: var(--navy);
+  border: none; border-radius: 8px; padding: 12px 22px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  font-weight: 500; cursor: pointer; transition: all 0.15s;
+}
+.runner-btn:hover { background: var(--cream); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy-deep);
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding: 32px; text-align: center;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; color: white; margin-bottom: 8px;
+}
+.footer-logo span { color: var(--gold); }
+.footer-text { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.8; }
+.footer-links { display: flex; gap: 20px; justify-content: center; margin: 12px 0; }
+.footer-link { font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: var(--gold); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--navy); color: white;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 8px; padding: 12px 20px;
+  font-size: 13px; font-weight: 500;
+  transition: transform 0.3s ease;
+  z-index: 999; white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast i { color: var(--gold); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Sidebar<span>Services</span></a>
+  <div class="nav-links">
+    <button class="nav-link" onclick="scrollTo('services')">Services</button>
+    <button class="nav-link" onclick="scrollTo('ask')">Sidebar Ask</button>
+    <button class="nav-link" onclick="scrollTo('docket')">The Docket</button>
+    <button class="nav-link cta" onclick="scrollTo('waitlist')">Join waitlist</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="waitlist">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow"><i class="ti ti-map-pin"></i> Launching in NYC</div>
+  <h1>The courthouse<br/>knows. <em>Now you do too.</em></h1>
+  <p class="hero-sub">Court runners, real answers from people who live at the courthouse, and the gossip you were never supposed to hear.</p>
+  <form class="hero-form" onsubmit="joinWaitlist(event)">
+    <input class="hero-input" type="email" id="hero-email" placeholder="your@lawfirm.com" required />
+    <button class="hero-btn" type="submit">Get early access</button>
+  </form>
+  <div class="hero-social">Join 0 NYC attorneys on the waitlist. Be first.</div>
+  <div class="hero-pillars">
+    <div class="pillar-chip"><i class="ti ti-briefcase"></i> Court runners on demand</div>
+    <div class="pillar-chip"><i class="ti ti-message-circle"></i> Ask the people who know</div>
+    <div class="pillar-chip"><i class="ti ti-flame"></i> The Docket gossip feed</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title">From your desk<br/>to filed & done.</h2>
+      <p class="section-sub">We handle the courthouse so you can handle the law.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Post your job</div>
+        <div class="step-text">Tell us what needs doing — filing, service, record pull. Set your deadline and any special instructions.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Runner picks it up</div>
+        <div class="step-text">A vetted NYC runner accepts your job. You get their name, photo, and ETA. No more wondering.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Track in real time</div>
+        <div class="step-text">Watch the job move from accepted to in-transit to done. No more calling the runner's cell 4 times.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Get proof</div>
+        <div class="step-text">Filed stamp scan, service affidavit, or certified copy delivered digitally. Your record, forever.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">Everything the courthouse requires.<br/>Nothing it doesn't.</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="ti ti-file-text"></i></div>
+        <div class="service-title">Document Filing</div>
+        <div class="service-text">Same-day and scheduled filings at 60 Centre, 111 Centre, and all five borough courthouses. Conformed copies returned digitally.</div>
+        <div class="service-price"><i class="ti ti-clock"></i> From $45 · Same-day available</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="ti ti-user-check"></i></div>
+        <div class="service-title">Process Service</div>
+        <div class="service-text">Personal service, substituted service, nail-and-mail. Proof of service affidavit included. We know where evasive defendants hide.</div>
+        <div class="service-price"><i class="ti ti-clock"></i> From $75 · 2 attempts included</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="ti ti-copy"></i></div>
+        <div class="service-title">Certified Copies & Records</div>
+        <div class="service-text">Pull certified copies of judgments, orders, divorce decrees, deeds, and court records. Pickup same day at most courthouses.</div>
+        <div class="service-price"><i class="ti ti-clock"></i> From $35 · Case number required</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="ti ti-search"></i></div>
+        <div class="service-title">Courthouse Research</div>
+        <div class="service-text">Index number searches, judgment searches, lien searches. We check the dockets so you don't have to make the trip.</div>
+        <div class="service-price"><i class="ti ti-clock"></i> From $55 · Results same day</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIDEBAR ASK -->
+<section id="ask">
+  <div class="section-inner">
+    <div class="ask-layout">
+      <div class="ask-left reveal">
+        <div class="section-label">Sidebar Ask</div>
+        <h2 class="section-title">The question you'd never ask a colleague.</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.45); margin-bottom:36px;">Ask it here. Our community of NYC courthouse insiders — runners, retired clerks, paralegals, process servers — answers fast.</p>
+        <div class="ask-feature">
+          <div class="ask-feature-icon"><i class="ti ti-users"></i></div>
+          <div>
+            <div class="ask-feature-title">Real people, real answers</div>
+            <div class="ask-feature-text">People who were at 60 Centre this morning. Not a chatbot guessing at local rules.</div>
+          </div>
+        </div>
+        <div class="ask-feature">
+          <div class="ask-feature-icon"><i class="ti ti-thumb-up"></i></div>
+          <div>
+            <div class="ask-feature-title">Crowdsourced & upvoted</div>
+            <div class="ask-feature-text">Best answers rise to the top. The community self-polices for accuracy.</div>
+          </div>
+        </div>
+        <div class="ask-feature">
+          <div class="ask-feature-icon"><i class="ti ti-lock"></i></div>
+          <div>
+            <div class="ask-feature-title">No judgment, ever</div>
+            <div class="ask-feature-text">Ask what a conformed copy is. Ask which window. Ask about the judge's quirks. We've heard it all.</div>
+          </div>
+        </div>
+      </div>
+      <div class="ask-right reveal">
+        <div class="ask-demo">
+          <div class="ask-demo-header">
+            <div class="online-dot"></div>
+            <div class="ask-demo-title">Sidebar Ask · NYC · 14 insiders online</div>
+          </div>
+          <div class="ask-chat" id="ask-chat">
+            <div style="display:flex;flex-direction:column;align-items:flex-end">
+              <div class="bubble bubble-q">
+                <div class="bubble-label">Attorney</div>
+                Does Judge Schechter at 60 Centre require courtesy copies for summary judgment motions?
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-start">
+              <div class="bubble bubble-a">
+                <div class="bubble-label">Maria L. · Court runner · 11 yrs</div>
+                Yes — she wants a courtesy copy for anything over 10 pages, tabbed and bound. Drop it at Dept. 21 before noon the same day you file. Her clerk will kick it back same day if you skip it.
+              </div>
+              <div class="upvote-row">
+                <button class="upvote-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>23</span></button>
+                <span style="font-size:11px; color:rgba(255,255,255,0.25);">Helpful?</span>
+              </div>
+            </div>
+          </div>
+          <div class="ask-input-area">
+            <input class="ask-q-input" id="ask-q" placeholder="Ask the courthouse anything…" />
+            <button class="ask-submit" onclick="postQuestion()">Ask</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE DOCKET -->
+<section id="docket">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">The Docket</div>
+      <h2 class="section-title">Off the record.<br/>On the internet.</h2>
+      <p class="section-sub">Anonymous submissions from attorneys, runners, clerks, and paralegals. 100% real. Names redacted to protect the guilty.</p>
+    </div>
+    <div class="docket-grid" id="docket-grid">
+      <div class="docket-card cringe reveal">
+        <div class="docket-tag">😬 Cringe</div>
+        <div class="docket-text">A partner at a three-name firm called the clerk's office to ask what a "conformed copy" was. Clerk put him on hold, came back, explained it. He asked her to email him that explanation "for his records."</div>
+        <div class="docket-footer">
+          <div class="docket-meta">Civil · 60 Centre · 2h ago</div>
+          <div class="docket-reactions">
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>47</span></button>
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-face-id-error"></i> <span>31</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="docket-card wild reveal">
+        <div class="docket-tag">🤯 Wild</div>
+        <div class="docket-text">Attorney got a TRO granted, then called our runner panicking because she didn't know you actually had to serve it. Thought the judge just... handled that part.</div>
+        <div class="docket-footer">
+          <div class="docket-meta">Family · 60 Centre · 5h ago</div>
+          <div class="docket-reactions">
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>89</span></button>
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-face-id-error"></i> <span>62</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="docket-card facepalm reveal">
+        <div class="docket-tag">🤦 Facepalm</div>
+        <div class="docket-text">Solo practitioner sent us to file a motion. Forgot to sign it. We drove back. He'd signed the wrong page. Third trip: he faxed a signature page. We don't have a fax machine. Nobody does.</div>
+        <div class="docket-footer">
+          <div class="docket-meta">Probate · Surrogate's Court · Yesterday</div>
+          <div class="docket-reactions">
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>134</span></button>
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-face-id-error"></i> <span>98</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="docket-card cringe reveal">
+        <div class="docket-tag">😬 Cringe</div>
+        <div class="docket-text">An attorney CC'd the judge on a client complaint email. The judge replied. To everyone. Including the client.</div>
+        <div class="docket-footer">
+          <div class="docket-meta">Supreme Court · 111 Centre · 2 days ago</div>
+          <div class="docket-reactions">
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>203</span></button>
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-face-id-error"></i> <span>177</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="docket-card wild reveal">
+        <div class="docket-tag">🤯 Wild</div>
+        <div class="docket-text">Watched an attorney argue with the NYSCEF system for 20 minutes because his PDF was "too perfect." The clerk finally told him it was rejected for being a scanned image of a printed PDF of the original PDF.</div>
+        <div class="docket-footer">
+          <div class="docket-meta">E-filing · NYSCEF · 3 days ago</div>
+          <div class="docket-reactions">
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>156</span></button>
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-face-id-error"></i> <span>112</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="docket-card facepalm reveal">
+        <div class="docket-tag">🤦 Facepalm</div>
+        <div class="docket-text">BigLaw associate called to confirm "which floor" the clerk's office is on at 60 Centre. It's on every floor. The building has 30 floors. Each one does something different. This is why we exist.</div>
+        <div class="docket-footer">
+          <div class="docket-meta">60 Centre St · This morning</div>
+          <div class="docket-reactions">
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-thumb-up"></i> <span>88</span></button>
+            <button class="react-btn" onclick="bump(this)"><i class="ti ti-face-id-error"></i> <span>55</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="docket-submit reveal">
+      <div class="docket-submit-title">Witnessed something? Spill it.</div>
+      <div class="docket-submit-sub">Anonymous. Reviewed before posting. No real names, case numbers, or firm identifiers.</div>
+      <textarea class="docket-textarea" id="gossip-input" placeholder="What happened at the courthouse?"></textarea>
+      <div class="docket-footer-row">
+        <div class="anon-note"><i class="ti ti-shield-check"></i> Completely anonymous · Moderated</div>
+        <button class="submit-btn" onclick="submitGossip()">Submit anonymously</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RUNNER CTA -->
+<section id="runners">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">For runners</div>
+      <h2 class="section-title">You know the courthouse.<br/>Get paid for it.</h2>
+      <p class="section-sub">NYC court runners, process servers, and paralegals — join our network and get jobs sent to you.</p>
+    </div>
+    <div class="runner-cards">
+      <div class="runner-perk reveal">
+        <i class="ti ti-cash"></i>
+        <div class="runner-perk-title">Set your own rates</div>
+        <div class="runner-perk-text">Price your jobs. We add a platform fee on top. You keep what you quote.</div>
+      </div>
+      <div class="runner-perk reveal">
+        <i class="ti ti-map-pin"></i>
+        <div class="runner-perk-title">Work your territory</div>
+        <div class="runner-perk-text">Accept jobs near your usual courthouses. No driving to the Bronx for a $30 job.</div>
+      </div>
+      <div class="runner-perk reveal">
+        <i class="ti ti-bolt"></i>
+        <div class="runner-perk-title">Get paid fast</div>
+        <div class="runner-perk-text">Direct deposit within 48 hours of job completion. No net-30 invoicing nonsense.</div>
+      </div>
+    </div>
+    <div class="runner-form reveal">
+      <input class="runner-input" type="email" id="runner-email" placeholder="your@email.com" />
+      <button class="runner-btn" onclick="runnerSignup()">Apply as a runner</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Sidebar<span>Services</span></div>
+  <div class="footer-links">
+    <a href="#" class="footer-link">sidebarservices.com</a>
+    <a href="#" class="footer-link">@sidebarservices</a>
+    <a href="mailto:hello@sidebarservices.com" class="footer-link">hello@sidebarservices.com</a>
+  </div>
+  <div class="footer-text">NYC's courthouse insider network. Launching soon.<br/>© 2026 Sidebar Services. Not a law firm. Not legal advice. Just the people who know.</div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="ti ti-check"></i> <span id="toast-msg"></span></div>
+
+<script>
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function joinWaitlist(e) {
+  e.preventDefault();
+  const email = document.getElementById('hero-email').value;
+  if (!email) return;
+  document.getElementById('hero-email').value = '';
+  showToast('You\'re on the list. We\'ll be in touch.');
+  document.querySelector('.hero-social').textContent = 'You\'re on the waitlist. Tell a colleague.';
+}
+
+function runnerSignup() {
+  const email = document.getElementById('runner-email').value;
+  if (!email) return;
+  document.getElementById('runner-email').value = '';
+  showToast('Runner application received. We\'ll reach out soon.');
+}
+
+function submitGossip() {
+  const text = document.getElementById('gossip-input').value.trim();
+  if (!text) return;
+  document.getElementById('gossip-input').value = '';
+  showToast('Received. Reviewed for moderation. The courthouse thanks you.');
+}
+
+function postQuestion() {
+  const q = document.getElementById('ask-q').value.trim();
+  if (!q) return;
+  const chat = document.getElementById('ask-chat');
+
+  const qDiv = document.createElement('div');
+  qDiv.style.cssText = 'display:flex;flex-direction:column;align-items:flex-end';
+  qDiv.innerHTML = '<div class="bubble bubble-q"><div class="bubble-label">You</div>' + q + '</div>';
+  chat.appendChild(qDiv);
+
+  const typingDiv = document.createElement('div');
+  typingDiv.style.cssText = 'display:flex;align-items:center;gap:5px;padding:8px 12px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:10px;align-self:flex-start;width:60px';
+  typingDiv.innerHTML = '<span style="width:6px;height:6px;background:rgba(201,168,76,0.6);border-radius:50%;display:inline-block;animation:bounce 1.2s infinite"></span><span style="width:6px;height:6px;background:rgba(201,168,76,0.6);border-radius:50%;display:inline-block;animation:bounce 1.2s infinite 0.2s"></span><span style="width:6px;height:6px;background:rgba(201,168,76,0.6);border-radius:50%;display:inline-block;animation:bounce 1.2s infinite 0.4s"></span>';
+  chat.appendChild(typingDiv);
+  chat.scrollTop = chat.scrollHeight;
+  document.getElementById('ask-q').value = '';
+  document.getElementById('ask-q').disabled = true;
+
+  setTimeout(() => {
+    chat.removeChild(typingDiv);
+    const aDiv = document.createElement('div');
+    aDiv.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start';
+    aDiv.innerHTML = '<div class="bubble bubble-a"><div class="bubble-label">Sidebar Ask · Posted to community</div>Your question is live. NYC courthouse insiders have been notified and will answer shortly.</div>';
+    chat.appendChild(aDiv);
+    chat.scrollTop = chat.scrollHeight;
+    document.getElementById('ask-q').disabled = false;
+    showToast('Question posted to 14 insiders online.');
+  }, 1800);
+}
+
+function bump(btn) {
+  const span = btn.querySelector('span');
+  span.textContent = parseInt(span.textContent) + 1;
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
