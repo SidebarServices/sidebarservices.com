@@ -5,211 +5,211 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sidebar Services — NYC Courthouse Classifieds</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --navy: #1a2744; --navy-deep: #111c33; --gold: #c9a84c; --gold-light: #e8cc85;
-  --cream: #f8f4ed; --cream-dark: #ede8df; --muted: #7a7060; --red: #c23b2a;
-  --border: rgba(26,39,68,0.1); --green: #2e7d52;
+  --ink: #1c1a17; --ink-mid: #3d3a33; --ink-muted: #6b6659; --ink-faint: #9a9486;
+  --parchment: #f5f0e8; --parchment-dark: #ede6d6; --parchment-deep: #e2d9c5;
+  --rule: #c8bfa8; --rule-dark: #a89880; --red: #8b1a1a; --red-light: #f5eded;
+  --green-text: #1a4a1a; --green-bg: #edf3ed; --gold-accent: #7a6030; --border: rgba(28,26,23,0.12);
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; }
-nav { background: var(--navy-deep); border-bottom: 2px solid var(--gold); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; position: sticky; top: 0; z-index: 100; }
-.logo { font-family: 'Playfair Display', serif; font-size: 20px; color: white; text-decoration: none; letter-spacing: -0.3px; }
-.logo span { color: var(--gold); }
-.post-btn { background: var(--gold); color: var(--navy); border: none; border-radius: 7px; padding: 8px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
-.post-btn:hover { background: var(--gold-light); }
-.hero-strip { background: var(--navy); padding: 28px 24px; text-align: center; }
-.hero-strip h1 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 5vw, 40px); color: white; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
-.hero-strip h1 em { color: var(--gold); font-style: italic; }
-.hero-strip p { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 300; max-width: 480px; margin: 0 auto 20px; }
-.tab-row { display: inline-flex; gap: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 4px; }
-.tab-btn { background: transparent; border: none; color: rgba(255,255,255,0.5); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
-.tab-btn:hover { color: white; }
-.tab-btn.active { background: var(--gold); color: var(--navy); }
-.main { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
-.filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-.filter-chip { background: white; border: 0.5px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: var(--muted); cursor: pointer; transition: all 0.15s; font-weight: 500; font-family: 'DM Sans', sans-serif; }
-.filter-chip:hover { border-color: var(--navy); color: var(--navy); }
-.filter-chip.active { background: var(--navy); color: white; border-color: var(--navy); }
-.filter-label { font-size: 12px; color: var(--muted); margin-right: 2px; }
-.listing { background: white; border: 0.5px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 10px; transition: box-shadow 0.15s; }
-.listing:hover { box-shadow: 0 3px 16px rgba(26,39,68,0.08); }
-.listing-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
-.listing-title { font-size: 15px; font-weight: 500; color: var(--navy); margin-top: 6px; }
-.listing-price { font-size: 15px; font-weight: 500; color: var(--navy); white-space: nowrap; flex-shrink: 0; }
-.listing-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-.listing-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-.listing-meta { display: flex; gap: 10px; flex-wrap: wrap; }
-.meta-chip { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
-.badge { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
-.badge-need { background: #eef3ff; color: #2952a3; }
-.badge-offer { background: #eef7f1; color: var(--green); }
-.badge-urgent { background: #fdecea; color: var(--red); }
-.contact-btn { background: var(--navy); color: white; border: none; border-radius: 6px; padding: 7px 14px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
-.contact-btn:hover { opacity: 0.8; }
-.empty { text-align: center; padding: 60px 24px; color: var(--muted); font-size: 14px; }
-.empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; }
-.overlay { display: none; position: fixed; inset: 0; background: rgba(17,28,51,0.7); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; font-size: 16px; }
+.masthead { background: var(--parchment); border-bottom: 3px double var(--ink); padding: 18px 32px 14px; }
+.masthead-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.masthead-title { text-align: center; }
+.masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 54px); font-weight: 900; color: var(--ink); letter-spacing: -0.5px; line-height: 1; margin-bottom: 2px; }
+.masthead-title h1 em { font-style: italic; font-weight: 400; }
+.masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: var(--ink-muted); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; }
+.masthead-rule { border: none; border-top: 1px solid var(--ink); margin: 10px 0 8px; }
+.masthead-nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.nav-links { display: flex; gap: 0; }
+.nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-mid); text-decoration: none; padding: 4px 14px; border-right: 1px solid var(--rule); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
+.nav-link:first-child { border-left: 1px solid var(--rule); }
+.nav-link:hover { color: var(--red); }
+.post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: var(--ink); color: var(--parchment); border: none; padding: 7px 16px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.15s; }
+.post-btn:hover { background: var(--ink-mid); }
+.section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin-bottom: 0; display: flex; align-items: center; justify-content: space-between; }
+.section-title-text { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); }
+.main { max-width: 920px; margin: 0 auto; padding: 0 24px 40px; }
+.filters-bar { background: var(--parchment-dark); border-bottom: 1px solid var(--rule); padding: 8px 24px; display: flex; gap: 0; align-items: center; flex-wrap: wrap; max-width: 920px; margin: 0 auto; }
+.filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); margin-right: 12px; }
+.filter-chip { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-mid); background: none; border: none; padding: 4px 12px; cursor: pointer; letter-spacing: 0.04em; border-right: 1px solid var(--rule); transition: all 0.12s; }
+.filter-chip:last-child { border-right: none; }
+.filter-chip:hover { color: var(--red); }
+.filter-chip.active { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.tab-row { background: var(--parchment-deep); border-bottom: 2px solid var(--ink); padding: 0 24px; display: flex; gap: 0; max-width: 920px; margin: 0 auto; }
+.tab-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); background: none; border: none; padding: 10px 18px; cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.12s; }
+.tab-btn:hover { color: var(--ink); }
+.tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+.listings-wrap { padding: 0; }
+.listing { border-bottom: 1px solid var(--rule); padding: 16px 0; display: grid; grid-template-columns: 1fr auto; gap: 0 20px; cursor: default; transition: background 0.12s; }
+.listing:hover { background: rgba(28,26,23,0.02); }
+.listing:first-child { border-top: 1px solid var(--rule); }
+.listing-badges { display: flex; gap: 6px; margin-bottom: 5px; align-items: center; }
+.badge { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border: 0.5px solid; }
+.badge-need { border-color: #7a6030; color: #7a6030; background: #faf6ed; }
+.badge-offer { border-color: #1a4a1a; color: #1a4a1a; background: var(--green-bg); }
+.badge-urgent { border-color: var(--red); color: var(--red); background: var(--red-light); }
+.listing-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.25; margin-bottom: 5px; }
+.listing-desc { font-family: 'EB Garamond', serif; font-size: 15px; color: var(--ink-mid); line-height: 1.55; margin-bottom: 8px; }
+.listing-meta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.meta-item { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.02em; }
+.meta-item strong { color: var(--ink-mid); font-weight: 500; }
+.listing-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 80px; }
+.listing-price { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.contact-btn { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: none; border: 1px solid var(--ink); color: var(--ink); padding: 5px 12px; cursor: pointer; transition: all 0.12s; white-space: nowrap; }
+.contact-btn:hover { background: var(--ink); color: var(--parchment); }
+.empty { text-align: center; padding: 48px 24px; font-family: 'EB Garamond', serif; font-style: italic; color: var(--ink-faint); font-size: 18px; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(28,26,23,0.65); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
 .overlay.open { display: flex; }
-.modal { background: white; border-radius: 12px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(17,28,51,0.3); }
-.modal-header { background: var(--navy); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-radius: 12px 12px 0 0; }
-.modal-title { font-family: 'Playfair Display', serif; font-size: 18px; color: white; }
-.modal-close { background: rgba(255,255,255,0.1); border: none; color: white; width: 30px; height: 30px; border-radius: 6px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
-.modal-close:hover { background: rgba(255,255,255,0.2); }
+.modal { background: var(--parchment); border: 1px solid var(--ink); width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; }
+.modal-header { background: var(--ink); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--rule-dark); }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--parchment); font-weight: 700; }
+.modal-close { background: none; border: 1px solid rgba(245,240,232,0.3); color: var(--parchment); width: 28px; height: 28px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.12s; }
+.modal-close:hover { background: rgba(255,255,255,0.1); }
 .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-size: 12px; font-weight: 500; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; }
-.field input, .field select, .field textarea { border: 0.5px solid var(--border); border-radius: 7px; padding: 10px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--navy); background: var(--cream); outline: none; transition: border-color 0.15s; }
-.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--navy); background: white; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 0.1em; }
+.field input, .field select, .field textarea { border: 1px solid var(--rule-dark); background: white; padding: 9px 11px; font-family: 'EB Garamond', serif; font-size: 15px; color: var(--ink); outline: none; transition: border-color 0.12s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ink); }
 .field textarea { resize: none; height: 80px; }
-.type-toggle { display: flex; gap: 8px; }
-.type-opt { flex: 1; padding: 10px; border-radius: 7px; border: 0.5px solid var(--border); background: var(--cream); text-align: center; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
-.type-opt:hover { border-color: var(--navy); color: var(--navy); }
-.type-opt.selected { background: var(--navy); color: white; border-color: var(--navy); }
+.field select { font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.type-toggle { display: flex; gap: 0; }
+.type-opt { flex: 1; padding: 9px 10px; border: 1px solid var(--rule-dark); border-right: none; background: white; text-align: center; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--ink-muted); transition: all 0.12s; letter-spacing: 0.02em; }
+.type-opt:last-child { border-right: 1px solid var(--rule-dark); }
+.type-opt:hover { background: var(--parchment-dark); color: var(--ink); }
+.type-opt.selected { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.hint { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.submit-listing-btn { background: var(--gold); color: var(--navy); border: none; border-radius: 8px; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; width: 100%; margin-top: 4px; }
-.submit-listing-btn:hover { background: var(--gold-light); }
+.hint { font-size: 11px; color: var(--ink-faint); margin-top: 2px; font-family: 'DM Sans', sans-serif; }
+.submit-listing-btn { background: var(--ink); color: var(--parchment); border: none; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.12s; width: 100%; margin-top: 4px; }
+.submit-listing-btn:hover { background: var(--ink-mid); }
 .contact-modal-body { padding: 24px; }
-.contact-info { display: flex; flex-direction: column; gap: 14px; }
-.contact-row { display: flex; gap: 12px; align-items: center; }
-.contact-icon { width: 36px; height: 36px; background: #eef1f8; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.contact-detail-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
-.contact-detail-value { font-size: 14px; font-weight: 500; color: var(--navy); }
-.contact-note { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 8px; padding-top: 16px; border-top: 0.5px solid var(--border); }
-.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--navy); color: white; border: 1px solid rgba(201,168,76,0.4); border-radius: 8px; padding: 12px 20px; font-size: 13px; font-weight: 500; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
+.contact-rows { display: flex; flex-direction: column; gap: 14px; }
+.contact-row { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.contact-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+.contact-key { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); min-width: 70px; padding-top: 2px; }
+.contact-val { font-family: 'EB Garamond', serif; font-size: 16px; color: var(--ink); }
+.contact-note { font-family: 'EB Garamond', serif; font-size: 13px; font-style: italic; color: var(--ink-faint); margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); line-height: 1.5; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink); color: var(--parchment); border: 1px solid var(--rule-dark); padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.04em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
 .toast.show { transform: translateX(-50%) translateY(0); }
-footer { background: var(--navy-deep); border-top: 1px solid rgba(201,168,76,0.2); padding: 24px; text-align: center; margin-top: 40px; }
-.footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: white; margin-bottom: 6px; }
-.footer-logo span { color: var(--gold); }
-.footer-text { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.8; }
-@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } nav { padding: 0 16px; } }
+footer { background: var(--ink); border-top: 3px double var(--rule-dark); padding: 24px 32px; text-align: center; }
+.footer-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--parchment); margin-bottom: 6px; font-weight: 700; }
+.footer-title em { font-style: italic; font-weight: 400; }
+.footer-rule { border: none; border-top: 1px solid var(--rule-dark); margin: 10px auto; max-width: 200px; }
+.footer-text { font-family: 'EB Garamond', serif; font-size: 13px; color: var(--rule-dark); font-style: italic; line-height: 1.7; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .masthead { padding: 12px 16px; } .listing { grid-template-columns: 1fr; } .listing-right { flex-direction: row; align-items: center; margin-top: 10px; } }
 </style>
 </head>
 <body>
-<nav>
-  <a href="#" class="logo">Sidebar<span>Services</span></a>
-  <button class="post-btn" onclick="openPost()">+ Post a listing</button>
-</nav>
-<div class="hero-strip">
-  <h1>NYC Courthouse<br/><em>Classifieds.</em></h1>
-  <p>Need a court runner? Are a court runner? Post it here. Free, open, and NYC-specific.</p>
-  <div class="tab-row">
-    <button class="tab-btn active" onclick="setTab('all', this)">All listings</button>
-    <button class="tab-btn" onclick="setTab('need', this)">Attorneys need help</button>
-    <button class="tab-btn" onclick="setTab('offer', this)">Runners available</button>
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="masthead-date">Est. 2026 · New York, N.Y.</div>
+    <div class="masthead-title">
+      <h1>Sidebar <em>Services</em></h1>
+      <div class="masthead-tagline">The New York Courthouse Classifieds</div>
+    </div>
+    <div class="masthead-date" id="issue-date"></div>
   </div>
+  <hr class="masthead-rule" />
+  <div class="masthead-nav">
+    <nav class="nav-links">
+      <button class="nav-link" onclick="setTab('all', document.getElementById('tab-all'))">All Listings</button>
+      <button class="nav-link" onclick="setTab('need', document.getElementById('tab-need'))">Attorneys Seeking</button>
+      <button class="nav-link" onclick="setTab('offer', document.getElementById('tab-offer'))">Runners Available</button>
+    </nav>
+    <button class="post-btn" onclick="openPost()">+ Place a Listing</button>
+  </div>
+</header>
+<div class="tab-row">
+  <button class="tab-btn active" id="tab-all" onclick="setTab('all', this)">All Listings</button>
+  <button class="tab-btn" id="tab-need" onclick="setTab('need', this)">Attorneys Seeking Help</button>
+  <button class="tab-btn" id="tab-offer" onclick="setTab('offer', this)">Runners &amp; Services</button>
+</div>
+<div class="filters-bar">
+  <span class="filter-label">Category:</span>
+  <button class="filter-chip active" onclick="setFilter('all', this)">All</button>
+  <button class="filter-chip" onclick="setFilter('filing', this)">Filing</button>
+  <button class="filter-chip" onclick="setFilter('process', this)">Process Service</button>
+  <button class="filter-chip" onclick="setFilter('records', this)">Records &amp; Copies</button>
+  <button class="filter-chip" onclick="setFilter('research', this)">Research</button>
+  <button class="filter-chip" onclick="setFilter('urgent', this)">Urgent</button>
 </div>
 <div class="main">
-  <div class="filters">
-    <span class="filter-label">Filter:</span>
-    <button class="filter-chip active" onclick="setFilter('all', this)">All</button>
-    <button class="filter-chip" onclick="setFilter('filing', this)">Filing</button>
-    <button class="filter-chip" onclick="setFilter('process', this)">Process service</button>
-    <button class="filter-chip" onclick="setFilter('records', this)">Records & copies</button>
-    <button class="filter-chip" onclick="setFilter('research', this)">Research</button>
-    <button class="filter-chip" onclick="setFilter('urgent', this)">🔴 Urgent</button>
+  <div class="section-header">
+    <span class="section-title-text" id="listings-count">Classifieds</span>
+    <span class="section-title-text" style="font-style:italic;font-family:'EB Garamond',serif;letter-spacing:0;text-transform:none;font-weight:400;font-size:12px;" id="listings-updated"></span>
   </div>
-  <div id="listings-container"></div>
+  <div class="listings-wrap" id="listings-container"></div>
 </div>
 <footer>
-  <div class="footer-logo">Sidebar<span>Services</span></div>
-  <div class="footer-text">NYC's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
+  <div class="footer-title">Sidebar <em>Services</em></div>
+  <hr class="footer-rule" />
+  <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
 </footer>
 <div class="overlay" id="post-overlay" onclick="closeIfOutside(event,'post-overlay')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Post a listing</div>
+      <div class="modal-title">Place a Listing</div>
       <button class="modal-close" onclick="closePost()">✕</button>
     </div>
     <div class="modal-body">
       <div class="field">
-        <label>I am a...</label>
+        <label>I am a&hellip;</label>
         <div class="type-toggle">
-          <button class="type-opt selected" id="type-need" onclick="selectType('need')">⚖️ Attorney — I need help</button>
-          <button class="type-opt" id="type-offer" onclick="selectType('offer')">🏃 Runner — I offer services</button>
+          <button class="type-opt selected" id="type-need" onclick="selectType('need')">⚖ Attorney — I need help</button>
+          <button class="type-opt" id="type-offer" onclick="selectType('offer')">Runner — I offer services</button>
         </div>
       </div>
-      <div class="field">
-        <label>Category</label>
-        <select id="f-category">
-          <option value="filing">Document filing</option>
-          <option value="process">Process service</option>
-          <option value="records">Certified copies / records</option>
-          <option value="research">Courthouse research</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Title</label>
-        <input id="f-title" type="text" placeholder="e.g. Need someone to file complaint at 60 Centre today" />
-      </div>
-      <div class="field">
-        <label>Details</label>
-        <textarea id="f-desc" placeholder="Courthouse, deadline, special instructions, number of copies..."></textarea>
-      </div>
+      <div class="field"><label>Category</label><select id="f-category"><option value="filing">Document filing</option><option value="process">Process service</option><option value="records">Certified copies / records</option><option value="research">Courthouse research</option><option value="other">Other</option></select></div>
+      <div class="field"><label>Headline</label><input id="f-title" type="text" placeholder="e.g., Seek runner for same-day filing at 60 Centre St." /></div>
+      <div class="field"><label>Details</label><textarea id="f-desc" placeholder="Courthouse, deadline, special instructions, number of copies required…"></textarea></div>
       <div class="two-col">
-        <div class="field">
-          <label>Budget / Rate</label>
-          <input id="f-price" type="text" placeholder="e.g. $65, Negotiable" />
-        </div>
-        <div class="field">
-          <label>Urgency</label>
-          <select id="f-urgency">
-            <option value="normal">Standard</option>
-            <option value="urgent">Urgent — today</option>
-            <option value="flexible">Flexible</option>
-          </select>
-        </div>
+        <div class="field"><label>Rate / Budget</label><input id="f-price" type="text" placeholder="e.g. $65, Negotiable" /></div>
+        <div class="field"><label>Urgency</label><select id="f-urgency"><option value="normal">Standard</option><option value="urgent">Urgent — today</option><option value="flexible">Flexible</option></select></div>
       </div>
-      <div class="field">
-        <label>Contact (shown publicly)</label>
-        <input id="f-contact" type="text" placeholder="Email or phone number" />
-        <div class="hint">This is how people reach you.</div>
-      </div>
-      <div class="field">
-        <label>Your name or handle</label>
-        <input id="f-name" type="text" placeholder="e.g. Maria L., Jane Esq." />
-      </div>
-      <button class="submit-listing-btn" onclick="submitListing()">Post listing</button>
+      <div class="field"><label>Contact (displayed publicly)</label><input id="f-contact" type="text" placeholder="Email or telephone" /><div class="hint">This is how respondents will reach you.</div></div>
+      <div class="field"><label>Name or firm</label><input id="f-name" type="text" placeholder="e.g. Maria L., Smith &amp; Associates" /></div>
+      <button class="submit-listing-btn" onclick="submitListing()">Submit Listing</button>
     </div>
   </div>
 </div>
 <div class="overlay" id="contact-overlay" onclick="closeIfOutside(event,'contact-overlay')">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Contact poster</div>
+      <div class="modal-title">Contact Information</div>
       <button class="modal-close" onclick="closeContact()">✕</button>
     </div>
     <div class="contact-modal-body">
-      <div class="contact-info" id="contact-info"></div>
+      <div class="contact-rows" id="contact-info"></div>
+      <div class="contact-note">Parties are encouraged to contact one another directly. Sidebar Services facilitates this introduction only and is not party to any arrangement made hereunder.</div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
+const now=new Date();
+document.getElementById('issue-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('listings-updated').textContent='Updated '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
 const seed=[
-  {id:1,type:'need',category:'filing',urgency:'urgent',title:'File complaint & summons at 60 Centre — today by 3pm',desc:'Need original + 2 copies filed at Civil Supreme, 60 Centre St. Conformed copies back digitally please.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min ago',courthouse:'60 Centre St'},
-  {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan & all 5 boroughs',desc:'Licensed NYC process server, 8 years experience. Personal service, substituted service, nail & mail. Proof of service affidavit included.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr ago',courthouse:'All boroughs'},
-  {id:3,type:'need',category:'records',urgency:'flexible',title:'Pull certified copy of divorce decree — Kings County',desc:"Kings County Surrogate's Court. I have the index number. End of week is fine.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs ago',courthouse:"Kings County Surrogate's"},
-  {id:4,type:'offer',category:'filing',urgency:'normal',title:'Court runner — 60 Centre, 111 Centre, Bronx daily',desc:'I run documents to 60 Centre, 111 Centre, and Bronx Supreme every weekday. Conformed copies back same day.',price:'From $40',name:'Marcus D.',contact:'917-555-0182',time:'3 hrs ago',courthouse:'Manhattan + Bronx'},
-  {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search — defendant name, NYC Civil Court',desc:'Need a judgment search on an individual defendant across all NYC Civil Court indexes.',price:'$55',name:'Paralegal @ BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs ago',courthouse:'NYC Civil Court'},
-  {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy specialist — Queens & Nassau',desc:'I pull certified copies from Queens Supreme, Queens Civil, and Nassau County regularly. Usually same or next day.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs ago',courthouse:'Queens + Nassau'}
+  {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally. Documents prepared and ready.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',courthouse:'60 Centre St.'},
+  {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment. Same-day availability most weekdays.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',courthouse:'All boroughs'},
+  {id:3,type:'need',category:'records',urgency:'flexible',title:"Certified copy of divorce decree sought — Kings County Surrogate's Court",desc:"Index number and parties' names on file. One certified copy required. Deadline is end of week — no urgency.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs. ago',courthouse:"Kings County Surrogate's"},
+  {id:4,type:'offer',category:'filing',urgency:'normal',title:'Daily court runner — 60 Centre, 111 Centre, and Bronx Supreme',desc:'Available for document runs to 60 Centre Street, 111 Centre Street, and Bronx Supreme Court each weekday. Conformed copies returned same day. Monthly arrangements considered.',price:'From $40',name:'Marcus D.',contact:'917-555-0182',time:'3 hrs. ago',courthouse:'Manhattan & Bronx'},
+  {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search required — NYC Civil Court, individual defendant',desc:'Full name and date of birth available. Search needed across all NYC Civil Court indexes. Results may be delivered digitally.',price:'$55',name:'Paralegal, BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',courthouse:'NYC Civil Court'},
+  {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders. Turnaround typically same or following business day.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
 ];
 let listings=[...seed],currentTab='all',currentFilter='all',currentType='need';
 function renderListings(){
   const c=document.getElementById('listings-container');
-  let f=listings.filter(l=>{
-    const t=currentTab==='all'||l.type===currentTab;
-    const fi=currentFilter==='all'||(currentFilter==='urgent'?l.urgency==='urgent':l.category===currentFilter);
-    return t&&fi;
-  });
-  if(!f.length){c.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No listings yet in this category.<br/>Be the first to post.</div>';return;}
-  c.innerHTML=f.map(l=>`<div class="listing"><div class="listing-top"><div><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Need':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent" style="margin-left:4px;">Urgent</span>':''}<div class="listing-title">${l.title}</div></div><div class="listing-price">${l.price}</div></div><div class="listing-desc">${l.desc}</div><div class="listing-footer"><div class="listing-meta"><span class="meta-chip">📍 ${l.courthouse}</span><span class="meta-chip">👤 ${l.name}</span><span class="meta-chip">🕐 ${l.time}</span></div><button class="contact-btn" onclick="showContact(${l.id})">Contact</button></div></div>`).join('');
+  let f=listings.filter(l=>{const t=currentTab==='all'||l.type===currentTab;const fi=currentFilter==='all'||(currentFilter==='urgent'?l.urgency==='urgent':l.category===currentFilter);return t&&fi;});
+  document.getElementById('listings-count').textContent=f.length+' listing'+(f.length!==1?'s':'')+' found';
+  if(!f.length){c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>';return;}
+  c.innerHTML=f.map(l=>`<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
 }
-function setTab(tab,btn){currentTab=tab;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderListings();}
+function setTab(tab,btn){currentTab=tab;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderListings();}
 function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderListings();}
 function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
 function openPost(){document.getElementById('post-overlay').classList.add('open');}
@@ -218,15 +218,14 @@ function submitListing(){
   const title=document.getElementById('f-title').value.trim();
   const contact=document.getElementById('f-contact').value.trim();
   const name=document.getElementById('f-name').value.trim();
-  if(!title||!contact||!name){showToast('Please fill in title, contact, and name.');return;}
-  listings.unshift({id:Date.now(),type:currentType,category:document.getElementById('f-category').value,urgency:document.getElementById('f-urgency').value,title,desc:document.getElementById('f-desc').value||'No additional details.',price:document.getElementById('f-price').value||'Negotiable',name,contact,time:'Just now',courthouse:'NYC'});
-  closePost();renderListings();showToast('✓ Listing posted!');
-  ['f-title','f-desc','f-contact','f-name','f-price'].forEach(id=>document.getElementById(id).value='');
-  selectType('need');
+  if(!title||!contact||!name){showToast('Headline, contact, and name are required.');return;}
+  listings.unshift({id:Date.now(),type:currentType,category:document.getElementById('f-category').value,urgency:document.getElementById('f-urgency').value,title,desc:document.getElementById('f-desc').value||'No further details provided.',price:document.getElementById('f-price').value||'Negotiable',name,contact,time:'Just posted',courthouse:'NYC'});
+  closePost();renderListings();showToast('Listing placed.');
+  ['f-title','f-desc','f-contact','f-name','f-price'].forEach(id=>document.getElementById(id).value='');selectType('need');
 }
 function showContact(id){
   const l=listings.find(x=>x.id===id);if(!l)return;
-  document.getElementById('contact-info').innerHTML=`<div class="contact-row"><div class="contact-icon">👤</div><div><div class="contact-detail-label">Posted by</div><div class="contact-detail-value">${l.name}</div></div></div><div class="contact-row"><div class="contact-icon">📬</div><div><div class="contact-detail-label">Contact</div><div class="contact-detail-value">${l.contact}</div></div></div><div class="contact-row"><div class="contact-icon">📋</div><div><div class="contact-detail-label">Listing</div><div class="contact-detail-value" style="font-size:13px;font-weight:400;">${l.title}</div></div></div><div class="contact-note">Reach out directly. Sidebar Services is not involved in the transaction — we just make the introduction.</div>`;
+  document.getElementById('contact-info').innerHTML=`<div class="contact-row"><div class="contact-key">Party</div><div class="contact-val">${l.name}</div></div><div class="contact-row"><div class="contact-key">Contact</div><div class="contact-val">${l.contact}</div></div><div class="contact-row"><div class="contact-key">Re:</div><div class="contact-val" style="font-size:14px;">${l.title}</div></div>`;
   document.getElementById('contact-overlay').classList.add('open');
 }
 function closeContact(){document.getElementById('contact-overlay').classList.remove('open');}
