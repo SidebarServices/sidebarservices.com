@@ -15,7 +15,7 @@
   --red: #8b1a1a; --red-light: #f5eded;
   --green-text: #1a4a1a; --green-bg: #edf3ed; --gold-accent: #7a6030;
   --g-bg: #0d0d0d; --g-hot: #ff2d78; --g-yellow: #ffe94d; --g-cyan: #00f0e0;
-  --g-purple: #c44dff; --g-orange: #ff6b1a; --g-card: #1a1a1a; --g-border: rgba(255,255,255,0.08);
+  --g-purple: #c44dff; --g-card: #1a1a1a; --g-border: rgba(255,255,255,0.08);
 }
 html { scroll-behavior: smooth; }
 body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
@@ -105,27 +105,9 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .gossip-card-meta { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.03em; }
 .gossip-reactions { display: flex; gap: 6px; }
 .g-react-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 3px 10px; cursor: pointer; transition: all 0.12s; display: flex; align-items: center; gap: 4px; }
-.g-react-btn:hover { background: rgba(255,255,255,0.12); color: white; }
-.mod-panel { max-width: 860px; margin: 0 auto; padding: 0 24px 40px; }
-.mod-header { border-top: 1px solid rgba(255,255,255,0.08); padding: 16px 0 12px; display: flex; align-items: center; justify-content: space-between; }
-.mod-title { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
-.mod-count { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--g-yellow); }
-.mod-cards { display: flex; flex-direction: column; gap: 10px; }
-.mod-card { background: rgba(255,233,77,0.04); border: 1px solid rgba(255,233,77,0.15); padding: 16px 18px; display: flex; gap: 16px; align-items: flex-start; }
-.mod-card-content { flex: 1; }
-.mod-card-tag { font-family: 'DM Sans', sans-serif; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--g-yellow); margin-bottom: 6px; }
-.mod-card-text { font-family: 'EB Garamond', serif; font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 8px; }
-.mod-card-meta { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.25); }
-.mod-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
-.mod-approve { background: rgba(0,240,224,0.1); border: 1px solid rgba(0,240,224,0.3); color: var(--g-cyan); font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; cursor: pointer; transition: all 0.12s; white-space: nowrap; }
-.mod-approve:hover { background: rgba(0,240,224,0.2); }
-.mod-reject { background: rgba(255,45,120,0.1); border: 1px solid rgba(255,45,120,0.3); color: var(--g-hot); font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; cursor: pointer; transition: all 0.12s; white-space: nowrap; }
-.mod-reject:hover { background: rgba(255,45,120,0.2); }
-.mod-empty { text-align: center; padding: 32px; font-family: 'EB Garamond', serif; font-style: italic; color: rgba(255,255,255,0.2); font-size: 16px; }
-.mod-toggle { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: none; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.3); padding: 5px 12px; cursor: pointer; transition: all 0.12s; }
-.mod-toggle:hover { color: var(--g-yellow); border-color: rgba(255,233,77,0.3); }
-.mod-panel-wrap { display: none; }
-.mod-panel-wrap.visible { display: block; }
+.g-react-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12); color: white; }
+.g-react-btn:disabled { cursor: default; opacity: 0.8; }
+.g-loading { text-align: center; padding: 48px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; text-transform: uppercase; grid-column: 1/-1; }
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
 .overlay.open { display: flex; }
 .modal { background: var(--parchment); border: 1px solid var(--ink); width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; }
@@ -181,7 +163,8 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .g-anon-text { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(0,240,224,0.7); line-height: 1.6; }
 .g-anon-text strong { color: var(--g-cyan); font-weight: 500; }
 .g-submit-btn { background: var(--g-hot); color: white; border: none; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.12s; width: 100%; margin-top: 4px; }
-.g-submit-btn:hover { background: #ff0060; }
+.g-submit-btn:hover:not(:disabled) { background: #ff0060; }
+.g-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 footer { background: var(--ink); border-top: 3px double var(--rule-dark); padding: 24px 32px; text-align: center; }
 .footer-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--parchment); margin-bottom: 6px; font-weight: 700; }
 .footer-title em { font-style: italic; font-weight: 400; }
@@ -193,7 +176,7 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
 .toast.show { transform: translateX(-50%) translateY(0); }
 .g-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--g-hot); color: white; border: none; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
 .g-toast.show { transform: translateX(-50%) translateY(0); }
-@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .masthead { padding: 12px 16px; } .listing { grid-template-columns: 1fr; } .listing-right { flex-direction: row; align-items: center; margin-top: 10px; } .gossip-feed { grid-template-columns: 1fr; } .mod-card { flex-direction: column; } }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .masthead { padding: 12px 16px; } .listing { grid-template-columns: 1fr; } .listing-right { flex-direction: row; align-items: center; margin-top: 10px; } .gossip-feed { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -215,7 +198,6 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <button class="post-btn" id="main-post-btn" onclick="openPost()">+ Place a Listing</button>
   </div>
 </header>
-
 <div id="page-classifieds" class="page active">
   <div class="tab-row">
     <button class="tab-btn active" id="tab-all" onclick="setTab('all',this)">All Listings</button>
@@ -244,7 +226,6 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
   </footer>
 </div>
-
 <div id="page-gossip" class="page">
   <div class="gossip-masthead">
     <div class="gossip-eyebrow">Sidebar Services Presents</div>
@@ -261,24 +242,11 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <button class="g-filter-chip" onclick="setGossipFilter('facepalm',this)">🤦 Facepalm</button>
     <button class="g-filter-chip" onclick="setGossipFilter('scandal',this)">👀 Scandal</button>
   </div>
-  <div class="gossip-feed" id="gossip-feed"></div>
-  <div class="mod-panel">
-    <div class="mod-header">
-      <span class="mod-title">Moderation Queue</span>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <span class="mod-count" id="mod-count"></span>
-        <button class="mod-toggle" onclick="toggleModPanel()">Show / Hide</button>
-      </div>
-    </div>
-    <div class="mod-panel-wrap" id="mod-panel-wrap">
-      <div class="mod-cards" id="mod-queue"></div>
-    </div>
-  </div>
+  <div class="gossip-feed" id="gossip-feed"><div class="g-loading">Loading The Docket&hellip;</div></div>
   <div class="g-footer">
     <div class="g-footer-text">The Docket is a feature of Sidebar Services · sidebarservices.com<br/>All posts anonymous · Moderated for content · No identifying information published<br/>Not legal advice. Not affiliated with any court. Just the people who were there.</div>
   </div>
 </div>
-
 <div class="overlay" id="post-overlay" onclick="closeIfOutside(event,'post-overlay')">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Place a Listing</div><button class="modal-close" onclick="closePost()">✕</button></div>
@@ -294,14 +262,12 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     </div>
   </div>
 </div>
-
 <div class="overlay" id="contact-overlay" onclick="closeIfOutside(event,'contact-overlay')">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Contact Information</div><button class="modal-close" onclick="closeContact()">✕</button></div>
     <div class="contact-modal-body"><div class="contact-rows" id="contact-info"></div><div class="contact-note">Parties are encouraged to contact one another directly. Sidebar Services facilitates this introduction only and is not party to any arrangement made hereunder.</div></div>
   </div>
 </div>
-
 <div class="overlay" id="gossip-overlay" onclick="closeIfOutside(event,'gossip-overlay')">
   <div class="g-modal">
     <div class="g-modal-header"><div class="g-modal-title">Spill It</div><button class="g-modal-close" onclick="closeGossipModal()">✕</button></div>
@@ -311,28 +277,73 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
       <div class="g-field"><label>What happened?</label><textarea id="g-text" placeholder="Tell us everything. Be specific about the absurdity. Be vague about the people."></textarea><div class="g-hint">Keep it cringe, not criminal. No real names, case numbers, or firm identifiers.</div></div>
       <div class="g-field"><label>Courthouse / Division (optional)</label><select id="g-court"><option value="">— Select if you like —</option><option>60 Centre St. — Civil</option><option>60 Centre St. — Criminal</option><option>111 Centre St.</option><option>Bronx Supreme Court</option><option>Kings County</option><option>Queens Supreme</option><option>Staten Island</option><option>Surrogate's Court</option><option>NYSCEF / E-filing</option><option>Other / Undisclosed</option></select></div>
       <div class="g-rules"><div class="g-rules-title">Moderation Rules</div><ul><li>No real names, firm names, or case numbers</li><li>No active litigation details</li><li>No content that could identify a specific individual</li><li>Keep it funny, not defamatory</li><li>Moderator's decision is final — most approved within 24 hrs</li></ul></div>
-      <button class="g-submit-btn" onclick="submitGossip()">Submit Anonymously</button>
+      <button class="g-submit-btn" id="g-submit-btn" onclick="submitGossip()">Submit Anonymously</button>
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 <div class="g-toast" id="g-toast"></div>
-
 <script>
+const WORKER_URL='https://floral-meadow-77a8.calm-mountain-41aa.workers.dev/';
 const now=new Date();
 document.getElementById('issue-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 document.getElementById('listings-updated').textContent='Updated '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-
 function showPage(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   const btn=document.getElementById('main-post-btn');
-  if(page==='gossip'){btn.textContent='✦ Spill It';btn.onclick=openGossipModal;}
+  if(page==='gossip'){btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();}
   else{btn.textContent='+ Place a Listing';btn.onclick=openPost;}
   window.scrollTo(0,0);
 }
-
+let gossipFilter='all',allGossipPosts=[],reactions={};
+async function loadGossip(){
+  const feed=document.getElementById('gossip-feed');
+  feed.innerHTML='<div class="g-loading">Loading The Docket&hellip;</div>';
+  try{
+    const res=await fetch(WORKER_URL);
+    const data=await res.json();
+    if(!data.records||data.records.length===0){allGossipPosts=[];renderGossip();return;}
+    allGossipPosts=data.records.map(r=>({id:r.id,type:(r.fields.category||'cringe').toLowerCase(),text:r.fields.final_text||r.fields.story||'',court:r.fields.court||'',time:r.fields.submitted_at?new Date(r.fields.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'' }));
+    renderGossip();
+  }catch(e){feed.innerHTML='<div class="g-loading">Could not load posts. Try refreshing.</div>';}
+}
+const typeLabels={cringe:'😬 Cringe',wild:'🤯 Wild',facepalm:'🤦 Facepalm',scandal:'👀 Scandal'};
+function renderGossip(){
+  const feed=document.getElementById('gossip-feed');
+  let f=gossipFilter==='all'?allGossipPosts:allGossipPosts.filter(g=>g.type===gossipFilter);
+  if(!f.length){feed.innerHTML='<div class="g-loading">Nothing here yet. Be first to submit.</div>';return;}
+  feed.innerHTML=f.map(g=>{
+    const r=reactions[g.id]||{fire:0,skull:0,voted:{}};
+    return `<div class="gossip-card ${g.type}"><div class="gossip-card-type">${typeLabels[g.type]||g.type}</div><div class="gossip-card-text">${g.text}</div><div class="gossip-card-footer"><div class="gossip-card-meta">${g.court?g.court+' · ':''}${g.time}</div><div class="gossip-reactions"><button class="g-react-btn" onclick="gReact('${g.id}','fire',this)" ${r.voted&&r.voted.fire?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>🔥 <span>${r.fire}</span></button><button class="g-react-btn" onclick="gReact('${g.id}','skull',this)" ${r.voted&&r.voted.skull?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>💀 <span>${r.skull}</span></button></div></div></div>`;
+  }).join('');
+}
+function setGossipFilter(f,btn){gossipFilter=f;document.querySelectorAll('.g-filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGossip();}
+function gReact(id,type,btn){
+  if(!reactions[id])reactions[id]={fire:0,skull:0,voted:{}};
+  if(reactions[id].voted[type])return;
+  reactions[id].voted[type]=true;
+  reactions[id][type]++;
+  btn.querySelector('span').textContent=reactions[id][type];
+  btn.style.background='rgba(255,255,255,0.14)';
+  btn.style.color='white';
+  btn.style.cursor='default';
+  btn.disabled=true;
+}
+function openGossipModal(){document.getElementById('gossip-overlay').classList.add('open');}
+function closeGossipModal(){document.getElementById('gossip-overlay').classList.remove('open');}
+async function submitGossip(){
+  const text=document.getElementById('g-text').value.trim();
+  if(!text){showGToast('Please write something first.');return;}
+  const btn=document.getElementById('g-submit-btn');
+  btn.textContent='Submitting…';btn.disabled=true;
+  try{
+    const res=await fetch('https://formspree.io/f/xnjwgdpn',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed',story:text})});
+    if(res.ok){closeGossipModal();document.getElementById('g-text').value='';document.getElementById('g-court').value='';showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');}
+    else{showGToast('Something went wrong. Please try again.');}
+  }catch(e){showGToast('Could not connect. Please try again.');}
+  btn.textContent='Submit Anonymously';btn.disabled=false;
+}
 const seed=[
   {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',courthouse:'60 Centre St.'},
   {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',courthouse:'All boroughs'},
@@ -342,7 +353,6 @@ const seed=[
   {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
 ];
 let listings=[...seed],currentTab='all',currentFilter='all',currentType='need';
-
 function renderListings(){
   const c=document.getElementById('listings-container');
   let f=listings.filter(l=>{const t=currentTab==='all'||l.type===currentTab;const fi=currentFilter==='all'||(currentFilter==='urgent'?l.urgency==='urgent':l.category===currentFilter);return t&&fi;});
@@ -350,7 +360,6 @@ function renderListings(){
   if(!f.length){c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>';return;}
   c.innerHTML=f.map(l=>`<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
 }
-
 function setTab(tab,btn){currentTab=tab;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderListings();}
 function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderListings();}
 function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
@@ -369,63 +378,11 @@ function showContact(id){
   document.getElementById('contact-overlay').classList.add('open');
 }
 function closeContact(){document.getElementById('contact-overlay').classList.remove('open');}
-
-const seedGossip=[
-  {id:1,type:'cringe',text:'A partner at a three-name firm called the clerk\'s office to ask what a "conformed copy" was. Clerk put him on hold, came back, explained it. He asked her to email him that explanation "for his records."',court:'60 Centre St. — Civil',time:'2 hrs. ago',reactions:{fire:47,skull:31}},
-  {id:2,type:'wild',text:'Attorney filed a TRO, got it granted, then called our runner panicking because she didn\'t know you actually had to serve it. Thought the judge just... handled that part.',court:'60 Centre St. — Civil',time:'5 hrs. ago',reactions:{fire:89,skull:62}},
-  {id:3,type:'facepalm',text:"Solo practitioner sent us to file a motion. Forgot to sign it. Called us back. We drove back. He'd signed the wrong page. Third trip: he faxed a signature page. We don't have a fax machine. Nobody does.",court:"Surrogate's Court",time:'Yesterday',reactions:{fire:134,skull:98}},
-  {id:4,type:'cringe',text:'An attorney CC\'d the judge on a client complaint email. The judge replied. To everyone. Including the client.',court:'111 Centre St.',time:'2 days ago',reactions:{fire:203,skull:177}},
-  {id:5,type:'wild',text:'Watched an attorney argue with the NYSCEF system for 20 minutes because his PDF was "too perfect." The clerk finally told him it was rejected for being a scanned image of a printed PDF of the original PDF.',court:'NYSCEF / E-filing',time:'3 days ago',reactions:{fire:156,skull:112}},
-  {id:6,type:'facepalm',text:'BigLaw associate called to confirm "which floor" the clerk\'s office was on at 60 Centre. It\'s on every floor. The building has 30 floors. Each one does something different. This is why we exist.',court:'60 Centre St. — Civil',time:'This morning',reactions:{fire:88,skull:55}},
-  {id:7,type:'scandal',text:'Overheard at the filing window: opposing counsel accidentally submitted their internal strategy memo instead of the proposed order. The clerk stamped it. It is now part of the public record.',court:'Queens Supreme',time:'4 days ago',reactions:{fire:312,skull:241}}
-];
-let gossipPosts=[...seedGossip],pendingGossip=[],gossipFilter='all';
-const typeLabels={cringe:'😬 Cringe',wild:'🤯 Wild',facepalm:'🤦 Facepalm',scandal:'👀 Scandal'};
-
-function renderGossip(){
-  const feed=document.getElementById('gossip-feed');
-  let f=gossipFilter==='all'?gossipPosts:gossipPosts.filter(g=>g.type===gossipFilter);
-  if(!f.length){feed.innerHTML='<div style="text-align:center;padding:48px;font-family:\'EB Garamond\',serif;font-style:italic;color:rgba(255,255,255,0.2);font-size:18px;grid-column:1/-1;">Nothing in this category yet.</div>';return;}
-  feed.innerHTML=f.map(g=>`<div class="gossip-card ${g.type}"><div class="gossip-card-type">${typeLabels[g.type]||g.type}</div><div class="gossip-card-text">${g.text}</div><div class="gossip-card-footer"><div class="gossip-card-meta">${g.court?g.court+' · ':''}${g.time}</div><div class="gossip-reactions"><button class="g-react-btn" onclick="gReact(${g.id},'fire',this)">🔥 <span>${g.reactions.fire}</span></button><button class="g-react-btn" onclick="gReact(${g.id},'skull',this)">💀 <span>${g.reactions.skull}</span></button></div></div></div>`).join('');
-}
-
-function setGossipFilter(f,btn){gossipFilter=f;document.querySelectorAll('.g-filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGossip();}
-function gReact(id,type,btn){const g=gossipPosts.find(x=>x.id===id);if(!g)return;g.reactions[type]++;btn.querySelector('span').textContent=g.reactions[type];btn.style.background='rgba(255,255,255,0.14)';btn.style.color='white';}
-function openGossipModal(){document.getElementById('gossip-overlay').classList.add('open');}
-function closeGossipModal(){document.getElementById('gossip-overlay').classList.remove('open');}
-
-function submitGossip(){
-  const text=document.getElementById('g-text').value.trim();
-  if(!text){showGToast('Please write something first.');return;}
-  const entry={id:Date.now(),type:document.getElementById('g-category').value,text,court:document.getElementById('g-court').value||'Undisclosed',time:'Just submitted',reactions:{fire:0,skull:0},pending:true};
-  pendingGossip.push(entry);closeGossipModal();
-  document.getElementById('g-text').value='';document.getElementById('g-court').value='';
-  renderModQueue();showGToast('Submitted. Under review — usually approved within 24 hrs.');
-}
-
-function renderModQueue(){
-  const queue=document.getElementById('mod-queue');const countEl=document.getElementById('mod-count');
-  countEl.textContent=pendingGossip.length?pendingGossip.length+' pending':'Queue empty';
-  if(!pendingGossip.length){queue.innerHTML='<div class="mod-empty">Queue is empty. Nothing to review.</div>';return;}
-  queue.innerHTML=pendingGossip.map(g=>`<div class="mod-card" id="modcard-${g.id}"><div class="mod-card-content"><div class="mod-card-tag">${typeLabels[g.type]||g.type} · ${g.court}</div><div class="mod-card-text">${g.text}</div><div class="mod-card-meta">Submitted ${g.time}</div></div><div class="mod-actions"><button class="mod-approve" onclick="approvePost(${g.id})">✓ Approve</button><button class="mod-reject" onclick="rejectPost(${g.id})">✕ Reject</button></div></div>`).join('');
-}
-
-function approvePost(id){
-  const idx=pendingGossip.findIndex(g=>g.id===id);if(idx===-1)return;
-  const post={...pendingGossip[idx],time:'Just now',pending:false};
-  pendingGossip.splice(idx,1);gossipPosts.unshift(post);
-  renderGossip();renderModQueue();showGToast('Post approved and published.');
-}
-function rejectPost(id){
-  const idx=pendingGossip.findIndex(g=>g.id===id);if(idx===-1)return;
-  pendingGossip.splice(idx,1);renderModQueue();showGToast('Post rejected and removed from queue.');
-}
-function toggleModPanel(){document.getElementById('mod-panel-wrap').classList.toggle('visible');}
 function closeIfOutside(e,id){if(e.target.id===id)document.getElementById(id).classList.remove('open');}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function showGToast(msg){const t=document.getElementById('g-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('post-overlay').classList.remove('open');document.getElementById('contact-overlay').classList.remove('open');document.getElementById('gossip-overlay').classList.remove('open');}});
-renderListings();renderGossip();renderModQueue();
+renderListings();
 </script>
 </body>
 </html>
