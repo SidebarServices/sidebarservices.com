@@ -105,8 +105,7 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .gossip-card-meta { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.03em; }
 .gossip-reactions { display: flex; gap: 6px; }
 .g-react-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 3px 10px; cursor: pointer; transition: all 0.12s; display: flex; align-items: center; gap: 4px; }
-.g-react-btn:hover:not(:disabled) { background: rgba(255,255,255,0.12); color: white; }
-.g-react-btn:disabled { cursor: default; opacity: 0.8; }
+.g-react-btn:hover { background: rgba(255,255,255,0.12); color: white; }
 .g-loading { text-align: center; padding: 48px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; text-transform: uppercase; grid-column: 1/-1; }
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
 .overlay.open { display: flex; }
@@ -201,6 +200,7 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <button class="post-btn" id="main-post-btn" onclick="openPost()">+ Place a Listing</button>
   </div>
 </header>
+
 <div id="page-classifieds" class="page active">
   <div class="tab-row">
     <button class="tab-btn active" id="tab-all" onclick="setTab('all',this)">All Listings</button>
@@ -229,11 +229,12 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
   </footer>
 </div>
+
 <div id="page-gossip" class="page">
   <div class="gossip-masthead">
     <div class="gossip-eyebrow">Sidebar Services Presents</div>
     <div class="gossip-logo">The Docket</div>
-    <div class="gossip-tagline">Anonymous "courthouse" confessions. 100% off the record.</div>
+    <div class="gossip-tagline">Anonymous courthouse confessions. 100% off the record.</div>
     <button class="gossip-submit-btn" onclick="openGossipModal()">&#9670; Spill It</button>
     <div class="gossip-disclaimer">All submissions anonymous · Reviewed by moderators before publishing · No real names, case numbers, or identifying details</div>
   </div>
@@ -245,15 +246,19 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <button class="g-filter-chip" onclick="setGossipFilter('facepalm',this)">🤦 Facepalm</button>
     <button class="g-filter-chip" onclick="setGossipFilter('scandal',this)">👀 Scandal</button>
   </div>
-  <div class="gossip-feed" id="gossip-feed"><div class="g-loading">Loading The Docket&hellip;</div></div>
+  <div class="gossip-feed" id="gossip-feed">
+    <div class="g-loading">Loading The Docket&hellip;</div>
+  </div>
   <div class="g-footer">
     <div class="g-footer-text">
       <div class="f-line1">The Docket is a feature of Sidebar Services · sidebarservices.com</div>
       <div class="f-line2">All posts anonymous · Moderated for content · No identifying information published</div>
-      <div class="f-line3">Not legal advice. Not affiliated with any court or firm. Just the people who were there.</div>
+      <div class="f-line3">Not legal advice. Not affiliated with any court. Just the people who were there.</div>
     </div>
   </div>
 </div>
+
+<!-- POST MODAL -->
 <div class="overlay" id="post-overlay" onclick="closeIfOutside(event,'post-overlay')">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Place a Listing</div><button class="modal-close" onclick="closePost()">✕</button></div>
@@ -269,12 +274,16 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     </div>
   </div>
 </div>
+
+<!-- CONTACT MODAL -->
 <div class="overlay" id="contact-overlay" onclick="closeIfOutside(event,'contact-overlay')">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Contact Information</div><button class="modal-close" onclick="closeContact()">✕</button></div>
     <div class="contact-modal-body"><div class="contact-rows" id="contact-info"></div><div class="contact-note">Parties are encouraged to contact one another directly. Sidebar Services facilitates this introduction only and is not party to any arrangement made hereunder.</div></div>
   </div>
 </div>
+
+<!-- GOSSIP MODAL -->
 <div class="overlay" id="gossip-overlay" onclick="closeIfOutside(event,'gossip-overlay')">
   <div class="g-modal">
     <div class="g-modal-header"><div class="g-modal-title">Spill It</div><button class="g-modal-close" onclick="closeGossipModal()">✕</button></div>
@@ -288,74 +297,160 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 <div class="g-toast" id="g-toast"></div>
+
 <script>
 const WORKER_URL='https://floral-meadow-77a8.calm-mountain-41aa.workers.dev/';
-const now=new Date();
-document.getElementById('issue-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-document.getElementById('listings-updated').textContent='Updated '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-function showPage(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  const btn=document.getElementById('main-post-btn');
-  if(page==='gossip'){btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();window.location.hash='docket';}
-  else{btn.textContent='+ Place a Listing';btn.onclick=openPost;window.location.hash='';}
-  window.scrollTo(0,0);
+
+const now = new Date();
+document.getElementById('issue-date').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('listings-updated').textContent = 'Updated ' + now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const btn = document.getElementById('main-post-btn');
+  if(page === 'gossip') {
+    btn.textContent = '✦ Spill It';
+    btn.onclick = openGossipModal;
+    loadGossip();
+    window.location.hash = 'docket';
+  } else {
+    btn.textContent = '+ Place a Listing';
+    btn.onclick = openPost;
+    window.location.hash = '';
+  }
+  window.scrollTo(0, 0);
 }
-let gossipFilter='all', allGossipPosts=[];
-function loadReactions(){try{return JSON.parse(localStorage.getItem('docket_reactions')||'{}');}catch(e){return {};}}
-function saveReactions(r){try{localStorage.setItem('docket_reactions',JSON.stringify(r));}catch(e){}}
-let reactions=loadReactions();
-async function loadGossip(){
-  const feed=document.getElementById('gossip-feed');
-  feed.innerHTML='<div class="g-loading">Loading The Docket&hellip;</div>';
-  try{
-    const res=await fetch(WORKER_URL);
-    const data=await res.json();
-    if(!data.records||data.records.length===0){allGossipPosts=[];renderGossip();return;}
-    allGossipPosts=data.records.map(r=>({id:r.id,type:(r.fields.category||'cringe').toLowerCase(),text:r.fields.final_text||r.fields.story||'',court:r.fields.court||'',time:r.fields.submitted_at?new Date(r.fields.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'' }));
+
+// ── AIRTABLE FETCH ──
+let gossipFilter = 'all';
+let allGossipPosts = [];
+
+function loadVoted(){try{return JSON.parse(localStorage.getItem('docket_voted')||'{}');}catch(e){return {};}}
+function saveVoted(v){try{localStorage.setItem('docket_voted',JSON.stringify(v));}catch(e){}}
+let voted=loadVoted();
+
+async function loadGossip() {
+  const feed = document.getElementById('gossip-feed');
+  feed.innerHTML = '<div class="g-loading">Loading The Docket&hellip;</div>';
+  try {
+    const res = await fetch(WORKER_URL);
+    const data = await res.json();
+    if(!data.records || data.records.length === 0) {
+      allGossipPosts = [];
+      renderGossip();
+      return;
+    }
+    allGossipPosts = data.records.map(r => ({
+      id: r.id,
+      type: (r.fields.category || 'cringe').toLowerCase(),
+      text: r.fields.final_text || r.fields.story || '',
+      court: r.fields.court || '',
+      time: r.fields.submitted_at ? new Date(r.fields.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '',
+      fire: r.fields.reactions_fire || 0,
+      skull: r.fields.reactions_skull || 0
+    }));
     renderGossip();
-  }catch(e){feed.innerHTML='<div class="g-loading">Could not load posts. Try refreshing.</div>';}
+  } catch(e) {
+    feed.innerHTML = '<div class="g-loading">Could not load posts. Try refreshing.</div>';
+  }
 }
-const typeLabels={cringe:'😬 Cringe',wild:'🤯 Wild',facepalm:'🤦 Facepalm',scandal:'👀 Scandal'};
-function renderGossip(){
-  const feed=document.getElementById('gossip-feed');
-  let f=gossipFilter==='all'?allGossipPosts:allGossipPosts.filter(g=>g.type===gossipFilter);
-  if(!f.length){feed.innerHTML='<div class="g-loading">Nothing here yet. Be first to submit.</div>';return;}
-  feed.innerHTML=f.map(g=>{
-    const r=reactions[g.id]||{fire:0,skull:0,voted:{}};
-    return `<div class="gossip-card ${g.type}"><div class="gossip-card-type">${typeLabels[g.type]||g.type}</div><div class="gossip-card-text">${g.text}</div><div class="gossip-card-footer"><div class="gossip-card-meta">${g.court?g.court+' · ':''}${g.time}</div><div class="gossip-reactions"><button class="g-react-btn" onclick="gReact('${g.id}','fire',this)" ${r.voted&&r.voted.fire?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>🔥 <span>${r.fire}</span></button><button class="g-react-btn" onclick="gReact('${g.id}','skull',this)" ${r.voted&&r.voted.skull?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>💀 <span>${r.skull}</span></button></div></div></div>`;
+
+const typeLabels = {cringe:'😬 Cringe', wild:'🤯 Wild', facepalm:'🤦 Facepalm', scandal:'👀 Scandal'};
+
+function renderGossip() {
+  const feed = document.getElementById('gossip-feed');
+  let f = gossipFilter === 'all' ? allGossipPosts : allGossipPosts.filter(g => g.type === gossipFilter);
+  if(!f.length) {
+    feed.innerHTML = '<div class="g-loading">Nothing here yet. Be first to submit.</div>';
+    return;
+  }
+  feed.innerHTML = f.map(g => {
+    const fVoted = voted[g.id]?.fire;
+    const sVoted = voted[g.id]?.skull;
+    return `<div class="gossip-card ${g.type}">
+      <div class="gossip-card-type">${typeLabels[g.type] || g.type}</div>
+      <div class="gossip-card-text">${g.text}</div>
+      <div class="gossip-card-footer">
+        <div class="gossip-card-meta">${g.court ? g.court + ' · ' : ''}${g.time}</div>
+        <div class="gossip-reactions">
+          <button class="g-react-btn" onclick="gReact('${g.id}','fire',this)" ${fVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>🔥 <span>${g.fire}</span></button>
+          <button class="g-react-btn" onclick="gReact('${g.id}','skull',this)" ${sVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>💀 <span>${g.skull}</span></button>
+        </div>
+      </div>
+    </div>`;
   }).join('');
 }
-function setGossipFilter(f,btn){gossipFilter=f;document.querySelectorAll('.g-filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGossip();}
-function gReact(id,type,btn){
-  if(!reactions[id])reactions[id]={fire:0,skull:0,voted:{}};
-  if(reactions[id].voted[type])return;
-  reactions[id].voted[type]=true;
-  reactions[id][type]++;
-  btn.querySelector('span').textContent=reactions[id][type];
-  btn.style.background='rgba(255,255,255,0.14)';
-  btn.style.color='white';
-  btn.style.cursor='default';
-  btn.disabled=true;
-  saveReactions(reactions);
+
+function setGossipFilter(f, btn) {
+  gossipFilter = f;
+  document.querySelectorAll('.g-filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGossip();
 }
-function openGossipModal(){document.getElementById('gossip-overlay').classList.add('open');}
-function closeGossipModal(){document.getElementById('gossip-overlay').classList.remove('open');}
-async function submitGossip(){
-  const text=document.getElementById('g-text').value.trim();
-  if(!text){showGToast('Please write something first.');return;}
-  const btn=document.getElementById('g-submit-btn');
-  btn.textContent='Submitting…';btn.disabled=true;
-  try{
-    const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({story:text,category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed'})});
-    if(res.ok){closeGossipModal();document.getElementById('g-text').value='';document.getElementById('g-court').value='';showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');}
-    else{showGToast('Something went wrong. Please try again.');}
-  }catch(e){showGToast('Could not connect. Please try again.');}
-  btn.textContent='Submit Anonymously';btn.disabled=false;
+
+async function gReact(id, type, btn) {
+  if(!voted[id]) voted[id] = {};
+  if(voted[id][type]) return;
+  voted[id][type] = true;
+  saveVoted(voted);
+  btn.style.background = 'rgba(255,255,255,0.14)';
+  btn.style.color = 'white';
+  btn.style.cursor = 'default';
+  btn.disabled = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, type })
+    });
+    const data = await res.json();
+    // Update the count in memory and on the button
+    const post = allGossipPosts.find(p => p.id === id);
+    if(post) { post.fire = data.fire; post.skull = data.skull; }
+    btn.querySelector('span').textContent = data[type];
+  } catch(e) {
+    // Silently fail — voted state is already saved locally
+  }
 }
-const seed=[
+
+function openGossipModal() { document.getElementById('gossip-overlay').classList.add('open'); }
+function closeGossipModal() { document.getElementById('gossip-overlay').classList.remove('open'); }
+
+async function submitGossip() {
+  const text = document.getElementById('g-text').value.trim();
+  if(!text) { showGToast('Please write something first.'); return; }
+  const btn = document.getElementById('g-submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        story: text,
+        category: document.getElementById('g-category').value,
+        court: document.getElementById('g-court').value || 'Undisclosed'
+      })
+    });
+    if(res.ok) {
+      closeGossipModal();
+      document.getElementById('g-text').value = '';
+      document.getElementById('g-court').value = '';
+      showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');
+    } else {
+      showGToast('Something went wrong. Please try again.');
+    }
+  } catch(e) {
+    showGToast('Could not connect. Please try again.');
+  }
+  btn.textContent = 'Submit Anonymously'; btn.disabled = false;
+}
+
+// ── CLASSIFIEDS ──
+const seed = [
   {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',courthouse:'60 Centre St.'},
   {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',courthouse:'All boroughs'},
   {id:3,type:'need',category:'records',urgency:'flexible',title:"Certified copy of divorce decree sought — Kings County Surrogate's Court",desc:"Index number and parties' names on file. One certified copy required. End of week is fine.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs. ago',courthouse:"Kings County Surrogate's"},
@@ -363,21 +458,29 @@ const seed=[
   {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search required — NYC Civil Court, individual defendant',desc:'Full name and date of birth available. Search needed across all NYC Civil Court indexes.',price:'$55',name:'Paralegal, BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',courthouse:'NYC Civil Court'},
   {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
 ];
-let listings=[...seed],currentTab='all',currentFilter='all',currentType='need';
-function renderListings(){
-  const c=document.getElementById('listings-container');
-  let f=listings.filter(l=>{const t=currentTab==='all'||l.type===currentTab;const fi=currentFilter==='all'||(currentFilter==='urgent'?l.urgency==='urgent':l.category===currentFilter);return t&&fi;});
-  document.getElementById('listings-count').textContent=f.length+' listing'+(f.length!==1?'s':'')+' found';
-  if(!f.length){c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>';return;}
-  c.innerHTML=f.map(l=>`<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
+let listings=[...seed], currentTab='all', currentFilter='all', currentType='need';
+
+function renderListings() {
+  const c = document.getElementById('listings-container');
+  let f = listings.filter(l => {
+    const t = currentTab==='all' || l.type===currentTab;
+    const fi = currentFilter==='all' || (currentFilter==='urgent' ? l.urgency==='urgent' : l.category===currentFilter);
+    return t && fi;
+  });
+  document.getElementById('listings-count').textContent = f.length + ' listing' + (f.length!==1?'s':'') + ' found';
+  if(!f.length) { c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>'; return; }
+  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
 }
+
 function setTab(tab,btn){currentTab=tab;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderListings();}
 function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderListings();}
 function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
 function openPost(){document.getElementById('post-overlay').classList.add('open');}
 function closePost(){document.getElementById('post-overlay').classList.remove('open');}
 function submitListing(){
-  const title=document.getElementById('f-title').value.trim();const contact=document.getElementById('f-contact').value.trim();const name=document.getElementById('f-name').value.trim();
+  const title=document.getElementById('f-title').value.trim();
+  const contact=document.getElementById('f-contact').value.trim();
+  const name=document.getElementById('f-name').value.trim();
   if(!title||!contact||!name){showToast('Headline, contact, and name are required.');return;}
   listings.unshift({id:Date.now(),type:currentType,category:document.getElementById('f-category').value,urgency:document.getElementById('f-urgency').value,title,desc:document.getElementById('f-desc').value||'No further details.',price:document.getElementById('f-price').value||'Negotiable',name,contact,time:'Just posted',courthouse:'NYC'});
   closePost();renderListings();showToast('Listing placed.');
@@ -393,8 +496,8 @@ function closeIfOutside(e,id){if(e.target.id===id)document.getElementById(id).cl
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function showGToast(msg){const t=document.getElementById('g-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('post-overlay').classList.remove('open');document.getElementById('contact-overlay').classList.remove('open');document.getElementById('gossip-overlay').classList.remove('open');}});
+
 renderListings();
-if(window.location.hash==='#docket') showPage('gossip');
-</script>
+if(window.location.hash === '#docket') showPage('gossip');
 </body>
 </html>
