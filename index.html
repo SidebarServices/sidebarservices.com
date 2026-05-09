@@ -171,7 +171,10 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
 .footer-rule { border: none; border-top: 1px solid var(--rule-dark); margin: 10px auto; max-width: 200px; }
 .footer-text { font-family: 'EB Garamond', serif; font-size: 13px; color: var(--rule-dark); font-style: italic; line-height: 1.7; }
 .g-footer { background: #0a0a0a; border-top: 1px solid var(--g-border); padding: 24px 32px; text-align: center; }
-.g-footer-text { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.04em; line-height: 1.8; }
+.g-footer-text { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.04em; line-height: 1.8; }
+.g-footer-text .f-line1 { color: var(--g-hot); }
+.g-footer-text .f-line2 { color: var(--g-cyan); }
+.g-footer-text .f-line3 { color: var(--g-yellow); }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink); color: var(--parchment); border: 1px solid var(--rule-dark); padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.04em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 .g-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--g-hot); color: white; border: none; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
@@ -244,7 +247,11 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
   </div>
   <div class="gossip-feed" id="gossip-feed"><div class="g-loading">Loading The Docket&hellip;</div></div>
   <div class="g-footer">
-    <div class="g-footer-text">The Docket is a feature of Sidebar Services · sidebarservices.com<br/>All posts anonymous · Moderated for content · No identifying information published<br/>Not legal advice. Not affiliated with any court. Just the people who were there.</div>
+    <div class="g-footer-text">
+      <div class="f-line1">The Docket is a feature of Sidebar Services · sidebarservices.com</div>
+      <div class="f-line2">All posts anonymous · Moderated for content · No identifying information published</div>
+      <div class="f-line3">Not legal advice. Not affiliated with any court. Just the people who were there.</div>
+    </div>
   </div>
 </div>
 <div class="overlay" id="post-overlay" onclick="closeIfOutside(event,'post-overlay')">
@@ -338,7 +345,11 @@ async function submitGossip(){
   const btn=document.getElementById('g-submit-btn');
   btn.textContent='Submitting…';btn.disabled=true;
   try{
-    const res=await fetch('https://formspree.io/f/xnjwgdpn',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed',story:text})});
+    const res=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({story:text,category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed'})
+    });
     if(res.ok){closeGossipModal();document.getElementById('g-text').value='';document.getElementById('g-court').value='';showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');}
     else{showGToast('Something went wrong. Please try again.');}
   }catch(e){showGToast('Could not connect. Please try again.');}
