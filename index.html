@@ -233,7 +233,7 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
   <div class="gossip-masthead">
     <div class="gossip-eyebrow">Sidebar Services Presents</div>
     <div class="gossip-logo">The Docket</div>
-    <div class="gossip-tagline">Anonymous courthouse confessions. 100% off the record.</div>
+    <div class="gossip-tagline">Anonymous "courthouse" confessions. 100% off the record.</div>
     <button class="gossip-submit-btn" onclick="openGossipModal()">&#9670; Spill It</button>
     <div class="gossip-disclaimer">All submissions anonymous · Reviewed by moderators before publishing · No real names, case numbers, or identifying details</div>
   </div>
@@ -250,7 +250,7 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <div class="g-footer-text">
       <div class="f-line1">The Docket is a feature of Sidebar Services · sidebarservices.com</div>
       <div class="f-line2">All posts anonymous · Moderated for content · No identifying information published</div>
-      <div class="f-line3">Not legal advice. Not affiliated with any court. Just the people who were there.</div>
+      <div class="f-line3">Not legal advice. Not affiliated with any court or firm. Just the people who were there.</div>
     </div>
   </div>
 </div>
@@ -299,8 +299,13 @@ function showPage(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   const btn=document.getElementById('main-post-btn');
-  if(page==='gossip'){btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();}
-  else{btn.textContent='+ Place a Listing';btn.onclick=openPost;}
+  if(page==='gossip'){
+    btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();
+    window.location.hash='docket';
+  } else {
+    btn.textContent='+ Place a Listing';btn.onclick=openPost;
+    window.location.hash='';
+  }
   window.scrollTo(0,0);
 }
 let gossipFilter='all',allGossipPosts=[],reactions={};
@@ -345,11 +350,7 @@ async function submitGossip(){
   const btn=document.getElementById('g-submit-btn');
   btn.textContent='Submitting…';btn.disabled=true;
   try{
-    const res=await fetch(WORKER_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({story:text,category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed'})
-    });
+    const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({story:text,category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed'})});
     if(res.ok){closeGossipModal();document.getElementById('g-text').value='';document.getElementById('g-court').value='';showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');}
     else{showGToast('Something went wrong. Please try again.');}
   }catch(e){showGToast('Could not connect. Please try again.');}
@@ -394,6 +395,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 function showGToast(msg){const t=document.getElementById('g-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('post-overlay').classList.remove('open');document.getElementById('contact-overlay').classList.remove('open');document.getElementById('gossip-overlay').classList.remove('open');}});
 renderListings();
+if(window.location.hash==='#docket') showPage('gossip');
 </script>
 </body>
 </html>
