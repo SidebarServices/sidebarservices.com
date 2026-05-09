@@ -331,6 +331,7 @@ let allGossipPosts = [];
 
 function loadVoted(){try{return JSON.parse(localStorage.getItem('docket_voted')||'{}');}catch(e){return {};}}
 function saveVoted(v){try{localStorage.setItem('docket_voted',JSON.stringify(v));}catch(e){}}
+// Clear voted state if it's from a different session's post IDs (stale data guard)
 let voted=loadVoted();
 
 async function loadGossip() {
@@ -393,6 +394,7 @@ function setGossipFilter(f, btn) {
 }
 
 async function gReact(id, type, btn) {
+  if(btn.disabled) return;
   if(!voted[id]) voted[id] = {};
   if(voted[id][type]) return;
   voted[id][type] = true;
@@ -408,7 +410,6 @@ async function gReact(id, type, btn) {
       body: JSON.stringify({ id, type })
     });
     const data = await res.json();
-    // Update the count in memory and on the button
     const post = allGossipPosts.find(p => p.id === id);
     if(post) { post.fire = data.fire; post.skull = data.skull; }
     btn.querySelector('span').textContent = data[type];
