@@ -299,16 +299,14 @@ function showPage(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   const btn=document.getElementById('main-post-btn');
-  if(page==='gossip'){
-    btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();
-    window.location.hash='docket';
-  } else {
-    btn.textContent='+ Place a Listing';btn.onclick=openPost;
-    window.location.hash='';
-  }
+  if(page==='gossip'){btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();window.location.hash='docket';}
+  else{btn.textContent='+ Place a Listing';btn.onclick=openPost;window.location.hash='';}
   window.scrollTo(0,0);
 }
-let gossipFilter='all',allGossipPosts=[],reactions={};
+let gossipFilter='all', allGossipPosts=[];
+function loadReactions(){try{return JSON.parse(localStorage.getItem('docket_reactions')||'{}');}catch(e){return {};}}
+function saveReactions(r){try{localStorage.setItem('docket_reactions',JSON.stringify(r));}catch(e){}}
+let reactions=loadReactions();
 async function loadGossip(){
   const feed=document.getElementById('gossip-feed');
   feed.innerHTML='<div class="g-loading">Loading The Docket&hellip;</div>';
@@ -341,6 +339,7 @@ function gReact(id,type,btn){
   btn.style.color='white';
   btn.style.cursor='default';
   btn.disabled=true;
+  saveReactions(reactions);
 }
 function openGossipModal(){document.getElementById('gossip-overlay').classList.add('open');}
 function closeGossipModal(){document.getElementById('gossip-overlay').classList.remove('open');}
