@@ -81,26 +81,32 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 /* Hide masthead when on Docket page */
 body.docket-active .masthead { display: none; }
 
-.masthead { background: #0a0a0a; width: 100%; display: block; }
-.masthead-band { position: relative; overflow: hidden; height: 320px; width: 100%; }
+/* Contained masthead — cream background with centered banner inside */
+.masthead { background: var(--parchment); width: 100%; display: block; padding: 28px 24px 0; }
+.masthead-container { max-width: 960px; margin: 0 auto; }
+.masthead-band { position: relative; overflow: hidden; height: 220px; width: 100%; background: #0a0a0a; }
 .masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.PNG'); background-size: cover; background-position: center 40%; }
-.masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, rgba(6,6,6,0.7) 100%); }
-.masthead-band-ct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -65%); z-index: 2; text-align: center; width: 100%; padding: 0 24px; }
-.masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 10px; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+.masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, rgba(6,6,6,0.55) 100%); }
+.masthead-band-ct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; width: 100%; padding: 0 24px; }
+.masthead-date { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 8px; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 .masthead-title { text-align: center; }
-.masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 54px); font-weight: 900; color: white; letter-spacing: -0.5px; line-height: 1; margin-bottom: 5px; }
+.masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 5.5vw, 48px); font-weight: 900; color: white; letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
 .masthead-title h1 em { font-style: italic; font-weight: 400; color: #e8cc85; }
-.masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.85); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.8); }
-.masthead-nav { position: absolute; left: 0; right: 0; bottom: 0; z-index: 10; background: transparent; padding: 0; }
-.masthead-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 36px; }
+.masthead-tagline { font-family: 'EB Garamond', serif; font-size: 12px; color: rgba(255,255,255,0.85); letter-spacing: 0.18em; text-transform: uppercase; font-style: italic; text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.8); margin-top: 4px; }
+
+/* Nav bar — sits on cream below the banner with thin border lines */
+.masthead-nav { background: var(--parchment); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 0; }
+.masthead-nav-inner { max-width: 960px; margin: 0 auto; padding: 0; display: flex; align-items: stretch; justify-content: space-between; }
 .nav-links { display: flex; gap: 0; }
-.nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(245,240,232,0.85); text-decoration: none; padding: 4px 14px; border-right: 1px solid rgba(200,191,168,0.35); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
-.nav-link:first-child { border-left: 1px solid rgba(200,191,168,0.35); }
-.nav-link:hover { color: #e8cc85; }
-.nav-link.gossip-nav { color: var(--g-hot); font-weight: 500; }
-.nav-link.gossip-nav:hover { color: #c44dff; }
-.post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: none; color: rgba(245,240,232,0.85); border: none; border-left: 1px solid rgba(200,191,168,0.35); border-right: 1px solid rgba(200,191,168,0.35); padding: 4px 14px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.15s; text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
-.post-btn:hover { color: #e8cc85; background: none; }
+.nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-mid); text-decoration: none; padding: 12px 22px; border-right: 1px solid var(--rule); letter-spacing: 0.12em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.nav-link:hover { color: var(--ink); background: var(--parchment-deep); }
+.nav-link.gossip-nav { color: var(--g-hot); font-weight: 600; }
+.nav-link.gossip-nav:hover { color: #c44dff; background: var(--parchment-deep); }
+.nav-link.coming-soon { color: var(--ink-faint); cursor: default; font-style: italic; }
+.nav-link.coming-soon:hover { color: var(--ink-faint); background: none; }
+.nav-link.coming-soon::after { content: ' · soon'; font-size: 9px; opacity: 0.7; }
+.post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: var(--ink); color: var(--parchment); border: none; border-left: 1px solid var(--rule); padding: 12px 22px; cursor: pointer; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.15s; }
+.post-btn:hover { background: var(--ink-mid); }
 
 /* Standalone navigation for Docket page */
 .docket-nav { display: none; background: #0a0a0a; border-bottom: 1px solid var(--g-border); padding: 10px 0; position: sticky; top: 0; z-index: 100; }
@@ -115,7 +121,7 @@ body.docket-active .docket-nav { display: block; }
 
 .page { display: none; margin: 0; padding: 0; }
 .page.active { display: block; }
-#page-classifieds { margin-top: 0; padding-top: 0; }
+#page-classifieds { margin-top: 0; padding-top: 24px; }
 .tab-row { display: none; }
 .filters-bar { display: none; }
 .filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); padding: 11px 14px; border-right: 1px solid var(--rule); }
@@ -123,7 +129,7 @@ body.docket-active .docket-nav { display: block; }
 .filter-chip:last-child { border-right: none; }
 .filter-chip:hover { color: var(--red); background: var(--parchment-deep); }
 .filter-chip.active { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-.classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 32px 40px; display: block; }
+.classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; display: block; }
 .section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin: 0; display: flex; align-items: center; justify-content: space-between; }
 .section-title-text { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); }
 .listing { border-bottom: 1px solid var(--rule); padding: 16px 0; display: grid; grid-template-columns: 1fr auto; gap: 0 20px; transition: background 0.12s; }
@@ -239,7 +245,8 @@ body.docket-active .docket-nav { display: block; }
 .g-submit-btn { background: var(--g-hot); color: white; border: none; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.12s; width: 100%; margin-top: 4px; }
 .g-submit-btn:hover:not(:disabled) { background: #ff0060; }
 .g-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-footer { background: var(--ink); border-top: 3px double var(--rule-dark); padding: 24px 32px; text-align: center; }
+footer { background: var(--parchment); padding: 0 24px 28px; }
+.footer-inner { max-width: 960px; margin: 0 auto; background: var(--ink); border-top: 3px double var(--rule-dark); padding: 28px 32px; text-align: center; }
 .footer-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--parchment); margin-bottom: 6px; font-weight: 700; }
 .footer-title em { font-style: italic; font-weight: 400; }
 .footer-rule { border: none; border-top: 1px solid var(--rule-dark); margin: 10px auto; max-width: 200px; }
@@ -258,20 +265,23 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
 </head>
 <body>
 <header class="masthead">
-  <div class="masthead-band">
-    <div class="masthead-band-bg"></div>
-    <div class="masthead-band-ov"></div>
-    <div class="masthead-band-ct">
-      <div class="masthead-title">
-        <h1>Sidebar <em>Services</em></h1>
-        <div class="masthead-tagline">The New York Legal Classifieds</div>
-        <div class="masthead-date">Est. 2026 · New York, N.Y.</div>
+  <div class="masthead-container">
+    <div class="masthead-band">
+      <div class="masthead-band-bg"></div>
+      <div class="masthead-band-ov"></div>
+      <div class="masthead-band-ct">
+        <div class="masthead-title">
+          <div class="masthead-date">Est. 2026 · New York, N.Y.</div>
+          <h1>Sidebar <em>Services</em></h1>
+          <div class="masthead-tagline">The New York Legal Classifieds</div>
+        </div>
       </div>
     </div>
     <div class="masthead-nav">
       <div class="masthead-nav-inner">
         <nav class="nav-links">
           <button class="nav-link" onclick="showPage('classifieds')">Classifieds</button>
+          <button class="nav-link coming-soon" onclick="showComingSoon()">Resources</button>
           <button class="nav-link gossip-nav" onclick="showPage('gossip')">&#9670; The Docket</button>
         </nav>
         <button class="post-btn" id="main-post-btn" onclick="openPost()">+ Place a Listing</button>
@@ -315,9 +325,11 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <div id="listings-container"></div>
   </div>
   <footer>
-    <div class="footer-title">Sidebar <em>Services</em></div>
-    <hr class="footer-rule" />
-    <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
+    <div class="footer-inner">
+      <div class="footer-title">Sidebar <em>Services</em></div>
+      <hr class="footer-rule" />
+      <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
+    </div>
   </footer>
 </div>
 
@@ -412,6 +424,10 @@ function showPage(page) {
     window.location.hash = '';
   }
   window.scrollTo(0, 0);
+}
+
+function showComingSoon() {
+  showToast('Resources — coming soon.');
 }
 
 // ── AIRTABLE FETCH ──
@@ -540,6 +556,10 @@ async function submitGossip() {
 }
 
 // ── CLASSIFIEDS ──
+// ── CLASSIFIEDS ──
+const CLASSIFIEDS_URL = WORKER_URL.replace(/\/$/, '') + '/classifieds';
+
+// Fallback seed data (only shown if Airtable fetch fails or is empty)
 const seed = [
   {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',courthouse:'60 Centre St.'},
   {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',courthouse:'All boroughs'},
@@ -548,7 +568,53 @@ const seed = [
   {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search required — NYC Civil Court, individual defendant',desc:'Full name and date of birth available. Search needed across all NYC Civil Court indexes.',price:'$55',name:'Paralegal, BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',courthouse:'NYC Civil Court'},
   {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
 ];
-let listings=[...seed], currentTab='all', currentFilter='all', currentType='need';
+let listings=[], currentTab='all', currentFilter='all', currentType='need';
+
+// Format a date as relative time ("35 min. ago", "2 hrs. ago", "3 days ago")
+function formatRelativeTime(dateStr) {
+  if(!dateStr) return 'Recently';
+  const now = new Date();
+  const then = new Date(dateStr);
+  const diffMs = now - then;
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMs / 3600000);
+  const diffDay = Math.floor(diffMs / 86400000);
+  if(diffMin < 1) return 'Just posted';
+  if(diffMin < 60) return diffMin + ' min. ago';
+  if(diffHr < 24) return diffHr + ' hr' + (diffHr !== 1 ? 's' : '') + '. ago';
+  if(diffDay < 7) return diffDay + ' day' + (diffDay !== 1 ? 's' : '') + ' ago';
+  return then.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+}
+
+async function loadClassifieds() {
+  try {
+    const res = await fetch(CLASSIFIEDS_URL);
+    const data = await res.json();
+    if(data.records && data.records.length > 0) {
+      listings = data.records.map(r => ({
+        id: r.id,
+        type: r.fields.type || 'need',
+        category: r.fields.category || 'other',
+        urgency: r.fields.urgency || 'normal',
+        title: r.fields.title || '',
+        desc: r.fields.description || 'No further details.',
+        price: r.fields.price || 'Negotiable',
+        name: r.fields.name || '',
+        contact: r.fields.contact || '',
+        time: formatRelativeTime(r.fields.submitted_at),
+        courthouse: r.fields.courthouse || 'NYC'
+      }));
+    } else {
+      // No real listings yet — show seed data so the page isn't empty
+      listings = [...seed];
+    }
+    renderListings();
+  } catch(e) {
+    // Worker failed — fall back to seed data
+    listings = [...seed];
+    renderListings();
+  }
+}
 
 function renderListings() {
   const c = document.getElementById('listings-container');
@@ -559,7 +625,7 @@ function renderListings() {
   });
   document.getElementById('listings-count').textContent = f.length + ' listing' + (f.length!==1?'s':'') + ' found';
   if(!f.length) { c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>'; return; }
-  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
+  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact('${l.id}')">Respond</button></div></div>`).join('');
 }
 
 const tabBtns = ['all','need','offer'];
@@ -568,17 +634,70 @@ function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-chi
 function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
 function openPost(){document.getElementById('post-overlay').classList.add('open');}
 function closePost(){document.getElementById('post-overlay').classList.remove('open');}
-function submitListing(){
+
+async function submitListing(){
   const title=document.getElementById('f-title').value.trim();
   const contact=document.getElementById('f-contact').value.trim();
   const name=document.getElementById('f-name').value.trim();
   if(!title||!contact||!name){showToast('Headline, contact, and name are required.');return;}
-  listings.unshift({id:Date.now(),type:currentType,category:document.getElementById('f-category').value,urgency:document.getElementById('f-urgency').value,title,desc:document.getElementById('f-desc').value||'No further details.',price:document.getElementById('f-price').value||'Negotiable',name,contact,time:'Just posted',courthouse:'NYC'});
-  closePost();renderListings();showToast('Listing placed.');
-  ['f-title','f-desc','f-contact','f-name','f-price'].forEach(id=>document.getElementById(id).value='');selectType('need');
+
+  const submitBtn = document.querySelector('.submit-listing-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting…';
+  submitBtn.disabled = true;
+
+  const payload = {
+    type: currentType,
+    category: document.getElementById('f-category').value,
+    urgency: document.getElementById('f-urgency').value,
+    title: title,
+    description: document.getElementById('f-desc').value || 'No further details.',
+    price: document.getElementById('f-price').value || 'Negotiable',
+    contact: contact,
+    name: name,
+    courthouse: 'NYC'
+  };
+
+  try {
+    const res = await fetch(CLASSIFIEDS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if(res.ok) {
+      // Add to local list immediately for instant feedback
+      const data = await res.json();
+      listings.unshift({
+        id: data.id || Date.now(),
+        type: currentType,
+        category: payload.category,
+        urgency: payload.urgency,
+        title: payload.title,
+        desc: payload.description,
+        price: payload.price,
+        name: payload.name,
+        contact: payload.contact,
+        time: 'Just posted',
+        courthouse: payload.courthouse
+      });
+      closePost();
+      renderListings();
+      showToast('Listing placed.');
+      ['f-title','f-desc','f-contact','f-name','f-price'].forEach(id=>document.getElementById(id).value='');
+      selectType('need');
+    } else {
+      showToast('Submission failed. Please try again.');
+    }
+  } catch(e) {
+    showToast('Could not connect. Please try again.');
+  }
+
+  submitBtn.textContent = originalText;
+  submitBtn.disabled = false;
 }
+
 function showContact(id){
-  const l=listings.find(x=>x.id===id);if(!l)return;
+  const l=listings.find(x=>String(x.id)===String(id));if(!l)return;
   document.getElementById('contact-info').innerHTML=`<div class="contact-row"><div class="contact-key">Party</div><div class="contact-val">${l.name}</div></div><div class="contact-row"><div class="contact-key">Contact</div><div class="contact-val">${l.contact}</div></div><div class="contact-row"><div class="contact-key">Re:</div><div class="contact-val" style="font-size:14px;">${l.title}</div></div>`;
   document.getElementById('contact-overlay').classList.add('open');
 }
@@ -588,7 +707,7 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 function showGToast(msg){const t=document.getElementById('g-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('post-overlay').classList.remove('open');document.getElementById('contact-overlay').classList.remove('open');document.getElementById('gossip-overlay').classList.remove('open');}});
 
-renderListings();
+loadClassifieds();
 if(window.location.hash === '#docket') showPage('gossip');
 </script>
 </body>
