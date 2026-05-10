@@ -19,28 +19,45 @@
 }
 html { scroll-behavior: smooth; }
 body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
+
+/* Hide masthead when on Docket page */
+body.docket-active .masthead { display: none; }
+
 .masthead { background: #0a0a0a; }
-.masthead-band { position: relative; overflow: hidden; height: 280px; }
-.masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.PNG'); background-size: cover; background-position: center 10%; }
+.masthead-band { position: relative; overflow: hidden; height: 320px; }
+.masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.PNG'); background-size: cover; background-position: center 40%; }
 .masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, rgba(6,6,6,0.7) 100%); }
 .masthead-band-ct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); z-index: 2; text-align: center; width: 100%; padding: 0 24px; }
-.masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 10px; }
+.masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 10px; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 .masthead-title { text-align: center; }
 .masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 54px); font-weight: 900; color: white; letter-spacing: -0.5px; line-height: 1; margin-bottom: 5px; }
 .masthead-title h1 em { font-style: italic; font-weight: 400; color: #e8cc85; }
-.masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; }
-.masthead-nav { position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; padding: 10px 0; background: transparent; }
-.masthead-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
+.masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.85); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.8); }
+.masthead-nav { position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; background: transparent; }
+.masthead-nav-inner { max-width: 960px; margin: 0 auto; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; }
 .nav-links { display: flex; gap: 0; }
 .nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(245,240,232,0.85); text-decoration: none; padding: 4px 14px; border-right: 1px solid rgba(200,191,168,0.35); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
-.nav-link:first-child { border-left: 1px solid rgba(200,191,168,0.35); }
+.nav-link:first-child { border-left: none; }
 .nav-link:hover { color: #e8cc85; }
 .nav-link.gossip-nav { color: var(--g-hot); font-weight: 500; }
 .nav-link.gossip-nav:hover { color: #c44dff; }
 .post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: rgba(245,240,232,0.12); color: rgba(245,240,232,0.9); border: 1px solid rgba(245,240,232,0.3); padding: 5px 16px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.15s; }
 .post-btn:hover { background: rgba(245,240,232,0.22); }
+
+/* Standalone navigation for Docket page */
+.docket-nav { display: none; background: #0a0a0a; border-bottom: 1px solid var(--g-border); padding: 10px 0; position: sticky; top: 0; z-index: 100; }
+body.docket-active .docket-nav { display: block; }
+.docket-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
+.docket-nav-links { display: flex; gap: 0; }
+.docket-nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.6); text-decoration: none; padding: 4px 14px; border-right: 1px solid var(--g-border); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
+.docket-nav-link:first-child { border-left: 1px solid var(--g-border); }
+.docket-nav-link:hover { color: var(--g-hot); }
+.docket-post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: rgba(255,45,120,0.12); color: var(--g-hot); border: 1px solid rgba(255,45,120,0.3); padding: 5px 16px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.15s; }
+.docket-post-btn:hover { background: rgba(255,45,120,0.22); }
+
 .page { display: none; }
 .page.active { display: block; }
+#page-classifieds { margin-top: 0; }
 .tab-row { display: none; }
 .filters-bar { display: none; }
 .filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); padding: 11px 14px; border-right: 1px solid var(--rule); }
@@ -49,7 +66,7 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .filter-chip:hover { color: var(--red); background: var(--parchment-deep); }
 .filter-chip.active { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 32px 40px; }
-.section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin-bottom: 0; display: flex; align-items: center; justify-content: space-between; }
+.section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin: 0; display: flex; align-items: center; justify-content: space-between; }
 .section-title-text { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); }
 .listing { border-bottom: 1px solid var(--rule); padding: 16px 0; display: grid; grid-template-columns: 1fr auto; gap: 0 20px; transition: background 0.12s; }
 .listing:hover { background: rgba(28,26,23,0.02); }
@@ -205,6 +222,15 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
   </div>
 </header>
 
+<!-- Standalone Docket Navigation -->
+<nav class="docket-nav">
+  <div class="docket-nav-inner">
+    <div class="docket-nav-links">
+      <button class="docket-nav-link" onclick="showPage('classifieds')">← Back to Classifieds</button>
+    </div>
+  </div>
+</nav>
+
 <div id="page-classifieds" class="page active">
   <div class="tab-row">
     <button class="tab-btn active" id="tab-all" onclick="setTab('all',this)">All Listings</button>
@@ -317,15 +343,14 @@ document.getElementById('listings-updated').textContent = 'Updated ' + now.toLoc
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-  const btn = document.getElementById('main-post-btn');
+  
+  // Toggle body class for Docket page to hide main masthead
   if(page === 'gossip') {
-    btn.textContent = '✦ Spill It';
-    btn.onclick = openGossipModal;
+    document.body.classList.add('docket-active');
     loadGossip();
     window.location.hash = 'docket';
   } else {
-    btn.textContent = '+ Place a Listing';
-    btn.onclick = openPost;
+    document.body.classList.remove('docket-active');
     window.location.hash = '';
   }
   window.scrollTo(0, 0);
