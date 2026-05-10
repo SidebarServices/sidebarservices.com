@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sidebar Services — NYC Legal Classifieds</title>
+<title>Sidebar Services — NYC Courthouse Classifieds</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet" />
 <style>
@@ -20,9 +20,9 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
 .masthead { background: #0a0a0a; }
-.masthead-band { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-.masthead-band-wrap { width: 100%; position: relative; height: 280px; display: flex; align-items: center; justify-content: center; }
-.masthead-band-bg { position: absolute; inset: 0; background-image: url('https://sidebarservices.com/skyline.png'); background-size: cover; background-position: center 10%; }
+.masthead-band { height: 280px; display: flex; align-items: center; justify-content: center; }
+.masthead-band-wrap { max-width: 960px; width: 100%; margin: 0 auto; position: relative; height: 280px; overflow: hidden; border-left: 1px solid rgba(200,191,168,0.15); border-right: 1px solid rgba(200,191,168,0.15); display: flex; align-items: center; justify-content: center; }
+.masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.png'); background-size: cover; background-position: center 10%; }
 .masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.28) 0%, rgba(6,6,6,0.62) 100%); }
 .masthead-band-ct { position: relative; z-index: 2; text-align: center; padding: 0 24px; margin-bottom: 44px; }
 .masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 10px; }
@@ -30,7 +30,8 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 54px); font-weight: 900; color: white; letter-spacing: -0.5px; line-height: 1; margin-bottom: 5px; }
 .masthead-title h1 em { font-style: italic; font-weight: 400; color: #e8cc85; }
 .masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; }
-.masthead-nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 24px; background: transparent; position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; }
+.masthead-rule { border: none; border-top: 1px solid var(--ink); margin: 10px 0 8px; }
+.masthead-nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 24px; background: transparent; border: none; position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; }
 .nav-links { display: flex; gap: 0; }
 .nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(245,240,232,0.85); text-decoration: none; padding: 4px 14px; border-right: 1px solid rgba(200,191,168,0.35); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
 .nav-link:first-child { border-left: 1px solid rgba(200,191,168,0.35); }
@@ -43,6 +44,11 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .page.active { display: block; }
 .tab-row { display: none; }
 .filters-bar { display: none; }
+.filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); padding: 11px 14px; border-right: 1px solid var(--rule); }
+.filter-chip { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-mid); background: none; border: none; padding: 11px 18px; cursor: pointer; letter-spacing: 0.04em; border-right: 1px solid var(--rule); transition: all 0.12s; }
+.filter-chip:last-child { border-right: none; }
+.filter-chip:hover { color: var(--red); background: var(--parchment-deep); }
+.filter-chip.active { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 32px 40px; }
 .section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin-bottom: 0; display: flex; align-items: center; justify-content: space-between; }
 .section-title-text { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); }
@@ -173,7 +179,7 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
 .toast.show { transform: translateX(-50%) translateY(0); }
 .g-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--g-hot); color: white; border: none; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
 .g-toast.show { transform: translateX(-50%) translateY(0); }
-@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .listing { grid-template-columns: 1fr; } .listing-right { flex-direction: row; align-items: center; margin-top: 10px; } .gossip-feed { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .masthead { padding: 12px 16px; } .listing { grid-template-columns: 1fr; } .listing-right { flex-direction: row; align-items: center; margin-top: 10px; } .gossip-feed { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -186,20 +192,40 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
         <div class="masthead-title">
           <h1>Sidebar <em>Services</em></h1>
           <div class="masthead-tagline">The New York Legal Classifieds</div>
-          <div class="masthead-date">Est. 2026 · New York, N.Y.</div>
+          <div class="masthead-date" id="issue-date">Est. 2026 · New York, N.Y.</div>
         </div>
       </div>
       <div class="masthead-nav">
-        <nav class="nav-links">
-          <button class="nav-link" onclick="showPage('classifieds')">Classifieds</button>
-          <button class="nav-link gossip-nav" onclick="showPage('gossip')">&#9670; The Docket</button>
-        </nav>
-        <button class="post-btn" id="main-post-btn" onclick="openPost()">+ Place a Listing</button>
+        <div class="masthead-nav-inner">
+          <nav class="nav-links">
+            <button class="nav-link" onclick="showPage('classifieds')">Classifieds</button>
+            <button class="nav-link gossip-nav" onclick="showPage('gossip')">&#9670; The Docket</button>
+          </nav>
+          <button class="post-btn" id="main-post-btn" onclick="openPost()">+ Place a Listing</button>
+        </div>
       </div>
     </div>
   </div>
 </header>
+
 <div id="page-classifieds" class="page active">
+  <div class="tab-row">
+    <button class="tab-btn active" id="tab-all" onclick="setTab('all',this)">All Listings</button>
+    <button class="tab-btn" id="tab-need" onclick="setTab('need',this)">Attorneys Seeking Help</button>
+    <button class="tab-btn" id="tab-offer" onclick="setTab('offer',this)">Runners &amp; Services</button>
+  </div>
+  <div class="filters-bar">
+    <span class="filter-label">Show:</span>
+    <button class="filter-chip active" onclick="setTab('all',this)">All Listings</button>
+    <button class="filter-chip" onclick="setTab('need',this)">Attorneys Seeking Help</button>
+    <button class="filter-chip" onclick="setTab('offer',this)">Runners &amp; Services</button>
+    <span class="filter-label" style="border-left:1px solid var(--rule); margin-left:4px;">Category:</span>
+    <button class="filter-chip" onclick="setFilter('filing',this)">Filing</button>
+    <button class="filter-chip" onclick="setFilter('process',this)">Process Service</button>
+    <button class="filter-chip" onclick="setFilter('records',this)">Records &amp; Copies</button>
+    <button class="filter-chip" onclick="setFilter('research',this)">Research</button>
+    <button class="filter-chip" onclick="setFilter('urgent',this)">Urgent</button>
+  </div>
   <div class="classifieds-main">
     <div class="section-header">
       <span class="section-title-text" id="listings-count">Classifieds</span>
@@ -210,9 +236,10 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
   <footer>
     <div class="footer-title">Sidebar <em>Services</em></div>
     <hr class="footer-rule" />
-    <div class="footer-text">New York City's legal classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
+    <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
   </footer>
 </div>
+
 <div id="page-gossip" class="page">
   <div class="gossip-masthead">
     <div class="gossip-eyebrow">Sidebar Services Presents</div>
@@ -229,7 +256,9 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     <button class="g-filter-chip" onclick="setGossipFilter('facepalm',this)">🤦 Facepalm</button>
     <button class="g-filter-chip" onclick="setGossipFilter('scandal',this)">👀 Scandal</button>
   </div>
-  <div class="gossip-feed" id="gossip-feed"><div class="g-loading">Loading The Docket&hellip;</div></div>
+  <div class="gossip-feed" id="gossip-feed">
+    <div class="g-loading">Loading The Docket&hellip;</div>
+  </div>
   <div class="g-footer">
     <div class="g-footer-text">
       <div class="f-line1">The Docket is a feature of Sidebar Services · sidebarservices.com</div>
@@ -238,6 +267,8 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     </div>
   </div>
 </div>
+
+<!-- POST MODAL -->
 <div class="overlay" id="post-overlay" onclick="closeIfOutside(event,'post-overlay')">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Place a Listing</div><button class="modal-close" onclick="closePost()">✕</button></div>
@@ -253,12 +284,16 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     </div>
   </div>
 </div>
+
+<!-- CONTACT MODAL -->
 <div class="overlay" id="contact-overlay" onclick="closeIfOutside(event,'contact-overlay')">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Contact Information</div><button class="modal-close" onclick="closeContact()">✕</button></div>
     <div class="contact-modal-body"><div class="contact-rows" id="contact-info"></div><div class="contact-note">Parties are encouraged to contact one another directly. Sidebar Services facilitates this introduction only and is not party to any arrangement made hereunder.</div></div>
   </div>
 </div>
+
+<!-- GOSSIP MODAL -->
 <div class="overlay" id="gossip-overlay" onclick="closeIfOutside(event,'gossip-overlay')">
   <div class="g-modal">
     <div class="g-modal-header"><div class="g-modal-title">Spill It</div><button class="g-modal-close" onclick="closeGossipModal()">✕</button></div>
@@ -272,75 +307,160 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
     </div>
   </div>
 </div>
+
 <div class="toast" id="toast"></div>
 <div class="g-toast" id="g-toast"></div>
+
 <script>
 const WORKER_URL='https://floral-meadow-77a8.calm-mountain-41aa.workers.dev/';
-const now=new Date();
-document.getElementById('listings-updated').textContent='Updated '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-function showPage(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  const btn=document.getElementById('main-post-btn');
-  if(page==='gossip'){btn.textContent='✦ Spill It';btn.onclick=openGossipModal;loadGossip();window.location.hash='docket';}
-  else{btn.textContent='+ Place a Listing';btn.onclick=openPost;window.location.hash='';}
-  window.scrollTo(0,0);
+
+const now = new Date();
+document.getElementById('listings-updated').textContent = 'Updated ' + now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const btn = document.getElementById('main-post-btn');
+  if(page === 'gossip') {
+    btn.textContent = '✦ Spill It';
+    btn.onclick = openGossipModal;
+    loadGossip();
+    window.location.hash = 'docket';
+  } else {
+    btn.textContent = '+ Place a Listing';
+    btn.onclick = openPost;
+    window.location.hash = '';
+  }
+  window.scrollTo(0, 0);
 }
-let gossipFilter='all',allGossipPosts=[];
+
+// ── AIRTABLE FETCH ──
+let gossipFilter = 'all';
+let allGossipPosts = [];
+
 function loadVoted(){try{return JSON.parse(localStorage.getItem('docket_voted')||'{}');}catch(e){return {};}}
 function saveVoted(v){try{localStorage.setItem('docket_voted',JSON.stringify(v));}catch(e){}}
+// Clear voted state if it's from a different session's post IDs (stale data guard)
 let voted=loadVoted();
-async function loadGossip(){
-  const feed=document.getElementById('gossip-feed');
-  feed.innerHTML='<div class="g-loading">Loading The Docket&hellip;</div>';
-  try{
-    const res=await fetch(WORKER_URL);
-    const data=await res.json();
-    if(!data.records||data.records.length===0){allGossipPosts=[];renderGossip();return;}
-    allGossipPosts=data.records.map(r=>({id:r.id,type:(r.fields.category||'cringe').toLowerCase(),text:r.fields.final_text||r.fields.story||'',court:r.fields.court||'',time:r.fields.submitted_at?new Date(r.fields.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'',fire:r.fields.reactions_fire||0,skull:r.fields.reactions_skull||0}));
+
+async function loadGossip() {
+  const feed = document.getElementById('gossip-feed');
+  feed.innerHTML = '<div class="g-loading">Loading The Docket&hellip;</div>';
+  try {
+    const res = await fetch(WORKER_URL);
+    const data = await res.json();
+    if(!data.records || data.records.length === 0) {
+      allGossipPosts = [];
+      renderGossip();
+      return;
+    }
+    allGossipPosts = data.records.map(r => ({
+      id: r.id,
+      type: (r.fields.category || 'cringe').toLowerCase(),
+      text: r.fields.final_text || r.fields.story || '',
+      court: r.fields.court || '',
+      time: r.fields.submitted_at ? new Date(r.fields.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '',
+      fire: r.fields.reactions_fire || 0,
+      skull: r.fields.reactions_skull || 0
+    }));
     renderGossip();
-  }catch(e){feed.innerHTML='<div class="g-loading">Could not load posts. Try refreshing.</div>';}
+  } catch(e) {
+    feed.innerHTML = '<div class="g-loading">Could not load posts. Try refreshing.</div>';
+  }
 }
-const typeLabels={cringe:'😬 Cringe',wild:'🤯 Wild',facepalm:'🤦 Facepalm',scandal:'👀 Scandal'};
-function renderGossip(){
-  const feed=document.getElementById('gossip-feed');
-  let f=gossipFilter==='all'?allGossipPosts:allGossipPosts.filter(g=>g.type===gossipFilter);
-  if(!f.length){feed.innerHTML='<div class="g-loading">Nothing here yet. Be first to submit.</div>';return;}
-  feed.innerHTML=f.map(g=>{
-    const fVoted=voted[g.id]?.fire,sVoted=voted[g.id]?.skull;
-    return `<div class="gossip-card ${g.type}"><div class="gossip-card-type">${typeLabels[g.type]||g.type}</div><div class="gossip-card-text">${g.text}</div><div class="gossip-card-footer"><div class="gossip-card-meta">${g.court?g.court+' · ':''}${g.time}</div><div class="gossip-reactions"><button class="g-react-btn" onclick="gReact('${g.id}','fire',this)" ${fVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>🔥 <span>${g.fire}</span></button><button class="g-react-btn" onclick="gReact('${g.id}','skull',this)" ${sVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>💀 <span>${g.skull}</span></button></div></div></div>`;
+
+const typeLabels = {cringe:'😬 Cringe', wild:'🤯 Wild', facepalm:'🤦 Facepalm', scandal:'👀 Scandal'};
+
+function renderGossip() {
+  const feed = document.getElementById('gossip-feed');
+  let f = gossipFilter === 'all' ? allGossipPosts : allGossipPosts.filter(g => g.type === gossipFilter);
+  if(!f.length) {
+    feed.innerHTML = '<div class="g-loading">Nothing here yet. Be first to submit.</div>';
+    return;
+  }
+  feed.innerHTML = f.map(g => {
+    const fVoted = voted[g.id]?.fire;
+    const sVoted = voted[g.id]?.skull;
+    return `<div class="gossip-card ${g.type}">
+      <div class="gossip-card-type">${typeLabels[g.type] || g.type}</div>
+      <div class="gossip-card-text">${g.text}</div>
+      <div class="gossip-card-footer">
+        <div class="gossip-card-meta">${g.court ? g.court + ' · ' : ''}${g.time}</div>
+        <div class="gossip-reactions">
+          <button class="g-react-btn" onclick="gReact('${g.id}','fire',this)" ${fVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>🔥 <span>${g.fire}</span></button>
+          <button class="g-react-btn" onclick="gReact('${g.id}','skull',this)" ${sVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>💀 <span>${g.skull}</span></button>
+        </div>
+      </div>
+    </div>`;
   }).join('');
 }
-function setGossipFilter(f,btn){gossipFilter=f;document.querySelectorAll('.g-filter-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGossip();}
-async function gReact(id,type,btn){
-  if(btn.disabled)return;
-  if(!voted[id])voted[id]={};
-  if(voted[id][type])return;
-  voted[id][type]=true;saveVoted(voted);
-  btn.style.background='rgba(255,255,255,0.14)';btn.style.color='white';btn.style.cursor='default';btn.disabled=true;
-  try{
-    const res=await fetch(WORKER_URL,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,type})});
-    const data=await res.json();
-    const post=allGossipPosts.find(p=>p.id===id);
-    if(post){post.fire=data.fire;post.skull=data.skull;}
-    btn.querySelector('span').textContent=data[type];
-  }catch(e){}
+
+function setGossipFilter(f, btn) {
+  gossipFilter = f;
+  document.querySelectorAll('.g-filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGossip();
 }
-function openGossipModal(){document.getElementById('gossip-overlay').classList.add('open');}
-function closeGossipModal(){document.getElementById('gossip-overlay').classList.remove('open');}
-async function submitGossip(){
-  const text=document.getElementById('g-text').value.trim();
-  if(!text){showGToast('Please write something first.');return;}
-  const btn=document.getElementById('g-submit-btn');
-  btn.textContent='Submitting…';btn.disabled=true;
-  try{
-    const res=await fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({story:text,category:document.getElementById('g-category').value,court:document.getElementById('g-court').value||'Undisclosed'})});
-    if(res.ok){closeGossipModal();document.getElementById('g-text').value='';document.getElementById('g-court').value='';showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');}
-    else{showGToast('Something went wrong. Please try again.');}
-  }catch(e){showGToast('Could not connect. Please try again.');}
-  btn.textContent='Submit Anonymously';btn.disabled=false;
+
+async function gReact(id, type, btn) {
+  if(btn.disabled) return;
+  if(!voted[id]) voted[id] = {};
+  if(voted[id][type]) return;
+  voted[id][type] = true;
+  saveVoted(voted);
+  btn.style.background = 'rgba(255,255,255,0.14)';
+  btn.style.color = 'white';
+  btn.style.cursor = 'default';
+  btn.disabled = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, type })
+    });
+    const data = await res.json();
+    const post = allGossipPosts.find(p => p.id === id);
+    if(post) { post.fire = data.fire; post.skull = data.skull; }
+    btn.querySelector('span').textContent = data[type];
+  } catch(e) {
+    // Silently fail — voted state is already saved locally
+  }
 }
-const seed=[
+
+function openGossipModal() { document.getElementById('gossip-overlay').classList.add('open'); }
+function closeGossipModal() { document.getElementById('gossip-overlay').classList.remove('open'); }
+
+async function submitGossip() {
+  const text = document.getElementById('g-text').value.trim();
+  if(!text) { showGToast('Please write something first.'); return; }
+  const btn = document.getElementById('g-submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        story: text,
+        category: document.getElementById('g-category').value,
+        court: document.getElementById('g-court').value || 'Undisclosed'
+      })
+    });
+    if(res.ok) {
+      closeGossipModal();
+      document.getElementById('g-text').value = '';
+      document.getElementById('g-court').value = '';
+      showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');
+    } else {
+      showGToast('Something went wrong. Please try again.');
+    }
+  } catch(e) {
+    showGToast('Could not connect. Please try again.');
+  }
+  btn.textContent = 'Submit Anonymously'; btn.disabled = false;
+}
+
+// ── CLASSIFIEDS ──
+const seed = [
   {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',courthouse:'60 Centre St.'},
   {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',courthouse:'All boroughs'},
   {id:3,type:'need',category:'records',urgency:'flexible',title:"Certified copy of divorce decree sought — Kings County Surrogate's Court",desc:"Index number and parties' names on file. One certified copy required. End of week is fine.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs. ago',courthouse:"Kings County Surrogate's"},
@@ -348,17 +468,30 @@ const seed=[
   {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search required — NYC Civil Court, individual defendant',desc:'Full name and date of birth available. Search needed across all NYC Civil Court indexes.',price:'$55',name:'Paralegal, BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',courthouse:'NYC Civil Court'},
   {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
 ];
-let listings=[...seed],currentType='need';
-function renderListings(){
-  const c=document.getElementById('listings-container');
-  document.getElementById('listings-count').textContent=listings.length+' listing'+(listings.length!==1?'s':'')+' found';
-  c.innerHTML=listings.map(l=>`<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
+let listings=[...seed], currentTab='all', currentFilter='all', currentType='need';
+
+function renderListings() {
+  const c = document.getElementById('listings-container');
+  let f = listings.filter(l => {
+    const t = currentTab==='all' || l.type===currentTab;
+    const fi = currentFilter==='all' || (currentFilter==='urgent' ? l.urgency==='urgent' : l.category===currentFilter);
+    return t && fi;
+  });
+  document.getElementById('listings-count').textContent = f.length + ' listing' + (f.length!==1?'s':'') + ' found';
+  if(!f.length) { c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>'; return; }
+  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
 }
+
+const tabBtns = ['all','need','offer'];
+function setTab(tab,btn){currentTab=tab;document.querySelectorAll('.filter-chip').forEach(b=>{if(tabBtns.includes(b.getAttribute('onclick')?.match(/'(\w+)'/)?.[1]))b.classList.remove('active');});btn.classList.add('active');renderListings();}
+function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-chip').forEach(b=>{if(!tabBtns.includes(b.getAttribute('onclick')?.match(/'(\w+)'/)?.[1]))b.classList.remove('active');});btn.classList.add('active');renderListings();}
 function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
 function openPost(){document.getElementById('post-overlay').classList.add('open');}
 function closePost(){document.getElementById('post-overlay').classList.remove('open');}
 function submitListing(){
-  const title=document.getElementById('f-title').value.trim(),contact=document.getElementById('f-contact').value.trim(),name=document.getElementById('f-name').value.trim();
+  const title=document.getElementById('f-title').value.trim();
+  const contact=document.getElementById('f-contact').value.trim();
+  const name=document.getElementById('f-name').value.trim();
   if(!title||!contact||!name){showToast('Headline, contact, and name are required.');return;}
   listings.unshift({id:Date.now(),type:currentType,category:document.getElementById('f-category').value,urgency:document.getElementById('f-urgency').value,title,desc:document.getElementById('f-desc').value||'No further details.',price:document.getElementById('f-price').value||'Negotiable',name,contact,time:'Just posted',courthouse:'NYC'});
   closePost();renderListings();showToast('Listing placed.');
@@ -374,8 +507,9 @@ function closeIfOutside(e,id){if(e.target.id===id)document.getElementById(id).cl
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 function showGToast(msg){const t=document.getElementById('g-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('post-overlay').classList.remove('open');document.getElementById('contact-overlay').classList.remove('open');document.getElementById('gossip-overlay').classList.remove('open');}});
+
 renderListings();
-if(window.location.hash==='#docket') showPage('gossip');
+if(window.location.hash === '#docket') showPage('gossip');
 </script>
 </body>
 </html>
