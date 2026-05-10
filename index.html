@@ -20,9 +20,9 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
 .masthead { background: #0a0a0a; }
-.masthead-band { height: 280px; display: flex; align-items: center; justify-content: center; }
-.masthead-band-wrap { max-width: 960px; width: 100%; margin: 0 auto; position: relative; height: 280px; overflow: hidden; border-left: 1px solid rgba(200,191,168,0.15); border-right: 1px solid rgba(200,191,168,0.15); display: flex; align-items: center; justify-content: center; }
-.masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.png'); background-size: cover; background-position: center 10%; }
+.masthead-band { height: 280px; position: relative; overflow: hidden; }
+.masthead-band-wrap { width: 100%; height: 280px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.PNG'); background-size: cover; background-position: center 10%; }
 .masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.28) 0%, rgba(6,6,6,0.62) 100%); }
 .masthead-band-ct { position: relative; z-index: 2; text-align: center; padding: 0 24px; margin-bottom: 44px; }
 .masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 10px; }
@@ -31,7 +31,8 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .masthead-title h1 em { font-style: italic; font-weight: 400; color: #e8cc85; }
 .masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; }
 .masthead-rule { border: none; border-top: 1px solid var(--ink); margin: 10px 0 8px; }
-.masthead-nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 24px; background: transparent; border: none; position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; }
+.masthead-nav { position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; padding: 8px 0; background: transparent; }
+.masthead-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
 .nav-links { display: flex; gap: 0; }
 .nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(245,240,232,0.85); text-decoration: none; padding: 4px 14px; border-right: 1px solid rgba(200,191,168,0.35); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
 .nav-link:first-child { border-left: 1px solid rgba(200,191,168,0.35); }
