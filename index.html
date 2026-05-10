@@ -269,6 +269,19 @@ footer { background: var(--parchment); padding: 0 24px 28px; }
 .toast.show { transform: translateX(-50%) translateY(0); }
 .g-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--g-hot); color: white; border: none; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
 .g-toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Docket Disclaimer Modal */
+.docket-disclaimer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300; align-items: center; justify-content: center; padding: 16px; }
+.docket-disclaimer-overlay.open { display: flex; }
+.docket-disclaimer { background: #111; border: 1px solid var(--g-border); width: 100%; max-width: 460px; text-align: center; padding: 40px 36px; position: relative; overflow: hidden; }
+.docket-disclaimer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, var(--g-hot) 0%, var(--g-yellow) 40%, var(--g-cyan) 70%, var(--g-purple) 100%); }
+.docket-disclaimer-icon { font-size: 32px; margin-bottom: 16px; }
+.docket-disclaimer-title { font-family: 'Bebas Neue', 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; background: linear-gradient(135deg, var(--g-hot) 0%, var(--g-yellow) 40%, var(--g-cyan) 70%, var(--g-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px; }
+.docket-disclaimer-text { font-family: 'EB Garamond', serif; font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 8px; }
+.docket-disclaimer-text strong { color: var(--g-cyan); font-weight: 500; }
+.docket-disclaimer-rules { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.8; margin: 16px 0 24px; padding: 16px 0; border-top: 1px solid var(--g-border); border-bottom: 1px solid var(--g-border); }
+.docket-disclaimer-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--g-hot); color: white; border: none; padding: 12px 32px; cursor: pointer; transition: all 0.15s; }
+.docket-disclaimer-btn:hover { background: #ff0060; transform: translateY(-1px); }
 @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .masthead { padding: 12px 16px; } .listing { grid-template-columns: 1fr; } .listing-right { flex-direction: row; align-items: center; margin-top: 10px; } .gossip-feed { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -411,6 +424,17 @@ footer { background: var(--parchment); padding: 0 24px 28px; }
   </div>
 </div>
 
+<!-- DOCKET DISCLAIMER MODAL -->
+<div class="docket-disclaimer-overlay" id="docket-disclaimer">
+  <div class="docket-disclaimer">
+    <div class="docket-disclaimer-icon">🔒</div>
+    <div class="docket-disclaimer-title">Before You Enter</div>
+    <div class="docket-disclaimer-text">The Docket is an <strong>anonymous space</strong> for legal industry stories and confessions. Everything here is submitted anonymously and moderated before publishing.</div>
+    <div class="docket-disclaimer-rules">No real names · No case numbers · No firm identifiers · No identifying details<br/>All posts are reviewed by moderators · Content is for entertainment only<br/>Not legal advice · Not affiliated with any court or firm</div>
+    <button class="docket-disclaimer-btn" onclick="acceptDocketDisclaimer()">I Understand — Enter The Docket</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <div class="g-toast" id="g-toast"></div>
 
@@ -427,6 +451,10 @@ function showPage(page) {
   // Toggle body class for Docket page to hide main masthead
   if(page === 'gossip') {
     document.body.classList.add('docket-active');
+    // Show disclaimer if user hasn't accepted it yet
+    if(!localStorage.getItem('docket_disclaimer_accepted')) {
+      document.getElementById('docket-disclaimer').classList.add('open');
+    }
     loadGossip();
     window.location.hash = 'docket';
   } else {
@@ -440,6 +468,11 @@ function showPage(page) {
     page_path: page === 'gossip' ? '/docket' : '/',
     page_title: page === 'gossip' ? 'The Docket' : 'Classifieds'
   });
+}
+
+function acceptDocketDisclaimer() {
+  localStorage.setItem('docket_disclaimer_accepted', 'true');
+  document.getElementById('docket-disclaimer').classList.remove('open');
 }
 
 function showComingSoon() {
