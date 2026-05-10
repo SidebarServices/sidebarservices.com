@@ -434,6 +434,12 @@ function showPage(page) {
     window.location.hash = '';
   }
   window.scrollTo(0, 0);
+
+  // Track page switch in Google Analytics
+  gtag('event', 'page_view', {
+    page_path: page === 'gossip' ? '/docket' : '/',
+    page_title: page === 'gossip' ? 'The Docket' : 'Classifieds'
+  });
 }
 
 function showComingSoon() {
