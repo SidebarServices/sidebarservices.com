@@ -328,7 +328,7 @@ footer { background: var(--parchment); padding: 0 24px 28px; }
     <div class="footer-inner">
       <div class="footer-title">Sidebar <em>Services</em></div>
       <hr class="footer-rule" />
-      <div class="footer-text">New York City's courthouse classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
+      <div class="footer-text">New York City's legal classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
     </div>
   </footer>
 </div>
@@ -367,10 +367,11 @@ footer { background: var(--parchment); padding: 0 24px 28px; }
     <div class="modal-header"><div class="modal-title">Place a Listing</div><button class="modal-close" onclick="closePost()">✕</button></div>
     <div class="modal-body">
       <div class="field"><label>I am a&hellip;</label><div class="type-toggle"><button class="type-opt selected" id="type-need" onclick="selectType('need')">⚖ Attorney — I need help</button><button class="type-opt" id="type-offer" onclick="selectType('offer')">Runner — I offer services</button></div></div>
-      <div class="field"><label>Category</label><select id="f-category"><option value="filing">Document filing</option><option value="process">Process service</option><option value="records">Certified copies / records</option><option value="research">Courthouse research</option><option value="other">Other</option></select></div>
-      <div class="field"><label>Headline</label><input id="f-title" type="text" placeholder="e.g., Seek runner for same-day filing at 60 Centre St." /></div>
-      <div class="field"><label>Details</label><textarea id="f-desc" placeholder="Courthouse, deadline, special instructions…"></textarea></div>
+      <div class="field"><label>Category</label><select id="f-category"><option value="filing">Document filing</option><option value="process">Process service</option><option value="records">Certified copies / records</option><option value="research">Research</option><option value="other">Other</option></select></div>
+      <div class="field"><label>Headline</label><input id="f-title" type="text" placeholder="e.g., Seek paralegal for document review project" /></div>
+      <div class="field"><label>Details</label><textarea id="f-desc" placeholder="Scope, deadline, special instructions…"></textarea></div>
       <div class="two-col"><div class="field"><label>Rate / Budget</label><input id="f-price" type="text" placeholder="e.g. $65, Negotiable" /></div><div class="field"><label>Urgency</label><select id="f-urgency"><option value="normal">Standard</option><option value="urgent">Urgent — today</option><option value="flexible">Flexible</option></select></div></div>
+      <div class="field"><label>Location</label><input id="f-location" type="text" placeholder="e.g., 60 Centre St., Midtown, All five boroughs, Remote" /><div class="hint">Where the work takes place. Be as specific or general as you like.</div></div>
       <div class="field"><label>Contact (displayed publicly)</label><input id="f-contact" type="text" placeholder="Email or telephone" /><div class="hint">This is how respondents will reach you.</div></div>
       <div class="field"><label>Name or firm</label><input id="f-name" type="text" placeholder="e.g. Maria L., Smith &amp; Associates" /></div>
       <button class="submit-listing-btn" onclick="submitListing()">Submit Listing</button>
@@ -561,12 +562,12 @@ const CLASSIFIEDS_URL = WORKER_URL.replace(/\/$/, '') + '/classifieds';
 
 // Fallback seed data (only shown if Airtable fetch fails or is empty)
 const seed = [
-  {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',courthouse:'60 Centre St.'},
-  {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',courthouse:'All boroughs'},
-  {id:3,type:'need',category:'records',urgency:'flexible',title:"Certified copy of divorce decree sought — Kings County Surrogate's Court",desc:"Index number and parties' names on file. One certified copy required. End of week is fine.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs. ago',courthouse:"Kings County Surrogate's"},
-  {id:4,type:'offer',category:'filing',urgency:'normal',title:'Daily court runner — 60 Centre, 111 Centre, and Bronx Supreme',desc:'Available for document runs to 60 Centre Street, 111 Centre Street, and Bronx Supreme Court each weekday. Conformed copies returned same day.',price:'From $40',name:'Marcus D.',contact:'917-555-0182',time:'3 hrs. ago',courthouse:'Manhattan & Bronx'},
-  {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search required — NYC Civil Court, individual defendant',desc:'Full name and date of birth available. Search needed across all NYC Civil Court indexes.',price:'$55',name:'Paralegal, BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',courthouse:'NYC Civil Court'},
-  {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
+  {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',location:'60 Centre St.'},
+  {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',location:'All five boroughs'},
+  {id:3,type:'need',category:'records',urgency:'flexible',title:"Certified copy of divorce decree sought — Kings County Surrogate's Court",desc:"Index number and parties' names on file. One certified copy required. End of week is fine.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs. ago',location:"Kings County Surrogate's"},
+  {id:4,type:'offer',category:'other',urgency:'normal',title:'Spanish/English legal translation & deposition interpreter',desc:'Certified court interpreter available for depositions, document translation, and client meetings. Five years of legal industry experience.',price:'$95/hr',name:'Marcus D.',contact:'917-555-0182',time:'3 hrs. ago',location:'NYC + remote'},
+  {id:5,type:'need',category:'research',urgency:'normal',title:'Paralegal sought for document review — commercial litigation',desc:'Two-week project reviewing discovery documents for mid-size commercial case. Remote work acceptable. Litigation experience required.',price:'$45/hr',name:'BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',location:'Remote'},
+  {id:6,type:'offer',category:'records',urgency:'normal',title:'Mobile notary & certified copy retrieval — Queens & Long Island',desc:'Available evenings and weekends for mobile notary, document retrieval, and certified copy services across Queens and Nassau County.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',location:'Queens & Nassau'}
 ];
 let listings=[], currentTab='all', currentFilter='all', currentType='need';
 
@@ -602,7 +603,7 @@ async function loadClassifieds() {
         name: r.fields.name || '',
         contact: r.fields.contact || '',
         time: formatRelativeTime(r.fields.submitted_at),
-        courthouse: r.fields.courthouse || 'NYC'
+        location: r.fields.location || 'NYC'
       }));
     } else {
       // No real listings yet — show seed data so the page isn't empty
@@ -625,7 +626,7 @@ function renderListings() {
   });
   document.getElementById('listings-count').textContent = f.length + ' listing' + (f.length!==1?'s':'') + ' found';
   if(!f.length) { c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>'; return; }
-  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact('${l.id}')">Respond</button></div></div>`).join('');
+  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.location}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact('${l.id}')">Respond</button></div></div>`).join('');
 }
 
 const tabBtns = ['all','need','offer'];
@@ -655,7 +656,7 @@ async function submitListing(){
     price: document.getElementById('f-price').value || 'Negotiable',
     contact: contact,
     name: name,
-    courthouse: 'NYC'
+    location: document.getElementById('f-location').value.trim() || 'NYC'
   };
 
   try {
@@ -678,12 +679,12 @@ async function submitListing(){
         name: payload.name,
         contact: payload.contact,
         time: 'Just posted',
-        courthouse: payload.courthouse
+        location: payload.location
       });
       closePost();
       renderListings();
       showToast('Listing placed.');
-      ['f-title','f-desc','f-contact','f-name','f-price'].forEach(id=>document.getElementById(id).value='');
+      ['f-title','f-desc','f-contact','f-name','f-price','f-location'].forEach(id=>document.getElementById(id).value='');
       selectType('need');
     } else {
       showToast('Submission failed. Please try again.');
