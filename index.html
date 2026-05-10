@@ -20,9 +20,9 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
 .masthead { background: #0a0a0a; }
-.masthead-band { height: 280px; display: flex; align-items: center; justify-content: center; }
-.masthead-band-wrap { max-width: 960px; width: 100%; margin: 0 auto; position: relative; height: 280px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.masthead-band-bg { position: absolute; inset: 0; background-image: url('https://sidebarservices.github.io/sidebarservices.com/skyline.png'); background-size: cover; background-position: center 10%; }
+.masthead-band { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.masthead-band-wrap { width: 100%; position: relative; height: 280px; display: flex; align-items: center; justify-content: center; }
+.masthead-band-bg { position: absolute; inset: 0; background-image: url('https://sidebarservices.com/skyline.png'); background-size: cover; background-position: center 10%; }
 .masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.28) 0%, rgba(6,6,6,0.62) 100%); }
 .masthead-band-ct { position: relative; z-index: 2; text-align: center; padding: 0 24px; margin-bottom: 44px; }
 .masthead-date { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-top: 10px; }
@@ -30,7 +30,7 @@ body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment);
 .masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 54px); font-weight: 900; color: white; letter-spacing: -0.5px; line-height: 1; margin-bottom: 5px; }
 .masthead-title h1 em { font-style: italic; font-weight: 400; color: #e8cc85; }
 .masthead-tagline { font-family: 'EB Garamond', serif; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.15em; text-transform: uppercase; font-style: italic; }
-.masthead-nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px 24px; background: transparent; border: none; position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; }
+.masthead-nav { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 24px; background: transparent; position: absolute; bottom: 0; left: 0; right: 0; z-index: 10; }
 .nav-links { display: flex; gap: 0; }
 .nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(245,240,232,0.85); text-decoration: none; padding: 4px 14px; border-right: 1px solid rgba(200,191,168,0.35); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
 .nav-link:first-child { border-left: 1px solid rgba(200,191,168,0.35); }
@@ -186,7 +186,7 @@ footer { background: var(--ink); border-top: 3px double var(--rule-dark); paddin
         <div class="masthead-title">
           <h1>Sidebar <em>Services</em></h1>
           <div class="masthead-tagline">The New York Legal Classifieds</div>
-          <div class="masthead-date" id="issue-date">Est. 2026 · New York, N.Y.</div>
+          <div class="masthead-date">Est. 2026 · New York, N.Y.</div>
         </div>
       </div>
       <div class="masthead-nav">
@@ -348,13 +348,11 @@ const seed=[
   {id:5,type:'need',category:'research',urgency:'normal',title:'Judgment search required — NYC Civil Court, individual defendant',desc:'Full name and date of birth available. Search needed across all NYC Civil Court indexes.',price:'$55',name:'Paralegal, BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',courthouse:'NYC Civil Court'},
   {id:6,type:'offer',category:'records',urgency:'normal',title:'Certified copy retrieval — Queens and Nassau County',desc:'Regularly present at Queens Supreme, Queens Civil, and Nassau County courts. Deeds, judgments, divorce decrees, and orders.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',courthouse:'Queens & Nassau'}
 ];
-let listings=[...seed],currentTab='all',currentType='need';
+let listings=[...seed],currentType='need';
 function renderListings(){
   const c=document.getElementById('listings-container');
-  let f=listings.filter(l=>currentTab==='all'||l.type===currentTab);
-  document.getElementById('listings-count').textContent=f.length+' listing'+(f.length!==1?'s':'')+' found';
-  if(!f.length){c.innerHTML='<div class="empty">No listings at present.<br/>Be first to place one.</div>';return;}
-  c.innerHTML=f.map(l=>`<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
+  document.getElementById('listings-count').textContent=listings.length+' listing'+(listings.length!==1?'s':'')+' found';
+  c.innerHTML=listings.map(l=>`<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.courthouse}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact(${l.id})">Respond</button></div></div>`).join('');
 }
 function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
 function openPost(){document.getElementById('post-overlay').classList.add('open');}
