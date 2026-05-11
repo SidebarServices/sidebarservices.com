@@ -168,7 +168,7 @@ body.docket-active .docket-nav { display: block; }
 .gossip-submit-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--g-hot); color: white; border: none; padding: 10px 24px; cursor: pointer; transition: all 0.15s; }
 .gossip-submit-btn:hover { background: #ff0060; transform: translateY(-1px); }
 .gossip-disclaimer { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.2); margin-top: 10px; letter-spacing: 0.04em; }
-.gossip-filters { background: #111; border-bottom: 1px solid var(--g-border); padding: 10px 32px; display: flex; gap: 0; align-items: center; flex-wrap: wrap; }
+.gossip-filters { background: #111; border-bottom: 1px solid var(--g-border); padding: 10px 32px; display: flex; gap: 0; align-items: center; flex-wrap: wrap; justify-content: center; }
 .g-filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); margin-right: 12px; }
 .g-filter-chip { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); background: none; border: none; padding: 5px 14px; cursor: pointer; letter-spacing: 0.04em; border-right: 1px solid var(--g-border); transition: all 0.12s; }
 .g-filter-chip:last-child { border-right: none; }
@@ -304,8 +304,8 @@ footer { background: var(--parchment); padding: 0 0 28px; }
   footer { padding: 0 0 16px; }
   .footer-inner { padding: 20px 16px; }
 
-  /* Docket filters — allow horizontal scroll instead of wrapping */
-  .gossip-filters { overflow-x: auto; flex-wrap: nowrap; padding: 10px 16px; -webkit-overflow-scrolling: touch; }
+  /* Docket filters — center on mobile */
+  .gossip-filters { overflow-x: auto; flex-wrap: nowrap; padding: 10px 16px; -webkit-overflow-scrolling: touch; justify-content: center; }
   .g-filter-chip { white-space: nowrap; flex-shrink: 0; }
 
   /* Docket masthead tighter on mobile */
