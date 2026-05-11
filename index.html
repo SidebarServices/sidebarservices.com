@@ -87,12 +87,12 @@
 html { scroll-behavior: smooth; }
 body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
 
-/* Hide masthead when on Docket page */
+/* Hide classifieds card when on Docket page */
 body.docket-active .masthead { display: none; }
 
 /* Contained masthead — cream background with centered banner inside */
 .masthead { background: var(--parchment); width: 100%; display: block; padding: 28px 0 0; }
-.masthead-container { max-width: 960px; margin: 0 auto; border: 1px solid var(--ink); border-bottom: none; }
+.masthead-container { max-width: 960px; margin: 0 auto; }
 .masthead-band { position: relative; overflow: hidden; height: 220px; width: 100%; background: #0a0a0a; }
 .masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.PNG'); background-size: cover; background-position: center 40%; }
 .masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, rgba(6,6,6,0.55) 100%); }
@@ -130,7 +130,7 @@ body.docket-active .docket-nav { display: block; }
 
 .page { display: none; margin: 0; padding: 0; }
 .page.active { display: block; }
-#page-classifieds { margin-top: 0; padding-top: 0; }
+#page-classifieds { margin: 0 auto; padding-top: 0; max-width: 960px; }
 .tab-row { display: none; }
 .filters-bar { display: none; }
 .filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); padding: 11px 14px; border-right: 1px solid var(--rule); }
@@ -138,7 +138,7 @@ body.docket-active .docket-nav { display: block; }
 .filter-chip:last-child { border-right: none; }
 .filter-chip:hover { color: var(--red); background: var(--parchment-deep); }
 .filter-chip.active { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-.classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; display: block; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+.classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; display: block; }
 .section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin: 20px 0 0; display: flex; align-items: center; justify-content: space-between; }
 .section-title-text { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); }
 .listing { border-bottom: 1px solid var(--rule); padding: 16px 0; display: grid; grid-template-columns: 1fr auto; gap: 0 20px; transition: background 0.12s; }
@@ -255,7 +255,7 @@ body.docket-active .docket-nav { display: block; }
 .g-submit-btn:hover:not(:disabled) { background: #ff0060; }
 .g-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 footer { background: var(--parchment); padding: 0 0 28px; }
-.footer-inner { max-width: 960px; margin: 0 auto; background: var(--ink); border: 1px solid var(--ink); padding: 28px 32px; text-align: center; }
+.footer-inner { max-width: 960px; margin: 0 auto; background: var(--ink); padding: 28px 32px; text-align: center; }
 .footer-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--parchment); margin-bottom: 6px; font-weight: 700; }
 .footer-title em { font-style: italic; font-weight: 400; }
 .footer-rule { border: none; border-top: 1px solid var(--rule-dark); margin: 10px auto; max-width: 200px; }
@@ -300,9 +300,8 @@ footer { background: var(--parchment); padding: 0 0 28px; }
   .classifieds-main { padding: 0 16px 24px; }
   .section-header { margin: 12px 0 0; }
 
-  /* Footer alignment */
-  footer { padding: 0 0 16px; }
-  .footer-inner { padding: 20px 16px; }
+  /* Footer */
+  footer { padding: 20px 16px; }
 
   /* Docket filters — allow horizontal scroll instead of wrapping */
   .gossip-filters { overflow-x: auto; flex-wrap: nowrap; padding: 10px 16px; -webkit-overflow-scrolling: touch; }
