@@ -285,6 +285,803 @@ footer { background: var(--parchment); padding: 0 0 28px; }
 @media (max-width: 600px) {
   .masthead { padding: 16px 0 0; }
   .two-col { grid-template-columns: 1fr; }
+  .listing { grid-template-columns: 1fr auto; }
+  .listing-right { flex-direction: column; align-items: flex-end; justify-content: flex-start; min-width: 70px; }
+  .gossip-feed { grid-template-columns: 1fr; }
+
+  /* Nav buttons — smaller text, no wrapping */
+  .masthead-nav-inner { padding: 0; }
+  .nav-link { font-size: 9px; padding: 10px 10px; letter-spacing: 0.06em; white-space: nowrap; }
+  .nav-link.coming-soon::after { content: ''; }
+  .nav-link.coming-soon { font-size: 8px; }
+  .post-btn { font-size: 9px; padding: 10px 10px; letter-spacing: 0.06em; white-space: nowrap; }
+
+  /* Classifieds main — tighter padding */
+  .classifieds-main { padding: 0 16px 24px; }
+  .section-header { margin: 12px 0 0; }
+
+  /* Footer — full width, no side padding */
+  footer { padding: 0 0 16px; }
+  .footer-inner { padding: 20px 16px; }
+
+  /* Docket filters — allow horizontal scroll instead of wrapping */
+  .gossip-filters { overflow-x: auto; flex-wrap: nowrap; padding: 10px 16px; -webkit-overflow-scrolling: touch; }
+  .g-filter-chip { white-space: nowrap; flex-shrink: 0; }
+
+  /* Docket masthead tighter on mobile */
+  .gossip-masthead { padding: 20px 16px 16px; }
+  .gossip-logo { margin-bottom: 4px; }
+  .gossip-tagline { margin-bottom: 14px; font-size: 13px; }
+  .gossip-disclaimer { font-size: 9px; }
+
+  /* Docket nav */
+  .docket-nav-inner { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-container">
+    <div class="masthead-band">
+      <div class="masthead-band-bg"></div>
+      <div class="masthead-band-ov"></div>
+      <div class="masthead-band-ct">
+        <div class="masthead-title">
+          <div class="masthead-date">Est. 2026 · New York, N.Y.</div>
+          <h1>Sidebar <em>Services</em></h1>
+          <div class="masthead-tagline">The New York Legal Classifieds</div>
+        </div>
+      </div>
+    </div>
+    <div class="masthead-nav">
+      <div class="masthead-nav-inner">
+        <nav class="nav-links">
+          <button class="nav-link" onclick="showPage('classifieds')">Classifieds</button>
+          <button class="nav-link coming-soon" onclick="showComingSoon()">Resources</button>
+          <button class="nav-link gossip-nav" onclick="showPage('gossip')">&#9670; The Docket</button>
+        </nav>
+        <button class="post-btn" id="main-post-btn" onclick="openPost()">+ Place a Listing</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Standalone Docket Navigation -->
+<nav class="docket-nav">
+  <div class="docket-nav-inner">
+    <div class="docket-nav-links">
+      <button class="docket-nav-link" onclick="showPage('classifieds')">← Back to Classifieds</button>
+    </div>
+  </div>
+</nav>
+
+<div id="page-classifieds" class="page active">
+  <div class="tab-row">
+    <button class="tab-btn active" id="tab-all" onclick="setTab('all',this)">All Listings</button>
+    <button class="tab-btn" id="tab-need" onclick="setTab('need',this)">Attorneys Seeking Help</button>
+    <button class="tab-btn" id="tab-offer" onclick="setTab('offer',this)">Runners &amp; Services</button>
+  </div>
+  <div class="filters-bar">
+    <span class="filter-label">Show:</span>
+    <button class="filter-chip active" onclick="setTab('all',this)">All Listings</button>
+    <button class="filter-chip" onclick="setTab('need',this)">Attorneys Seeking Help</button>
+    <button class="filter-chip" onclick="setTab('offer',this)">Runners &amp; Services</button>
+    <span class="filter-label" style="border-left:1px solid var(--rule); margin-left:4px;">Category:</span>
+    <button class="filter-chip" onclick="setFilter('filing',this)">Filing</button>
+    <button class="filter-chip" onclick="setFilter('process',this)">Process Service</button>
+    <button class="filter-chip" onclick="setFilter('records',this)">Records &amp; Copies</button>
+    <button class="filter-chip" onclick="setFilter('research',this)">Research</button>
+    <button class="filter-chip" onclick="setFilter('urgent',this)">Urgent</button>
+  </div>
+  <div class="classifieds-main">
+    <div class="section-header">
+      <span class="section-title-text" id="listings-count">Classifieds</span>
+      <span class="section-title-text" style="font-style:italic;font-family:'EB Garamond',serif;letter-spacing:0;text-transform:none;font-weight:400;font-size:12px;" id="listings-updated"></span>
+    </div>
+    <div id="listings-container"></div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-title">Sidebar <em>Services</em></div>
+      <hr class="footer-rule" />
+      <div class="footer-text">New York City's legal classifieds. Free to post, free to browse.<br/>Not a law firm. Not legal advice. Just the people who know.</div>
+    </div>
+  </footer>
+</div>
+
+<div id="page-gossip" class="page">
+  <div class="gossip-masthead">
+    <div class="gossip-eyebrow">Sidebar Services Presents</div>
+    <div class="gossip-logo">The Docket</div>
+    <div class="gossip-tagline">Anonymous "courthouse" confessions. 100% off the record.</div>
+    <button class="gossip-submit-btn" onclick="openGossipModal()">&#9670; Spill It</button>
+    <div class="gossip-disclaimer">All submissions anonymous · Reviewed by moderators before publishing · No real names, case numbers, or identifying details</div>
+  </div>
+  <div class="gossip-filters">
+    <span class="g-filter-label">Show:</span>
+    <button class="g-filter-chip active" onclick="setGossipFilter('all',this)">All</button>
+    <button class="g-filter-chip" onclick="setGossipFilter('cringe',this)">😬 Cringe</button>
+    <button class="g-filter-chip" onclick="setGossipFilter('wild',this)">🤯 Wild</button>
+    <button class="g-filter-chip" onclick="setGossipFilter('facepalm',this)">🤦 Facepalm</button>
+    <button class="g-filter-chip" onclick="setGossipFilter('scandal',this)">👀 Scandal</button>
+  </div>
+  <div class="gossip-feed" id="gossip-feed">
+    <div class="g-loading">Loading The Docket&hellip;</div>
+  </div>
+  <div class="g-footer">
+    <div class="g-footer-text">
+      <div class="f-line1">The Docket is a feature of Sidebar Services · sidebarservices.com</div>
+      <div class="f-line2">All posts anonymous · Moderated for content · No identifying information published</div>
+      <div class="f-line3">Not legal advice. Not affiliated with any court or firm. Just the people who were there.</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST MODAL -->
+<div class="overlay" id="post-overlay" onclick="closeIfOutside(event,'post-overlay')">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Place a Listing</div><button class="modal-close" onclick="closePost()">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>I am a&hellip;</label><div class="type-toggle"><button class="type-opt selected" id="type-need" onclick="selectType('need')">⚖ Attorney — I need help</button><button class="type-opt" id="type-offer" onclick="selectType('offer')">Runner — I offer services</button></div></div>
+      <div class="field"><label>Category</label><select id="f-category"><option value="filing">Document filing</option><option value="process">Process service</option><option value="records">Certified copies / records</option><option value="research">Research</option><option value="other">Other</option></select></div>
+      <div class="field"><label>Headline</label><input id="f-title" type="text" placeholder="e.g., Seek paralegal for document review project" /></div>
+      <div class="field"><label>Details</label><textarea id="f-desc" placeholder="Scope, deadline, special instructions…"></textarea></div>
+      <div class="two-col"><div class="field"><label>Rate / Budget</label><input id="f-price" type="text" placeholder="e.g. $65, Negotiable" /></div><div class="field"><label>Urgency</label><select id="f-urgency"><option value="normal">Standard</option><option value="urgent">Urgent — today</option><option value="flexible">Flexible</option></select></div></div>
+      <div class="field"><label>Location</label><input id="f-location" type="text" placeholder="e.g., 60 Centre St., Midtown, All five boroughs, Remote" /><div class="hint">Where the work takes place. Be as specific or general as you like.</div></div>
+      <div class="field"><label>Contact (displayed publicly)</label><input id="f-contact" type="text" placeholder="Email or telephone" /><div class="hint">This is how respondents will reach you.</div></div>
+      <div class="field"><label>Name or firm</label><input id="f-name" type="text" placeholder="e.g. Maria L., Smith &amp; Associates" /></div>
+      <button class="submit-listing-btn" onclick="submitListing()">Submit Listing</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="overlay" id="contact-overlay" onclick="closeIfOutside(event,'contact-overlay')">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Contact Information</div><button class="modal-close" onclick="closeContact()">✕</button></div>
+    <div class="contact-modal-body"><div class="contact-rows" id="contact-info"></div><div class="contact-note">Parties are encouraged to contact one another directly. Sidebar Services facilitates this introduction only and is not party to any arrangement made hereunder.</div></div>
+  </div>
+</div>
+
+<!-- GOSSIP MODAL -->
+<div class="overlay" id="gossip-overlay" onclick="closeIfOutside(event,'gossip-overlay')">
+  <div class="g-modal">
+    <div class="g-modal-header"><div class="g-modal-title">Spill It</div><button class="g-modal-close" onclick="closeGossipModal()">✕</button></div>
+    <div class="g-modal-body">
+      <div class="g-anon-notice"><div class="g-anon-icon">🔒</div><div class="g-anon-text"><strong>Completely anonymous.</strong> We collect nothing about you — no IP address logging, no account required. Your post goes to a moderation queue and is reviewed before publishing.</div></div>
+      <div class="g-field"><label>Category</label><select id="g-category"><option value="cringe">😬 Cringe</option><option value="wild">🤯 Wild</option><option value="facepalm">🤦 Facepalm</option><option value="scandal">👀 Scandal</option></select></div>
+      <div class="g-field"><label>What happened?</label><textarea id="g-text" placeholder="Tell us everything. Be specific about the absurdity. Be vague about the people."></textarea><div class="g-hint">Keep it cringe, not criminal. No real names, case numbers, or firm identifiers.</div></div>
+      <div class="g-field"><label>Courthouse / Division (optional)</label><select id="g-court"><option value="">— Select if you like —</option><option>60 Centre St. — Civil</option><option>60 Centre St. — Criminal</option><option>111 Centre St.</option><option>Bronx Supreme Court</option><option>Kings County</option><option>Queens Supreme</option><option>Staten Island</option><option>Surrogate's Court</option><option>NYSCEF / E-filing</option><option>Other / Undisclosed</option></select></div>
+      <div class="g-rules"><div class="g-rules-title">Moderation Rules</div><ul><li>No real names, firm names, or case numbers</li><li>No active litigation details</li><li>No content that could identify a specific individual</li><li>Keep it funny, not defamatory</li><li>Moderator's decision is final — most approved within 24 hrs</li></ul></div>
+      <button class="g-submit-btn" id="g-submit-btn" onclick="submitGossip()">Submit Anonymously</button>
+    </div>
+  </div>
+</div>
+
+<!-- DOCKET DISCLAIMER MODAL -->
+<div class="docket-disclaimer-overlay" id="docket-disclaimer">
+  <div class="docket-disclaimer">
+    <div class="docket-disclaimer-icon">🔒</div>
+    <div class="docket-disclaimer-title">Before You Enter</div>
+    <div class="docket-disclaimer-text">The Docket is an <strong>anonymous space</strong> for legal industry stories and confessions. Everything here is submitted anonymously and moderated before publishing.</div>
+    <div class="docket-disclaimer-rules">No real names · No case numbers · No firm identifiers · No identifying details<br/>All posts are reviewed by moderators · Content is for entertainment only<br/>Not legal advice · Not affiliated with any court or firm</div>
+    <button class="docket-disclaimer-btn" onclick="acceptDocketDisclaimer()">I Understand — Enter The Docket</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="g-toast" id="g-toast"></div>
+
+<script>
+const WORKER_URL='https://floral-meadow-77a8.calm-mountain-41aa.workers.dev/';
+
+const now = new Date();
+document.getElementById('listings-updated').textContent = 'Updated ' + now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  
+  // Toggle body class for Docket page to hide main masthead
+  if(page === 'gossip') {
+    document.body.classList.add('docket-active');
+    // Show disclaimer if user hasn't accepted it yet
+    if(!localStorage.getItem('docket_disclaimer_accepted')) {
+      document.getElementById('docket-disclaimer').classList.add('open');
+    }
+    loadGossip();
+    window.location.hash = 'docket';
+  } else {
+    document.body.classList.remove('docket-active');
+    window.location.hash = '';
+  }
+  window.scrollTo(0, 0);
+
+  // Track page switch in Google Analytics
+  gtag('event', 'page_view', {
+    page_path: page === 'gossip' ? '/docket' : '/',
+    page_title: page === 'gossip' ? 'The Docket' : 'Classifieds'
+  });
+}
+
+function acceptDocketDisclaimer() {
+  localStorage.setItem('docket_disclaimer_accepted', 'true');
+  document.getElementById('docket-disclaimer').classList.remove('open');
+}
+
+function showComingSoon() {
+  showToast('Resources — coming soon.');
+}
+
+// ── AIRTABLE FETCH ──
+let gossipFilter = 'all';
+let allGossipPosts = [];
+
+function loadVoted(){try{return JSON.parse(localStorage.getItem('docket_voted')||'{}');}catch(e){return {};}}
+function saveVoted(v){try{localStorage.setItem('docket_voted',JSON.stringify(v));}catch(e){}}
+// Clear voted state if it's from a different session's post IDs (stale data guard)
+let voted=loadVoted();
+
+async function loadGossip() {
+  const feed = document.getElementById('gossip-feed');
+  feed.innerHTML = '<div class="g-loading">Loading The Docket&hellip;</div>';
+  try {
+    const res = await fetch(WORKER_URL);
+    const data = await res.json();
+    if(!data.records || data.records.length === 0) {
+      allGossipPosts = [];
+      renderGossip();
+      return;
+    }
+    allGossipPosts = data.records.map(r => ({
+      id: r.id,
+      type: (r.fields.category || 'cringe').toLowerCase(),
+      text: r.fields.final_text || r.fields.story || '',
+      court: r.fields.court || '',
+      time: r.fields.submitted_at ? new Date(r.fields.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '',
+      fire: r.fields.reactions_fire || 0,
+      skull: r.fields.reactions_skull || 0
+    }));
+    renderGossip();
+  } catch(e) {
+    feed.innerHTML = '<div class="g-loading">Could not load posts. Try refreshing.</div>';
+  }
+}
+
+const typeLabels = {cringe:'😬 Cringe', wild:'🤯 Wild', facepalm:'🤦 Facepalm', scandal:'👀 Scandal'};
+
+function renderGossip() {
+  const feed = document.getElementById('gossip-feed');
+  let f = gossipFilter === 'all' ? allGossipPosts : allGossipPosts.filter(g => g.type === gossipFilter);
+  if(!f.length) {
+    feed.innerHTML = '<div class="g-loading">Nothing here yet. Be first to submit.</div>';
+    return;
+  }
+  feed.innerHTML = f.map(g => {
+    const fVoted = voted[g.id]?.fire;
+    const sVoted = voted[g.id]?.skull;
+    return `<div class="gossip-card ${g.type}">
+      <div class="gossip-card-type">${typeLabels[g.type] || g.type}</div>
+      <div class="gossip-card-text">${g.text}</div>
+      <div class="gossip-card-footer">
+        <div class="gossip-card-meta">${g.court ? g.court + ' · ' : ''}${g.time}</div>
+        <div class="gossip-reactions">
+          <button class="g-react-btn" onclick="gReact('${g.id}','fire',this)" ${fVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>🔥 <span>${g.fire}</span></button>
+          <button class="g-react-btn" onclick="gReact('${g.id}','skull',this)" ${sVoted?'disabled style="background:rgba(255,255,255,0.14);color:white;"':''}>💀 <span>${g.skull}</span></button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setGossipFilter(f, btn) {
+  gossipFilter = f;
+  document.querySelectorAll('.g-filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGossip();
+}
+
+async function gReact(id, type, btn) {
+  if(btn.disabled) return;
+  if(!voted[id]) voted[id] = {};
+  if(voted[id][type]) return;
+  voted[id][type] = true;
+  saveVoted(voted);
+  btn.style.background = 'rgba(255,255,255,0.14)';
+  btn.style.color = 'white';
+  btn.style.cursor = 'default';
+  btn.disabled = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, type })
+    });
+    const data = await res.json();
+    const post = allGossipPosts.find(p => p.id === id);
+    if(post) { post.fire = data.fire; post.skull = data.skull; }
+    btn.querySelector('span').textContent = data[type];
+  } catch(e) {
+    // Silently fail — voted state is already saved locally
+  }
+}
+
+function openGossipModal() { document.getElementById('gossip-overlay').classList.add('open'); }
+function closeGossipModal() { document.getElementById('gossip-overlay').classList.remove('open'); }
+
+async function submitGossip() {
+  const text = document.getElementById('g-text').value.trim();
+  if(!text) { showGToast('Please write something first.'); return; }
+  const btn = document.getElementById('g-submit-btn');
+  btn.textContent = 'Submitting…'; btn.disabled = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        story: text,
+        category: document.getElementById('g-category').value,
+        court: document.getElementById('g-court').value || 'Undisclosed'
+      })
+    });
+    if(res.ok) {
+      closeGossipModal();
+      document.getElementById('g-text').value = '';
+      document.getElementById('g-court').value = '';
+      showGToast('Submitted anonymously. Under review — usually approved within 24 hrs.');
+    } else {
+      showGToast('Something went wrong. Please try again.');
+    }
+  } catch(e) {
+    showGToast('Could not connect. Please try again.');
+  }
+  btn.textContent = 'Submit Anonymously'; btn.disabled = false;
+}
+
+// ── CLASSIFIEDS ──
+// ── CLASSIFIEDS ──
+const CLASSIFIEDS_URL = WORKER_URL.replace(/\/$/, '') + '/classifieds';
+
+// Fallback seed data (only shown if Airtable fetch fails or is empty)
+const seed = [
+  {id:1,type:'need',category:'filing',urgency:'urgent',title:'Seek runner for immediate filing — Civil Supreme, 60 Centre St.',desc:'Original complaint plus two copies required at Civil Supreme Court, 60 Centre Street, by 3:00 p.m. today. Conformed copies to be returned digitally.',price:'$65',name:'R. Chen, Esq.',contact:'rchen@chenlaw.com',time:'35 min. ago',location:'60 Centre St.'},
+  {id:2,type:'offer',category:'process',urgency:'normal',title:'Licensed process server — Manhattan and all five boroughs',desc:'Licensed New York process server, eight years in practice. Personal service, substituted service, and nail-and-mail. Proof of service affidavit furnished with every assignment.',price:'$80–120',name:'Tony R.',contact:'tony@nycprocessservice.com',time:'1 hr. ago',location:'All five boroughs'},
+  {id:3,type:'need',category:'records',urgency:'flexible',title:"Certified copy of divorce decree sought — Kings County Surrogate's Court",desc:"Index number and parties' names on file. One certified copy required. End of week is fine.",price:'$45',name:'S. Goldberg, Esq.',contact:'sgoldberg@email.com',time:'2 hrs. ago',location:"Kings County Surrogate's"},
+  {id:4,type:'offer',category:'other',urgency:'normal',title:'Spanish/English legal translation & deposition interpreter',desc:'Certified court interpreter available for depositions, document translation, and client meetings. Five years of legal industry experience.',price:'$95/hr',name:'Marcus D.',contact:'917-555-0182',time:'3 hrs. ago',location:'NYC + remote'},
+  {id:5,type:'need',category:'research',urgency:'normal',title:'Paralegal sought for document review — commercial litigation',desc:'Two-week project reviewing discovery documents for mid-size commercial case. Remote work acceptable. Litigation experience required.',price:'$45/hr',name:'BDK Law',contact:'paralegal@bdklaw.com',time:'4 hrs. ago',location:'Remote'},
+  {id:6,type:'offer',category:'records',urgency:'normal',title:'Mobile notary & certified copy retrieval — Queens & Long Island',desc:'Available evenings and weekends for mobile notary, document retrieval, and certified copy services across Queens and Nassau County.',price:'$35–65',name:'Linda P.',contact:'linda.copies@gmail.com',time:'5 hrs. ago',location:'Queens & Nassau'}
+];
+let listings=[], currentTab='all', currentFilter='all', currentType='need';
+
+// Format a date as relative time ("35 min. ago", "2 hrs. ago", "3 days ago")
+function formatRelativeTime(dateStr) {
+  if(!dateStr) return 'Recently';
+  const now = new Date();
+  const then = new Date(dateStr);
+  const diffMs = now - then;
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMs / 3600000);
+  const diffDay = Math.floor(diffMs / 86400000);
+  if(diffMin < 1) return 'Just posted';
+  if(diffMin < 60) return diffMin + ' min. ago';
+  if(diffHr < 24) return diffHr + ' hr' + (diffHr !== 1 ? 's' : '') + '. ago';
+  if(diffDay < 7) return diffDay + ' day' + (diffDay !== 1 ? 's' : '') + ' ago';
+  return then.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+}
+
+async function loadClassifieds() {
+  try {
+    const res = await fetch(CLASSIFIEDS_URL);
+    const data = await res.json();
+    if(data.records && data.records.length > 0) {
+      listings = data.records.map(r => ({
+        id: r.id,
+        type: r.fields.type || 'need',
+        category: r.fields.category || 'other',
+        urgency: r.fields.urgency || 'normal',
+        title: r.fields.title || '',
+        desc: r.fields.description || 'No further details.',
+        price: r.fields.price || 'Negotiable',
+        name: r.fields.name || '',
+        contact: r.fields.contact || '',
+        time: formatRelativeTime(r.fields.submitted_at),
+        location: r.fields.location || 'NYC'
+      }));
+    } else {
+      // No real listings yet — show seed data so the page isn't empty
+      listings = [...seed];
+    }
+    renderListings();
+  } catch(e) {
+    // Worker failed — fall back to seed data
+    listings = [...seed];
+    renderListings();
+  }
+}
+
+function renderListings() {
+  const c = document.getElementById('listings-container');
+  let f = listings.filter(l => {
+    const t = currentTab==='all' || l.type===currentTab;
+    const fi = currentFilter==='all' || (currentFilter==='urgent' ? l.urgency==='urgent' : l.category===currentFilter);
+    return t && fi;
+  });
+  document.getElementById('listings-count').textContent = f.length + ' listing' + (f.length!==1?'s':'') + ' found';
+  if(!f.length) { c.innerHTML='<div class="empty">No listings in this category at present.<br/>Be first to place one.</div>'; return; }
+  c.innerHTML = f.map(l => `<div class="listing"><div class="listing-main"><div class="listing-badges"><span class="badge ${l.type==='need'?'badge-need':'badge-offer'}">${l.type==='need'?'Seeking':'Offering'}</span>${l.urgency==='urgent'?'<span class="badge badge-urgent">Urgent</span>':''}</div><div class="listing-title">${l.title}</div><div class="listing-desc">${l.desc}</div><div class="listing-meta-row"><span class="meta-item">&#9632; <strong>${l.location}</strong></span><span class="meta-item">&#9632; ${l.name}</span><span class="meta-item">&#9632; ${l.time}</span></div></div><div class="listing-right"><div class="listing-price">${l.price}</div><button class="contact-btn" onclick="showContact('${l.id}')">Respond</button></div></div>`).join('');
+}
+
+const tabBtns = ['all','need','offer'];
+function setTab(tab,btn){currentTab=tab;document.querySelectorAll('.filter-chip').forEach(b=>{if(tabBtns.includes(b.getAttribute('onclick')?.match(/'(\w+)'/)?.[1]))b.classList.remove('active');});btn.classList.add('active');renderListings();}
+function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-chip').forEach(b=>{if(!tabBtns.includes(b.getAttribute('onclick')?.match(/'(\w+)'/)?.[1]))b.classList.remove('active');});btn.classList.add('active');renderListings();}
+function selectType(t){currentType=t;document.getElementById('type-need').classList.toggle('selected',t==='need');document.getElementById('type-offer').classList.toggle('selected',t==='offer');}
+function openPost(){document.getElementById('post-overlay').classList.add('open');}
+function closePost(){document.getElementById('post-overlay').classList.remove('open');}
+
+async function submitListing(){
+  const title=document.getElementById('f-title').value.trim();
+  const contact=document.getElementById('f-contact').value.trim();
+  const name=document.getElementById('f-name').value.trim();
+  if(!title||!contact||!name){showToast('Headline, contact, and name are required.');return;}
+
+  const submitBtn = document.querySelector('.submit-listing-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting…';
+  submitBtn.disabled = true;
+
+  const payload = {
+    type: currentType,
+    category: document.getElementById('f-category').value,
+    urgency: document.getElementById('f-urgency').value,
+    title: title,
+    description: document.getElementById('f-desc').value || 'No further details.',
+    price: document.getElementById('f-price').value || 'Negotiable',
+    contact: contact,
+    name: name,
+    location: document.getElementById('f-location').value.trim() || 'NYC'
+  };
+
+  try {
+    const res = await fetch(CLASSIFIEDS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if(res.ok) {
+      // Add to local list immediately for instant feedback
+      const data = await res.json();
+      listings.unshift({
+        id: data.id || Date.now(),
+        type: currentType,
+        category: payload.category,
+        urgency: payload.urgency,
+        title: payload.title,
+        desc: payload.description,
+        price: payload.price,
+        name: payload.name,
+        contact: payload.contact,
+        time: 'Just posted',
+        location: payload.location
+      });
+      closePost();
+      renderListings();
+      showToast('Listing placed.');
+      ['f-title','f-desc','f-contact','f-name','f-price','f-location'].forEach(id=>document.getElementById(id).value='');
+      selectType('need');
+    } else {
+      showToast('Submission failed. Please try again.');
+    }
+  } catch(e) {
+    showToast('Could not connect. Please try again.');
+  }
+
+  submitBtn.textContent = originalText;
+  submitBtn.disabled = false;
+}
+
+function showContact(id){
+  const l=listings.find(x=>String(x.id)===String(id));if(!l)return;
+  document.getElementById('contact-info').innerHTML=`<div class="contact-row"><div class="contact-key">Party</div><div class="contact-val">${l.name}</div></div><div class="contact-row"><div class="contact-key">Contact</div><div class="contact-val">${l.contact}</div></div><div class="contact-row"><div class="contact-key">Re:</div><div class="contact-val" style="font-size:14px;">${l.title}</div></div>`;
+  document.getElementById('contact-overlay').classList.add('open');
+}
+function closeContact(){document.getElementById('contact-overlay').classList.remove('open');}
+function closeIfOutside(e,id){if(e.target.id===id)document.getElementById(id).classList.remove('open');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+function showGToast(msg){const t=document.getElementById('g-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('post-overlay').classList.remove('open');document.getElementById('contact-overlay').classList.remove('open');document.getElementById('gossip-overlay').classList.remove('open');}});
+
+loadClassifieds();
+if(window.location.hash === '#docket') showPage('gossip');
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Primary SEO -->
+<title>Sidebar Services — The New York Legal Classifieds</title>
+<meta name="description" content="The New York Legal Classifieds — free to post, free to browse. Connect attorneys with court runners, process servers, filers, and researchers across all five boroughs." />
+<meta name="keywords" content="NYC court runner, New York process server, courthouse filing, legal classifieds, NYC paralegal, certified copies, court records, NYC legal services, Manhattan court filing, Bronx Supreme Court, Kings County, Queens Supreme Court" />
+<meta name="author" content="Sidebar Services" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://sidebarservices.com/" />
+
+<!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://sidebarservices.com/" />
+<meta property="og:title" content="Sidebar Services — The New York Legal Classifieds" />
+<meta property="og:description" content="Free to post, free to browse. NYC's classifieds for court runners, process servers, and legal services. Just the people who know." />
+<meta property="og:image" content="https://sidebarservices.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Sidebar Services — The New York Legal Classifieds" />
+<meta property="og:site_name" content="Sidebar Services" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="https://sidebarservices.com/" />
+<meta name="twitter:title" content="Sidebar Services — The New York Legal Classifieds" />
+<meta name="twitter:description" content="Free to post, free to browse. NYC's classifieds for court runners, process servers, and legal services." />
+<meta name="twitter:image" content="https://sidebarservices.com/og-image.png" />
+<meta name="twitter:image:alt" content="Sidebar Services — The New York Legal Classifieds" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0a0a'/%3E%3Ctext x='50' y='62' font-family='Georgia,serif' font-size='52' font-weight='900' fill='%23e8cc85' text-anchor='middle' font-style='italic'%3ES%3C/text%3E%3C/svg%3E" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<!-- Theme color for mobile browsers -->
+<meta name="theme-color" content="#0a0a0a" />
+
+<!-- Structured Data (Schema.org) for rich search results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Sidebar Services",
+  "alternateName": "The New York Legal Classifieds",
+  "url": "https://sidebarservices.com/",
+  "description": "Free to post, free to browse. NYC's classifieds for court runners, process servers, and legal services across all five boroughs.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sidebar Services",
+    "url": "https://sidebarservices.com/"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://sidebarservices.com/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XMZBSSL7K5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XMZBSSL7K5');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #1c1a17; --ink-mid: #3d3a33; --ink-muted: #6b6659; --ink-faint: #9a9486;
+  --parchment: #f5f0e8; --parchment-dark: #ede6d6; --parchment-deep: #e2d9c5;
+  --rule: #c8bfa8; --rule-dark: #a89880;
+  --red: #8b1a1a; --red-light: #f5eded;
+  --green-text: #1a4a1a; --green-bg: #edf3ed; --gold-accent: #7a6030;
+  --g-bg: #0d0d0d; --g-hot: #ff2d78; --g-yellow: #ffe94d; --g-cyan: #00f0e0;
+  --g-purple: #c44dff; --g-card: #1a1a1a; --g-border: rgba(255,255,255,0.08);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'EB Garamond', Georgia, serif; background: var(--parchment); color: var(--ink); min-height: 100vh; }
+
+/* Hide classifieds card when on Docket page */
+body.docket-active .masthead { display: none; }
+
+/* Contained masthead — cream background with centered banner inside */
+.masthead { background: var(--parchment); width: 100%; display: block; padding: 28px 0 0; }
+.masthead-container { max-width: 960px; margin: 0 auto; }
+.masthead-band { position: relative; overflow: hidden; height: 220px; width: 100%; background: #0a0a0a; }
+.masthead-band-bg { position: absolute; inset: 0; background-image: url('skyline.PNG'); background-size: cover; background-position: center 40%; }
+.masthead-band-ov { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,6,6,0.25) 0%, rgba(6,6,6,0.55) 100%); }
+.masthead-band-ct { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; text-align: center; width: 100%; padding: 0 24px; }
+.masthead-date { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 8px; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+.masthead-title { text-align: center; }
+.masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 5.5vw, 48px); font-weight: 900; color: white; letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
+.masthead-title h1 em { font-style: italic; font-weight: 400; color: #e8cc85; }
+.masthead-tagline { font-family: 'EB Garamond', serif; font-size: 12px; color: rgba(255,255,255,0.85); letter-spacing: 0.18em; text-transform: uppercase; font-style: italic; text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.8); margin-top: 4px; }
+
+/* Nav bar — sits on cream below the banner with thin border lines */
+.masthead-nav { background: var(--parchment); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 0; }
+.masthead-nav-inner { max-width: 960px; margin: 0 auto; padding: 0; display: flex; align-items: stretch; justify-content: space-between; }
+.nav-links { display: flex; gap: 0; }
+.nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-mid); text-decoration: none; padding: 12px 22px; border-right: 1px solid var(--rule); letter-spacing: 0.12em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: all 0.15s; font-weight: 500; }
+.nav-link:hover { color: var(--ink); background: var(--parchment-deep); }
+.nav-link.gossip-nav { color: var(--g-hot); font-weight: 600; }
+.nav-link.gossip-nav:hover { color: #c44dff; background: var(--parchment-deep); }
+.nav-link.coming-soon { color: var(--ink-faint); cursor: default; font-style: italic; }
+.nav-link.coming-soon:hover { color: var(--ink-faint); background: none; }
+.nav-link.coming-soon::after { content: ' · soon'; font-size: 9px; opacity: 0.7; }
+.post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: var(--ink); color: var(--parchment); border: none; border-left: 1px solid var(--rule); padding: 12px 22px; cursor: pointer; letter-spacing: 0.12em; text-transform: uppercase; transition: all 0.15s; }
+.post-btn:hover { background: var(--ink-mid); }
+
+/* Standalone navigation for Docket page */
+.docket-nav { display: none; background: #0a0a0a; border-bottom: 1px solid var(--g-border); padding: 10px 0; position: sticky; top: 0; z-index: 100; }
+body.docket-active .docket-nav { display: block; }
+.docket-nav-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
+.docket-nav-links { display: flex; gap: 0; }
+.docket-nav-link { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.6); text-decoration: none; padding: 4px 14px; border-right: 1px solid var(--g-border); letter-spacing: 0.06em; text-transform: uppercase; background: none; border-top: none; border-bottom: none; border-left: none; cursor: pointer; transition: color 0.15s; }
+.docket-nav-link:first-child { border-left: 1px solid var(--g-border); }
+.docket-nav-link:hover { color: var(--g-hot); }
+.docket-post-btn { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; background: rgba(255,45,120,0.12); color: var(--g-hot); border: 1px solid rgba(255,45,120,0.3); padding: 5px 16px; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: all 0.15s; }
+.docket-post-btn:hover { background: rgba(255,45,120,0.22); }
+
+.page { display: none; margin: 0; padding: 0; }
+.page.active { display: block; }
+#page-classifieds { margin: 0 auto; padding-top: 0; max-width: 960px; }
+.tab-row { display: none; }
+.filters-bar { display: none; }
+.filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); padding: 11px 14px; border-right: 1px solid var(--rule); }
+.filter-chip { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-mid); background: none; border: none; padding: 11px 18px; cursor: pointer; letter-spacing: 0.04em; border-right: 1px solid var(--rule); transition: all 0.12s; }
+.filter-chip:last-child { border-right: none; }
+.filter-chip:hover { color: var(--red); background: var(--parchment-deep); }
+.filter-chip.active { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.classifieds-main { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; display: block; }
+.section-header { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 6px 0; margin: 20px 0 0; display: flex; align-items: center; justify-content: space-between; }
+.section-title-text { font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); }
+.listing { border-bottom: 1px solid var(--rule); padding: 16px 0; display: grid; grid-template-columns: 1fr auto; gap: 0 20px; transition: background 0.12s; }
+.listing:hover { background: rgba(28,26,23,0.02); }
+.listing:first-child { border-top: 1px solid var(--rule); }
+.listing-badges { display: flex; gap: 6px; margin-bottom: 5px; align-items: center; }
+.badge { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border: 0.5px solid; }
+.badge-need { border-color: #7a6030; color: #7a6030; background: #faf6ed; }
+.badge-offer { border-color: #1a4a1a; color: #1a4a1a; background: var(--green-bg); }
+.badge-urgent { border-color: var(--red); color: var(--red); background: var(--red-light); }
+.listing-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--ink); line-height: 1.25; margin-bottom: 5px; }
+.listing-desc { font-family: 'EB Garamond', serif; font-size: 15px; color: var(--ink-mid); line-height: 1.55; margin-bottom: 8px; }
+.listing-meta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.meta-item { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--ink-faint); }
+.meta-item strong { color: var(--ink-mid); font-weight: 500; }
+.listing-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; min-width: 80px; }
+.listing-price { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.contact-btn { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: none; border: 1px solid var(--ink); color: var(--ink); padding: 5px 12px; cursor: pointer; transition: all 0.12s; white-space: nowrap; }
+.contact-btn:hover { background: var(--ink); color: var(--parchment); }
+.empty { text-align: center; padding: 48px 24px; font-family: 'EB Garamond', serif; font-style: italic; color: var(--ink-faint); font-size: 18px; }
+#page-gossip { background: var(--g-bg); min-height: 100vh; }
+.gossip-masthead { background: var(--g-bg); border-bottom: 3px solid var(--g-hot); padding: 28px 32px 20px; text-align: center; position: relative; overflow: hidden; }
+.gossip-masthead::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,45,120,0.03) 20px, rgba(255,45,120,0.03) 21px); pointer-events: none; }
+.gossip-eyebrow { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--g-hot); margin-bottom: 8px; }
+.gossip-logo { font-family: 'Bebas Neue', 'Playfair Display', serif; font-size: clamp(48px, 10vw, 96px); line-height: 0.9; letter-spacing: 2px; background: linear-gradient(135deg, var(--g-hot) 0%, var(--g-yellow) 40%, var(--g-cyan) 70%, var(--g-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px; }
+.gossip-tagline { font-family: 'EB Garamond', serif; font-style: italic; font-size: 15px; color: rgba(255,255,255,0.45); margin-bottom: 20px; letter-spacing: 0.05em; }
+.gossip-submit-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--g-hot); color: white; border: none; padding: 10px 24px; cursor: pointer; transition: all 0.15s; }
+.gossip-submit-btn:hover { background: #ff0060; transform: translateY(-1px); }
+.gossip-disclaimer { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.2); margin-top: 10px; letter-spacing: 0.04em; }
+.gossip-filters { background: #111; border-bottom: 1px solid var(--g-border); padding: 10px 32px; display: flex; gap: 0; align-items: center; flex-wrap: wrap; }
+.g-filter-label { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.25); margin-right: 12px; }
+.g-filter-chip { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); background: none; border: none; padding: 5px 14px; cursor: pointer; letter-spacing: 0.04em; border-right: 1px solid var(--g-border); transition: all 0.12s; }
+.g-filter-chip:last-child { border-right: none; }
+.g-filter-chip:hover { color: white; }
+.g-filter-chip.active { color: var(--g-yellow); font-weight: 500; }
+.gossip-feed { max-width: 860px; margin: 0 auto; padding: 28px 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.gossip-card { background: var(--g-card); border: 1px solid var(--g-border); padding: 20px; position: relative; overflow: hidden; transition: transform 0.15s, border-color 0.15s; }
+.gossip-card:hover { transform: translateY(-2px); }
+.gossip-card.cringe { border-top: 3px solid var(--g-hot); }
+.gossip-card.cringe:hover { border-color: var(--g-hot); }
+.gossip-card.wild { border-top: 3px solid var(--g-yellow); }
+.gossip-card.wild:hover { border-color: var(--g-yellow); }
+.gossip-card.facepalm { border-top: 3px solid var(--g-cyan); }
+.gossip-card.facepalm:hover { border-color: var(--g-cyan); }
+.gossip-card.scandal { border-top: 3px solid var(--g-purple); }
+.gossip-card.scandal:hover { border-color: var(--g-purple); }
+.gossip-card-type { font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+.cringe .gossip-card-type { color: var(--g-hot); }
+.wild .gossip-card-type { color: var(--g-yellow); }
+.facepalm .gossip-card-type { color: var(--g-cyan); }
+.scandal .gossip-card-type { color: var(--g-purple); }
+.gossip-card-text { font-family: 'EB Garamond', serif; font-size: 16px; color: rgba(255,255,255,0.82); line-height: 1.65; margin-bottom: 16px; }
+.gossip-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.gossip-card-meta { font-family: 'DM Sans', sans-serif; font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.03em; }
+.gossip-reactions { display: flex; gap: 6px; }
+.g-react-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.45); font-family: 'DM Sans', sans-serif; font-size: 11px; padding: 3px 10px; cursor: pointer; transition: all 0.12s; display: flex; align-items: center; gap: 4px; }
+.g-react-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+.g-loading { text-align: center; padding: 48px; font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; text-transform: uppercase; grid-column: 1/-1; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+.overlay.open { display: flex; }
+.modal { background: var(--parchment); border: 1px solid var(--ink); width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; }
+.modal-header { background: var(--ink); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--parchment); font-weight: 700; }
+.modal-close { background: none; border: 1px solid rgba(245,240,232,0.3); color: var(--parchment); width: 28px; height: 28px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { background: rgba(255,255,255,0.1); }
+.modal-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 0.1em; }
+.field input, .field select, .field textarea { border: 1px solid var(--rule-dark); background: white; padding: 9px 11px; font-family: 'EB Garamond', serif; font-size: 15px; color: var(--ink); outline: none; transition: border-color 0.12s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ink); }
+.field textarea { resize: none; height: 80px; }
+.field select { font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.type-toggle { display: flex; gap: 0; }
+.type-opt { flex: 1; padding: 9px 10px; border: 1px solid var(--rule-dark); border-right: none; background: white; text-align: center; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--ink-muted); transition: all 0.12s; }
+.type-opt:last-child { border-right: 1px solid var(--rule-dark); }
+.type-opt:hover { background: var(--parchment-dark); color: var(--ink); }
+.type-opt.selected { background: var(--ink); color: var(--parchment); border-color: var(--ink); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hint { font-size: 11px; color: var(--ink-faint); margin-top: 2px; font-family: 'DM Sans', sans-serif; }
+.submit-listing-btn { background: var(--ink); color: var(--parchment); border: none; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.12s; width: 100%; margin-top: 4px; }
+.submit-listing-btn:hover { background: var(--ink-mid); }
+.contact-modal-body { padding: 24px; }
+.contact-rows { display: flex; flex-direction: column; gap: 14px; }
+.contact-row { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.contact-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+.contact-key { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); min-width: 70px; padding-top: 2px; }
+.contact-val { font-family: 'EB Garamond', serif; font-size: 16px; color: var(--ink); }
+.contact-note { font-family: 'EB Garamond', serif; font-size: 13px; font-style: italic; color: var(--ink-faint); margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); line-height: 1.5; }
+.g-modal { background: #111; border: 1px solid var(--g-hot); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+.g-modal-header { background: var(--g-hot); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+.g-modal-title { font-family: 'Bebas Neue', 'Playfair Display', serif; font-size: 22px; color: white; letter-spacing: 1px; }
+.g-modal-close { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; width: 28px; height: 28px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.g-modal-close:hover { background: rgba(0,0,0,0.4); }
+.g-modal-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.g-field { display: flex; flex-direction: column; gap: 6px; }
+.g-field label { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.12em; }
+.g-field input, .g-field select, .g-field textarea { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: white; padding: 10px 12px; font-family: 'EB Garamond', serif; font-size: 15px; outline: none; transition: border-color 0.12s; }
+.g-field input:focus, .g-field select:focus, .g-field textarea:focus { border-color: var(--g-hot); }
+.g-field input::placeholder, .g-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.g-field select { font-family: 'DM Sans', sans-serif; font-size: 13px; }
+.g-field select option { background: #222; }
+.g-field textarea { resize: none; height: 100px; }
+.g-hint { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 3px; font-family: 'DM Sans', sans-serif; font-style: italic; }
+.g-rules { background: rgba(255,45,120,0.07); border: 1px solid rgba(255,45,120,0.2); padding: 12px 14px; }
+.g-rules-title { font-family: 'DM Sans', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--g-hot); margin-bottom: 8px; font-weight: 500; }
+.g-rules ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.g-rules li { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); padding-left: 14px; position: relative; }
+.g-rules li::before { content: '—'; position: absolute; left: 0; color: var(--g-hot); }
+.g-anon-notice { display: flex; gap: 10px; align-items: flex-start; background: rgba(0,240,224,0.06); border: 1px solid rgba(0,240,224,0.2); padding: 12px 14px; }
+.g-anon-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.g-anon-text { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(0,240,224,0.7); line-height: 1.6; }
+.g-anon-text strong { color: var(--g-cyan); font-weight: 500; }
+.g-submit-btn { background: var(--g-hot); color: white; border: none; padding: 13px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.12s; width: 100%; margin-top: 4px; }
+.g-submit-btn:hover:not(:disabled) { background: #ff0060; }
+.g-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+footer { background: var(--parchment); padding: 0 0 28px; }
+.footer-inner { max-width: 960px; margin: 0 auto; background: var(--ink); padding: 28px 32px; text-align: center; }
+.footer-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--parchment); margin-bottom: 6px; font-weight: 700; }
+.footer-title em { font-style: italic; font-weight: 400; }
+.footer-rule { border: none; border-top: 1px solid var(--rule-dark); margin: 10px auto; max-width: 200px; }
+.footer-text { font-family: 'EB Garamond', serif; font-size: 13px; color: var(--rule-dark); font-style: italic; line-height: 1.7; }
+.g-footer { background: #0a0a0a; border-top: 1px solid var(--g-border); padding: 24px 32px; text-align: center; }
+.g-footer-text { font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 0.04em; line-height: 1.8; background: linear-gradient(135deg, var(--g-hot) 0%, var(--g-yellow) 40%, var(--g-cyan) 70%, var(--g-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.g-footer-text .f-line1 { color: var(--g-hot); }
+.g-footer-text .f-line2 { color: var(--g-cyan); }
+.g-footer-text .f-line3 { color: var(--g-yellow); }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink); color: var(--parchment); border: 1px solid var(--rule-dark); padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.04em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+.g-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--g-hot); color: white; border: none; padding: 10px 20px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; transition: transform 0.3s ease; z-index: 999; white-space: nowrap; }
+.g-toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Docket Disclaimer Modal */
+.docket-disclaimer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300; align-items: center; justify-content: center; padding: 16px; }
+.docket-disclaimer-overlay.open { display: flex; }
+.docket-disclaimer { background: #111; border: 1px solid var(--g-border); width: 100%; max-width: 460px; text-align: center; padding: 40px 36px; position: relative; overflow: hidden; }
+.docket-disclaimer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, var(--g-hot) 0%, var(--g-yellow) 40%, var(--g-cyan) 70%, var(--g-purple) 100%); }
+.docket-disclaimer-icon { font-size: 32px; margin-bottom: 16px; }
+.docket-disclaimer-title { font-family: 'Bebas Neue', 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; background: linear-gradient(135deg, var(--g-hot) 0%, var(--g-yellow) 40%, var(--g-cyan) 70%, var(--g-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px; }
+.docket-disclaimer-text { font-family: 'EB Garamond', serif; font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 8px; }
+.docket-disclaimer-text strong { color: var(--g-cyan); font-weight: 500; }
+.docket-disclaimer-rules { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.8; margin: 16px 0 24px; padding: 16px 0; border-top: 1px solid var(--g-border); border-bottom: 1px solid var(--g-border); }
+.docket-disclaimer-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; background: var(--g-hot); color: white; border: none; padding: 12px 32px; cursor: pointer; transition: all 0.15s; }
+.docket-disclaimer-btn:hover { background: #ff0060; transform: translateY(-1px); }
+@media (max-width: 600px) {
+  .masthead { padding: 16px 0 0; }
+  .two-col { grid-template-columns: 1fr; }
   .listing { grid-template-columns: 1fr; }
   .listing-right { flex-direction: row; align-items: center; margin-top: 10px; }
   .gossip-feed { grid-template-columns: 1fr; }
